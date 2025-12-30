@@ -35,17 +35,28 @@ Implement Phases 1–6 computationally, preserving conjugacy where required:
 
 - Statistical tests: paired by run seeds; multiple-comparisons correction is applied within each scenario × metric across model comparisons.
 
-## Underspecified Items — Implementation Choices (must be explicit)
-When the PDF does not specify an exact formula, implement the following defaults and label them in outputs:
+## Underspecified Items — Implementation Choices
+- The paper leaves several definitions open; the following defaults are used to make the      implementation operational while preserving Beta–Binomial conjugacy, Phase 6 admissibility (positive pseudo-counts), and the paper’s intent. These are implementation choices, not theoretical modifications.
 
-- MAE prob error: |p_true - pi_adj_yes|
-- Calibration error: ECE with B equal-width bins on [0,1]
-- Interval coverage: central Beta credible intervals at 90% and 95%;
-  report both coverage of outcome A and (optionally) coverage of p_true
-- Stage 1 weights w_beh: bounded positive weight family w = clip(wmin,wmax,w_LS * w_H),
-  where w_LS downweights long-shot implied probs and w_H downweights herding streak-following.
-- Regime likelihood L_r(D2): Beta-binomial marginal likelihood using (y^(1), n^(1)) as effective counts.
-- HMM: OFF by default; if enabled, use user-specified transition matrix and emissions based on L_r(D2_t).
+- Mean absolute probability error (Phase 7). 
+Defined as |p_true − π_adj^YES|.
+
+- Calibration error (Phase 7). 
+Use Expected Calibration Error (ECE) with equal-width bins on [0,1]. Reliability diagrams use the same binning.
+
+- Interval coverage (Phase 7)
+Use central Beta credible intervals at 90% and 95%. Report coverage of the realized outcome A; optionally report coverage with respect to p_true.
+
+- Stage 1 behavioral weights w_beh (Phase 6)
+Use a bounded positive weight family:
+w = clip(w_min, w_max, w_LS(p_mkt) × w_H(streak))
+where w_LS downweights long-shot probabilities (small p_mkt) and w_H downweights herding (long streaks of identical recent orders). Bounds ensure positivity and preserve conjugacy.
+
+- Regime likelihood L_r(D2) (Phase 6 Stage 2 mixture)
+Use the Beta–Binomial marginal likelihood based on effective counts (y^(1), n^(1)) as the regime likelihood in π_r(D2).
+
+- HMM regime dynamics (Phase 6 optional)
+OFF by default. If enabled, use a user-specified transition matrix and emissions derived from L_r(D2_t); outputs feed time-varying mixture weights while preserving admissibility (α_r(t) > 0, β_r(t) > 0).
 
 
 ## Baselines
