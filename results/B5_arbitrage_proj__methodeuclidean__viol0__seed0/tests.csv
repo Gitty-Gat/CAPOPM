@@ -1,0 +1,16 @@
+scenario_name,experiment_id,tier,seed,model,metric,test,stat,p_value,p_value_str,p_holm,p_holm_str,p_bonferroni,p_bonferroni_str,diff_mean,better_if_negative,ci_low,ci_high,coherent_flag,projection_method,violation_strength
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_brier,paired_t,0.0,1.0,1.000e+00,1.0,1.000e+00,1.0,1.000e+00,0.0,True,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_brier,wilcoxon,0.0,1.0,1.000e+00,,,,,0.0,True,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_brier,bootstrap_ci,,,,,,,,0.0,True,0.0,0.0,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_log_score,paired_t,0.0,1.0,1.000e+00,1.0,1.000e+00,1.0,1.000e+00,0.0,False,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_log_score,wilcoxon,0.0,1.0,1.000e+00,,,,,0.0,False,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_log_score,bootstrap_ci,,,,,,,,0.0,False,0.0,0.0,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_abs_error_outcome,paired_t,0.0,1.0,1.000e+00,1.0,1.000e+00,1.0,1.000e+00,0.0,True,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_abs_error_outcome,wilcoxon,0.0,1.0,1.000e+00,,,,,0.0,True,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_abs_error_outcome,bootstrap_ci,,,,,,,,0.0,True,0.0,0.0,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_proj_l1,paired_t,0.0,1.0,1.000e+00,1.0,1.000e+00,1.0,1.000e+00,0.0,True,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_proj_l1,wilcoxon,0.0,1.0,1.000e+00,,,,,0.0,True,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_proj_l1,bootstrap_ci,,,,,,,,0.0,True,0.0,0.0,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_proj_l2,paired_t,0.0,1.0,1.000e+00,1.0,1.000e+00,1.0,1.000e+00,0.0,True,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_proj_l2,wilcoxon,0.0,1.0,1.000e+00,,,,,0.0,True,,,True,euclidean,0.0
+B5_arbitrage_proj__methodeuclidean__viol0__seed0,B5.ARBITRAGE_PROJECTION_IMPACT,B,0,after_projection,delta_proj_l2,bootstrap_ci,,,,,,,,0.0,True,0.0,0.0,True,euclidean,0.0

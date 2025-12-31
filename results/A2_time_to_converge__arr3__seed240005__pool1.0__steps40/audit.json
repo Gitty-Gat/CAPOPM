@@ -1,0 +1,486 @@
+{
+  "audit_version": "audit_v1",
+  "scenario_name": "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+  "experiment_id": "A2.TIME_TO_CONVERGE",
+  "tier": "A",
+  "seed": 240005,
+  "metadata": {
+    "scenario_name": "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+    "experiment_id": "A2.TIME_TO_CONVERGE",
+    "tier": "A",
+    "seed": 240005,
+    "arrivals_per_step": 3,
+    "initial_pool": 1.0,
+    "n_steps": 40,
+    "config_hash": "22a32af85348e94b549480229a3c30c4d6624541b4f724b7c07ed57af602b3f6"
+  },
+  "calibration": {
+    "capopm": {
+      "n_samples": 30,
+      "n_unique_predictions": 30,
+      "n_nonempty_bins": 10,
+      "ece_value": 0.2838728916183122,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.47334751161640826,
+        "n_unique_support": 30,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "raw_parimutuel": {
+      "n_samples": 30,
+      "n_unique_predictions": 23,
+      "n_nonempty_bins": 9,
+      "ece_value": 0.24365573770491808,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.3406174863387978,
+        "n_unique_support": 23,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "structural_only": {
+      "n_samples": 30,
+      "n_unique_predictions": 23,
+      "n_nonempty_bins": 9,
+      "ece_value": 0.24356923079658122,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.3410102564307692,
+        "n_unique_support": 23,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "ml_only": {
+      "n_samples": 30,
+      "n_unique_predictions": 30,
+      "n_nonempty_bins": 10,
+      "ece_value": 0.2825988898195374,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.47116101831197016,
+        "n_unique_support": 30,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "uncorrected": {
+      "n_samples": 30,
+      "n_unique_predictions": 30,
+      "n_nonempty_bins": 10,
+      "ece_value": 0.23375207898632805,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.4733553959060684,
+        "n_unique_support": 30,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "beta_1_1": {
+      "n_samples": 30,
+      "n_unique_predictions": 23,
+      "n_nonempty_bins": 9,
+      "ece_value": 0.24207650273224046,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.339344262295082,
+        "n_unique_support": 23,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "beta_0_5_0_5": {
+      "n_samples": 30,
+      "n_unique_predictions": 23,
+      "n_nonempty_bins": 9,
+      "ece_value": 0.24187327823691462,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.33911845730027546,
+        "n_unique_support": 23,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    }
+  },
+  "coverage": {
+    "capopm": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.26666666666666666,
+        "coverage_95": 0.3333333333333333,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "raw_parimutuel": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": []
+    },
+    "structural_only": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.26666666666666666,
+        "coverage_95": 0.3333333333333333,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "ml_only": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.26666666666666666,
+        "coverage_95": 0.3333333333333333,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "uncorrected": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.26666666666666666,
+        "coverage_95": 0.3333333333333333,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "beta_1_1": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.26666666666666666,
+        "coverage_95": 0.3333333333333333,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "beta_0_5_0_5": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.26666666666666666,
+        "coverage_95": 0.3333333333333333,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    }
+  },
+  "criteria_evaluation": {
+    "overall_pass": true,
+    "criteria": [
+      {
+        "id": "variance_decay_negative",
+        "description": "Posterior variance slope vs steps should be non-positive.",
+        "theorem": "Phase 4 consistency",
+        "metric_path": [
+          "aggregated_metrics",
+          "capopm",
+          "var_decay_slope"
+        ],
+        "comparator_path": null,
+        "direction": "<=",
+        "threshold": 0.0,
+        "metric_value": -0.0002198761549320314,
+        "evaluated": true,
+        "pass": true,
+        "reason": null
+      },
+      {
+        "id": "grid_requirement",
+        "description": "Convergence comparisons need multiple liquidity/arrival settings.",
+        "theorem": "Phase 4 consistency",
+        "metric_path": null,
+        "comparator_path": null,
+        "direction": null,
+        "threshold": null,
+        "metric_value": null,
+        "evaluated": false,
+        "pass": null,
+        "reason": "grid_missing_for_claim"
+      }
+    ],
+    "recorded_status": {
+      "pass": null,
+      "notes": "",
+      "criteria": {}
+    },
+    "status_mismatch": false,
+    "criteria_semantics_mismatch": false,
+    "source_of_truth": "criteria_evaluation"
+  },
+  "theorem_checklist": [
+    {
+      "theorem": "Phase 4 consistency",
+      "claim": "Higher liquidity accelerates stabilization",
+      "status": "validated",
+      "criteria_ids": [
+        "variance_decay_negative",
+        "grid_requirement"
+      ]
+    }
+  ],
+  "seed_grid_coverage": {
+    "n_runs": 30,
+    "grid_axes": [
+      "arrivals_per_step",
+      "initial_pool",
+      "n_steps"
+    ],
+    "grid_points_observed": 1,
+    "coverage_class": "multi_seed",
+    "paper_ready": false,
+    "flags": [
+      "grid_points_below_paper_ready"
+    ]
+  },
+  "effect_sizes": {
+    "brier_vs_uncorrected": {
+      "key": "brier_vs_uncorrected",
+      "metric": "brier",
+      "baseline": "uncorrected",
+      "diff_mean": -3.376299147302833e-05,
+      "ci_low": -0.00011259864869963437,
+      "ci_high": 2.6886748868342144e-05,
+      "n": 30,
+      "better_if_negative": true,
+      "paired_t_p_holm": 1.0
+    },
+    "log_score_vs_uncorrected": {
+      "key": "log_score_vs_uncorrected",
+      "metric": "log_score",
+      "baseline": "uncorrected",
+      "diff_mean": 3.376290499719399e-05,
+      "ci_low": -0.00021425755877043244,
+      "ci_high": 0.0003180131390958482,
+      "n": 30,
+      "better_if_negative": false,
+      "paired_t_p_holm": 1.0
+    },
+    "brier_vs_raw_parimutuel": {
+      "key": "brier_vs_raw_parimutuel",
+      "metric": "brier",
+      "baseline": "raw_parimutuel",
+      "diff_mean": -0.00010219632678443474,
+      "ci_low": -0.0013768863312524319,
+      "ci_high": 0.000968869212222507,
+      "n": 30,
+      "better_if_negative": true,
+      "paired_t_p_holm": 1.0
+    },
+    "log_score_vs_raw_parimutuel": {
+      "key": "log_score_vs_raw_parimutuel",
+      "metric": "log_score",
+      "baseline": "raw_parimutuel",
+      "diff_mean": -0.00032093602701110393,
+      "ci_low": -0.005462802790996407,
+      "ci_high": 0.005250176744746005,
+      "n": 30,
+      "better_if_negative": false,
+      "paired_t_p_holm": 0.9078608156993782
+    }
+  },
+  "reproducibility": {
+    "artifact_hashes": {
+      "summary.json": "e2cc0692be3f0e68dee0da8497b15c5d0d9e1d56bff77282c3ab21977bef1404",
+      "metrics_aggregated.csv": "3d4b2578816c2441103f6e1dd60fe1e75902bf91b7db3125d5a0bd7bad3927ca",
+      "tests.csv": "79c0151e767118d711f3df840c4f2542dab4ca95cf5d34dd81c77f1cde04fc6c",
+      "reliability_capopm.csv": "d405aaa0f27b2271a8b01c4c154e8a971b2a9708a9271563414cee760d590ceb",
+      "reliability_raw_parimutuel.csv": "76f8ec42b5444a5d14375485a03416a3021e4006a3ba2f432fe202c78439816d",
+      "reliability_structural_only.csv": "37cd79c00992354d19f667166fa1e54092849d554895f1eb1967aacd016c34fc",
+      "reliability_ml_only.csv": "9a087bb278b2b33e874cddf8852cb78c120f283afcdba7eb6af5b4d9023cddb0",
+      "reliability_uncorrected.csv": "3288dcaa9eb13ec8d20c343a7dcfbb7fec701be465b4d969f180fcca426f0742",
+      "reliability_beta_1_1.csv": "59f8063f388561034d530a0e4c61c308612e4aa83d35e71a9c0101c269e8d30c",
+      "reliability_beta_0_5_0_5.csv": "f4f3ab2930013d46561154a745d980b40981524aa86804c4a68d02702501fc6a"
+    },
+    "scenario_registry_snapshot": {
+      "root": "results",
+      "scenarios": [
+        "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+        "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
+        "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A3_strategic_timing__attack0__seed0__window20__scale1",
+        "A3_strategic_timing__attack0__seed1__window20__scale3",
+        "A3_strategic_timing__attack100__seed2__window20__scale1",
+        "A3_strategic_timing__attack100__seed3__window20__scale3",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed2",
+        "B2_asymptotic_rate__seed0",
+        "B3_misspec_regret__struct0__ml0__seed0",
+        "B3_misspec_regret__struct0__ml5__seed1",
+        "B3_misspec_regret__struct10__ml0__seed100",
+        "B3_misspec_regret__struct10__ml5__seed101",
+        "B4_regime_concentration__evidence150__seed1",
+        "B4_regime_concentration__evidence50__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
+        "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv0_seed99101",
+        "a1_info_eff_q65_inf30_adv10_seed99101",
+        "a1_info_eff_q65_inf30_adv20_seed99102",
+        "a1_info_eff_q65_inf50_adv0_seed99103",
+        "a1_info_eff_q65_inf50_adv20_seed99104",
+        "a1_info_eff_q85_inf30_adv0_seed99105",
+        "a1_info_eff_q85_inf30_adv20_seed99106",
+        "a1_info_eff_q85_inf50_adv0_seed99107",
+        "a1_info_eff_q85_inf50_adv20_seed99108",
+        "mini_regression",
+        "paper_artifacts",
+        "smoke_metrics_phase7"
+      ]
+    },
+    "registry_hash": "731be1b185b6062729c63a5482b5ee36a356b9c6e400b8b4130aa621b2979913",
+    "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
+    "config_hash": "d227c5652cbed462ead92d9406c585bde7f78a4803a63e3f14eec6dfe34ea069",
+    "config_snapshot_path": "results\\A2_time_to_converge__arr3__seed240005__pool1.0__steps40\\config_snapshot.json",
+    "reproduction_command": "python run_paper_suite.py --experiment A2",
+    "reproduce_line": "python run_paper_suite.py --experiment A2 --scenario A2_time_to_converge__arr3__seed240005__pool1.0__steps40"
+  },
+  "borderline_flags": {
+    "degenerate_calibration_models": [],
+    "low_n_runs": false,
+    "coverage_flags": [
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal"
+    ],
+    "marginal_coverage_failures": [
+      "capopm_coverage90",
+      "capopm_coverage95",
+      "structural_only_coverage90",
+      "structural_only_coverage95",
+      "ml_only_coverage90",
+      "ml_only_coverage95",
+      "uncorrected_coverage90",
+      "uncorrected_coverage95",
+      "beta_1_1_coverage90",
+      "beta_1_1_coverage95",
+      "beta_0_5_0_5_coverage90",
+      "beta_0_5_0_5_coverage95"
+    ],
+    "status_mismatch_detected": false,
+    "criteria_semantics_mismatch": false
+  },
+  "notes": [
+    "Audit is reporting-only; no CAPOPM math/DGP changed.",
+    "Calibration alternative uses discrete predictions when ECE is not interpretable."
+  ],
+  "audit_hash": "30ee09bee4c8de48ae9c68e3664688db012373a51b0b474559943c02bb46ce02"
+}

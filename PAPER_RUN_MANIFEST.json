@@ -1,0 +1,206 @@
+{
+  "paper_runs": [
+    {
+      "experiment": "A1",
+      "scenario_name": "a1_info_eff_q65_inf30_adv0_seed99101",
+      "seed": 99101,
+      "sweep_params": {
+        "signal_quality": 0.65,
+        "informed_share": 0.3,
+        "adversarial_share": 0.0,
+        "noise_share": 0.7
+      },
+      "n_runs": 30,
+      "audit_hash": "c803beb6e215d8e67dfb1b16d1d292e62cf0d50f508c4b453af3433345eb29c5",
+      "artifact_hashes": {
+        "summary.json": "1cc5922ea67ae8f093e25a5e77efb8cd6edf4bf84a96c64918880cb52cb28516",
+        "metrics_aggregated.csv": "e76ee74c9fa0d439f65c4d3ccd50b0ff57b4affe70d3eb2bf4649c05f9d110fd",
+        "tests.csv": "57c1ecb0f9a2ad48ede00a8751e95a6805fa3ec981145b1f9bd8366438584d1c",
+        "reliability_capopm.csv": "9307fddd2f6f66e97e38cef8164448625fe143ea209a7ac9cd15f5527aa755a0",
+        "reliability_raw_parimutuel.csv": "71d6ca7950dec64dfba35701e62d35a65b979b9aa91bff2a22d9123f6efc9ff6",
+        "reliability_structural_only.csv": "8ae197576cba7856fee911cb8a4dbc3d201ccc7ae03c95e40a471c84d3a231cc",
+        "reliability_ml_only.csv": "ab4598b8980fa5a4689cf386e1f7edc9ae036b539117156c2030bf5caafde2e7",
+        "reliability_uncorrected.csv": "c04d9628fbab19cd3cd882d1993eb13ac48e2a11a13e560e0e6a555d279078ae",
+        "reliability_beta_1_1.csv": "5db07cb61a4174ebb214d671957f42054c8a720e679e42ea56fd89cdf8220c2d",
+        "reliability_beta_0_5_0_5.csv": "8a8488b4c3b9a04b80b31a8056c652f280e970766a0f26f3da5ee05642d1d55e"
+      }
+    },
+    {
+      "experiment": "A1",
+      "scenario_name": "a1_info_eff_q65_inf30_adv20_seed99102",
+      "seed": 99102,
+      "sweep_params": {
+        "signal_quality": 0.65,
+        "informed_share": 0.3,
+        "adversarial_share": 0.2,
+        "noise_share": 0.49999999999999994
+      },
+      "n_runs": 30,
+      "audit_hash": "8781793f0c48186af7218ee9f24a2efdca35eabfb032514619791567473ab550",
+      "artifact_hashes": {
+        "summary.json": "d68f649482c2592a7dc87b679d4080589e2b815aebd805bb99fd379df8f4c06a",
+        "metrics_aggregated.csv": "c9d8e9f9b9dc2d5cac62b1a1fc656951ac1375f6a067a54bf42ce73a307a528e",
+        "tests.csv": "301b10156f2e5eb1060f4151c1069281a8dd305e07f9556ac583c9a4a964cfb3",
+        "reliability_capopm.csv": "1f1b95ffe9084ae87b75faacd9381c35c248cfaefb67bb499cabed859226e8ed",
+        "reliability_raw_parimutuel.csv": "11460a0b53a2ef600400cf09bf733a1c5b3d9a4001768cbc09e7355803039060",
+        "reliability_structural_only.csv": "fc78c56e0bfbf73848d9bbabc7e3efb41a2e0c122e33816c682a712c4422a733",
+        "reliability_ml_only.csv": "338ee5dfa20ca59fd138ae11784afac3d5b0bc1b02c5c3b35a50163206edaf39",
+        "reliability_uncorrected.csv": "924f7cf7444024b5788387fec31112a3d34b1a73b713d0a285c0d8f36d8a4b81",
+        "reliability_beta_1_1.csv": "33ba8a9b9e70e8f38393f011f597aaa5899e04cef3d3dd1f224801c9b1e5cafb",
+        "reliability_beta_0_5_0_5.csv": "24b6d75019a2790d8f7c758c80cc964808f3497426226fdc632ba26451259554"
+      }
+    },
+    {
+      "experiment": "A1",
+      "scenario_name": "a1_info_eff_q65_inf50_adv0_seed99103",
+      "seed": 99103,
+      "sweep_params": {
+        "signal_quality": 0.65,
+        "informed_share": 0.5,
+        "adversarial_share": 0.0,
+        "noise_share": 0.5
+      },
+      "n_runs": 30,
+      "audit_hash": "5aa9c083a45084aacb780237ff569a54f4e31c2a681bdc574ababa31f4e0f2e4",
+      "artifact_hashes": {
+        "summary.json": "d48a776b3ef59dcb887c0ee89534993f7941c3b2c8ca10fbf5f74a4c48aed1cc",
+        "metrics_aggregated.csv": "2fb056a118dff401071123b50cc0ab6069ecc9ce5c3b305c766170e242ee367c",
+        "tests.csv": "19ce0b499d8e0b1421e65a7205c8a729d81020d1a1d41f8d032f6ca7ba591c28",
+        "reliability_capopm.csv": "911382e88a9355a2b92171fbb0af7063b4572f6dcc3bacb1d209857771e98899",
+        "reliability_raw_parimutuel.csv": "050bf3d0823fe131640aa36e8eda12997c89676d5f74e0200ffb5bda80de2c19",
+        "reliability_structural_only.csv": "e7ac66e8069529794d2243a497c0183a630d0fd013cde10329c321adaddb2e54",
+        "reliability_ml_only.csv": "dde7abdfd5ed4e6936f2c2a184e27c5427baef89791ba0e4333e7abf0ad9e519",
+        "reliability_uncorrected.csv": "2e2a60bf22ea2b74691c6ea522078cf9625d59f9068258f7bc56e1adf18999f1",
+        "reliability_beta_1_1.csv": "8bdde4fb743f8a61a1312e6a6f6bc1e28e76a8c99a938e0798acfd40de750491",
+        "reliability_beta_0_5_0_5.csv": "e3f150a3bc5d723ae182d6f51a0e05953beab6fafb395aae1b57b59a7adc965a"
+      }
+    },
+    {
+      "experiment": "A1",
+      "scenario_name": "a1_info_eff_q65_inf50_adv20_seed99104",
+      "seed": 99104,
+      "sweep_params": {
+        "signal_quality": 0.65,
+        "informed_share": 0.5,
+        "adversarial_share": 0.2,
+        "noise_share": 0.3
+      },
+      "n_runs": 30,
+      "audit_hash": "bf561509d1b007843fd630ae3ff8d11a9862701e37875992d7ece9f30b346818",
+      "artifact_hashes": {
+        "summary.json": "f082fe8f79dcd302c6b0ee3eadfb2dfbadd6a7ff491de4da6a29b265b01d64f7",
+        "metrics_aggregated.csv": "a1387a28aac1461e2de37c71332a81168e74bb1195e2c1ec66825fcb2d239bc0",
+        "tests.csv": "3012d9b45966e948c1908e30c3d176f6f69c706e4688d6a39fcc48b2ebd0cb5c",
+        "reliability_capopm.csv": "e3b783f72bd8b1929399764b1ffecb3a623b698ab730760a307e4c649ff81529",
+        "reliability_raw_parimutuel.csv": "60092d243a6b682dfba731725e689ed6c86e3c7e1765a251aef0d03044d99eb9",
+        "reliability_structural_only.csv": "332f6849459ff8c1cc5a0a7b91aabb9141256f416425ece3d85828a54b630a74",
+        "reliability_ml_only.csv": "282ce9a5e250af25bfef44d9a1a0a33c1d9bd1c564ae966998c630227b0eb6b1",
+        "reliability_uncorrected.csv": "18c6a286694eca3c7699cdf4a48c344c08af6d49792a59bdc13ab41fa77e176a",
+        "reliability_beta_1_1.csv": "e840cac50469cc7c6f493bd178d8b097e9f3d7f9ddfb2d9a196ba9df96c54205",
+        "reliability_beta_0_5_0_5.csv": "ea9b41fb7091e89f1b9a284a2781993829b6795a904b62adc9c1eb1157c92eec"
+      }
+    },
+    {
+      "experiment": "A1",
+      "scenario_name": "a1_info_eff_q85_inf30_adv0_seed99105",
+      "seed": 99105,
+      "sweep_params": {
+        "signal_quality": 0.85,
+        "informed_share": 0.3,
+        "adversarial_share": 0.0,
+        "noise_share": 0.7
+      },
+      "n_runs": 30,
+      "audit_hash": "a787d7e735136bdd2657f3133ad03a1b4ee341139c3ac8e051b944f1375558e1",
+      "artifact_hashes": {
+        "summary.json": "92b2aefe9761736b82c64483c1f9a24a40597d83e3b07d0926cb9df1db080aa3",
+        "metrics_aggregated.csv": "0980bfcb7ca254bac6b70ab86c78a04f434a97a56ed517dd8c4b979764330a82",
+        "tests.csv": "a1cb24b908f36466733bf4bdf91b71b4bd14e9434ec8d79ccf6c5e536575d2a4",
+        "reliability_capopm.csv": "e5036570e3739ec781abb7dfd65dbaba667b768d34b670b848d2a6800dbdb7b9",
+        "reliability_raw_parimutuel.csv": "75b6e4e9f82a6ee1dc6e67b34838af6007a34beb0821cbd4ffb5fd09c0aa897b",
+        "reliability_structural_only.csv": "a842ab594a82692d85357489506970c9f3d701c3a6ab427eb8fe6b7c4d99c978",
+        "reliability_ml_only.csv": "3ac23f10551b1fbe8040821bc2de499d543081c6d41335bbde22da36266f4b62",
+        "reliability_uncorrected.csv": "1957c1ce0ed2f3e1b14c508b0024e9c50afac8800b45025ab34c5f9af70c2bc5",
+        "reliability_beta_1_1.csv": "660661e98441873c1eb34f125b979b0cb6915c17fab888ad94e2db28cb7133d9",
+        "reliability_beta_0_5_0_5.csv": "4a673def12b595e371b4bdc01f0ddb51fecece08ec3748d130c8fb5f77bd2821"
+      }
+    },
+    {
+      "experiment": "A1",
+      "scenario_name": "a1_info_eff_q85_inf30_adv20_seed99106",
+      "seed": 99106,
+      "sweep_params": {
+        "signal_quality": 0.85,
+        "informed_share": 0.3,
+        "adversarial_share": 0.2,
+        "noise_share": 0.49999999999999994
+      },
+      "n_runs": 30,
+      "audit_hash": "7b19f85a3ae0c3558837786505d56ddeeec3ec97f7579e73df5ea5fc5f1df6ec",
+      "artifact_hashes": {
+        "summary.json": "b4b380a57e62c92218cf9f5330b65a448117b590ea9c41f10a7c78b01393c362",
+        "metrics_aggregated.csv": "92d62b892c790fa0530c4b95875717d96018ed0d7e355854ffc47a20993d68fe",
+        "tests.csv": "04f4f4fcf507ed0f651c264997a703c031e0b052dbe38249237da6301cb9c496",
+        "reliability_capopm.csv": "75c2780df227e1cfa1e9e7c889b3fee52f2c5f1ad839dbf94aa156e513d27b5b",
+        "reliability_raw_parimutuel.csv": "86e2eb657c43998f74f246743854891bff03bc755bdb9d9ba5e998411840037d",
+        "reliability_structural_only.csv": "1999a329acc22bda66bad9005601a482d47316c2554e5a3e836ca39cd8c348f7",
+        "reliability_ml_only.csv": "1a1f291ef5e269b5b4edbfa1c8af15dec18c73a674421273c0f7f5191438e320",
+        "reliability_uncorrected.csv": "811f9f92ee46109ea91a28709227ba52f63673a064fb8fa8c1cdd424e1df58d0",
+        "reliability_beta_1_1.csv": "35c7181919740b33770d8836d32736223d5720d901282b2a12ae1015763ada27",
+        "reliability_beta_0_5_0_5.csv": "d7b50d147b303487a7731415dfb1a2a0ed68c4e52efab7b08c0e0e7e38a73ddf"
+      }
+    },
+    {
+      "experiment": "A1",
+      "scenario_name": "a1_info_eff_q85_inf50_adv0_seed99107",
+      "seed": 99107,
+      "sweep_params": {
+        "signal_quality": 0.85,
+        "informed_share": 0.5,
+        "adversarial_share": 0.0,
+        "noise_share": 0.5
+      },
+      "n_runs": 30,
+      "audit_hash": "9d2e1927058c6ac315beb7d2682d972ad3458298b48271b7116caf52c7f98d77",
+      "artifact_hashes": {
+        "summary.json": "f7a30a99909291eb7b67a53d1857efbfc0197b5aa5e3c9f3a4fa65ee6793dc0a",
+        "metrics_aggregated.csv": "57320e6fbceca6c6359d859509de4f98f7a50db25066857e8311a5d1ce0a4ee0",
+        "tests.csv": "30f4e0d353837b33fa2baa632d28bced748fe28de5fe7f7ced01b4c38fd9db11",
+        "reliability_capopm.csv": "4c2a69bd1660b91132a54439e9469c31b19638a74b2279764825773e48f3fee8",
+        "reliability_raw_parimutuel.csv": "2d831551e61030e72ae2c98c19a6471e1dac45df8241899682f4a2734db9a4e3",
+        "reliability_structural_only.csv": "746c3dc8e7b6008a4f256d937109bebf65d686fe09569b2a756e4f66f217e100",
+        "reliability_ml_only.csv": "b0864603e698d91277a7e07a56710e86f491ed470a6ff34fb9937753efac8e68",
+        "reliability_uncorrected.csv": "df7f8fe6bc61ce04e13917de28e7db135cb6a4443aa9cc4c0cf22c1df6889c4c",
+        "reliability_beta_1_1.csv": "042d466f00c820cb506c64d421c4cb35431feae74400c15f51271395ee8e73f1",
+        "reliability_beta_0_5_0_5.csv": "5d9b63f3eeff16c50d6c21cec9cb1c246cfaac58b5c5d7d81f35ba17b34b6725"
+      }
+    },
+    {
+      "experiment": "A1",
+      "scenario_name": "a1_info_eff_q85_inf50_adv20_seed99108",
+      "seed": 99108,
+      "sweep_params": {
+        "signal_quality": 0.85,
+        "informed_share": 0.5,
+        "adversarial_share": 0.2,
+        "noise_share": 0.3
+      },
+      "n_runs": 30,
+      "audit_hash": "0255827b912ed3d5c89d1fb36f87e7ce5b99b95c56a99bb36692e2929f4f598d",
+      "artifact_hashes": {
+        "summary.json": "85644e4f9d045b997675dfad60d63e7297fdabe3b280824eff3b3b3687915a42",
+        "metrics_aggregated.csv": "96de80df7ab13f20d6172f6b5cbfc449e72d03e48006870da986c586d81768f3",
+        "tests.csv": "e056038ad31a2ef59e5e56b49f3fef69094ea72ae3c5e5dd99223eb72eb10d22",
+        "reliability_capopm.csv": "318d4003acd78ac7f426e4c8bc638bcf51d276a00fa91b33c1693684d45a8ec6",
+        "reliability_raw_parimutuel.csv": "d28c33f9952b6e05bf011972c77365a11c86fef03b367b1a62c988d57a533b1c",
+        "reliability_structural_only.csv": "336de85c0e40f18299cf5180f8464c560d4bdf22f1ca24f38e078d1e6f28548f",
+        "reliability_ml_only.csv": "59a12996a349a7295184169b372f45cbdfc2cac4b03dea59534b4d598546ae9b",
+        "reliability_uncorrected.csv": "5e3b83f4e85b916ae1b27075aa290690efdde1028938453ba1eb9aa9661e90fd",
+        "reliability_beta_1_1.csv": "d316d2cc15430e9481860c5dfe475eaf35790591211985a6e690cd71f3ef6145",
+        "reliability_beta_0_5_0_5.csv": "3a671026fcbdacc3246563f3bc97e14645135c633338105e8ab90ae6b054b8f7"
+      }
+    }
+  ],
+  "min_runs_per_cell": 30,
+  "min_grid_points": 2
+}

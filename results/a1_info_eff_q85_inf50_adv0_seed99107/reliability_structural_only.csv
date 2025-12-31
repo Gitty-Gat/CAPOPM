@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,adversarial_share,informed_share,noise_share,signal_quality
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.0,0.1,0,0.0,0.0,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.1,0.2,0,0.0,0.0,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.2,0.30000000000000004,3,0.26204761885714317,0.0,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.30000000000000004,0.4,4,0.34657142838095273,0.5,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.4,0.5,2,0.4429999998095241,0.0,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.5,0.6000000000000001,6,0.5715714283809525,0.6666666666666666,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.6000000000000001,0.7000000000000001,12,0.6513333331428574,0.5833333333333334,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.7000000000000001,0.8,3,0.704904761714286,0.3333333333333333,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.8,0.9,0,0.0,0.0,0.0,0.5,0.5,0.85
+a1_info_eff_q85_inf50_adv0_seed99107,A1.INFO_EFFICIENCY_CURVES,A,99107,structural_only,0.9,1.0,0,0.0,0.0,0.0,0.5,0.5,0.85

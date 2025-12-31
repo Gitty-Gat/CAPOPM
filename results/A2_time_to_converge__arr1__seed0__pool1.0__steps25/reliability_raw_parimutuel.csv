@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,arrivals_per_step,initial_pool,n_steps
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.0,0.32999999999999996,0,0.0,0.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.32999999999999996,0.32999999999999996,0,0.0,0.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.32999999999999996,0.352,2,0.32999999999999996,0.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.352,0.39599999999999996,0,0.0,0.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.39599999999999996,0.43999999999999995,0,0.0,0.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.43999999999999995,0.4546666666666666,1,0.43999999999999995,1.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.4546666666666666,0.4693333333333333,0,0.0,0.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.4693333333333333,0.49866666666666665,1,0.4766666666666666,0.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.49866666666666665,0.5426666666666666,0,0.0,0.0,1,1.0,25
+A2_time_to_converge__arr1__seed0__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,0,raw_parimutuel,0.5426666666666666,1.0,1,0.5866666666666667,0.0,1,1.0,25

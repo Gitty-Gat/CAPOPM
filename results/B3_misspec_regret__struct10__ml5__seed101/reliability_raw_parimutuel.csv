@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,ml_bias,structural_shift
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.0,0.1,0,0.0,0.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.1,0.2,0,0.0,0.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.2,0.30000000000000004,0,0.0,0.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.30000000000000004,0.4,0,0.0,0.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.4,0.5,1,0.44670731707317074,0.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.5,0.6000000000000001,2,0.531219512195122,1.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.6000000000000001,0.7000000000000001,0,0.0,0.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.7000000000000001,0.8,0,0.0,0.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.8,0.9,0,0.0,0.0,0.05,0.1
+B3_misspec_regret__struct10__ml5__seed101,B3.MISSPECIFICATION_REGRET_GRID,B,101,raw_parimutuel,0.9,1.0,0,0.0,0.0,0.05,0.1

@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,adversarial_share,informed_share,noise_share,signal_quality
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.0,0.1,0,0.0,0.0,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.1,0.2,0,0.0,0.0,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.2,0.30000000000000004,0,0.0,0.0,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.30000000000000004,0.4,0,0.0,0.0,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.4,0.5,0,0.0,0.0,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.5,0.6000000000000001,3,0.5120211853990163,0.6666666666666666,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.6000000000000001,0.7000000000000001,1,0.6116775582546596,0.0,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.7000000000000001,0.8,0,0.0,0.0,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.8,0.9,0,0.0,0.0,0.1,0.3,0.6,0.65
+a1_info_eff_q65_inf30_adv10_seed99101,A1.INFO_EFFICIENCY_CURVES,A,99101,ml_only,0.9,1.0,0,0.0,0.0,0.1,0.3,0.6,0.65

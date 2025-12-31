@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,adversarial_size_scale,attack_strength,attack_window
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.0,0.3959837621607977,1,0.3865749873935831,1.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.3959837621607977,0.40539253692801236,0,0.0,0.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.40539253692801236,0.42563961991444366,1,0.4100969243116197,1.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.42563961991444366,0.45672501112009156,0,0.0,0.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.45672501112009156,0.4878104023257394,0,0.0,0.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.4878104023257394,0.49524802620234704,1,0.4878104023257394,1.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.49524802620234704,0.5026856500789546,0,0.0,0.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.5026856500789546,0.5236561927618277,1,0.5064044620172584,0.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.5236561927618277,0.5581596542509661,0,0.0,0.0,3,0.0,0.2
+A3_strategic_timing__attack0__seed1__window20__scale3,A3.STRATEGIC_TIMING_ATTACK,A,1,ml_only,0.5581596542509661,1.0,1,0.5926631157401047,0.0,3,0.0,0.2

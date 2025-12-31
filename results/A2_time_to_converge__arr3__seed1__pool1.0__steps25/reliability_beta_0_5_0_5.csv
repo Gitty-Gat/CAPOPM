@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,arrivals_per_step,initial_pool,n_steps
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.0,0.3828947368421053,1,0.3355263157894737,0.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.3828947368421053,0.43026315789473685,0,0.0,0.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.43026315789473685,0.4644736842105263,1,0.45394736842105265,0.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.4644736842105263,0.4855263157894737,0,0.0,0.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.4855263157894737,0.506578947368421,0,0.0,0.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.506578947368421,0.5171052631578947,1,0.506578947368421,1.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.5171052631578947,0.5276315789473685,0,0.0,0.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.5276315789473685,0.5486842105263159,1,0.5328947368421053,1.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.5486842105263159,0.5802631578947368,0,0.0,0.0,3,1.0,25
+A2_time_to_converge__arr3__seed1__pool1.0__steps25,A2.TIME_TO_CONVERGE,A,1,beta_0_5_0_5,0.5802631578947368,1.0,1,0.6118421052631579,1.0,3,1.0,25

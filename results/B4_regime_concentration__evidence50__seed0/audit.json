@@ -1,0 +1,376 @@
+{
+  "audit_version": "audit_v1",
+  "scenario_name": "B4_regime_concentration__evidence50__seed0",
+  "experiment_id": "B4.REGIME_POSTERIOR_CONCENTRATION",
+  "tier": "B",
+  "seed": 0,
+  "metadata": {
+    "scenario_name": "B4_regime_concentration__evidence50__seed0",
+    "experiment_id": "B4.REGIME_POSTERIOR_CONCENTRATION",
+    "tier": "B",
+    "seed": 0,
+    "evidence_strength": 0.5
+  },
+  "calibration": {
+    "capopm": {
+      "n_samples": 3,
+      "n_unique_predictions": 3,
+      "n_nonempty_bins": 2,
+      "ece_value": 0.5002426549813128,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10",
+        "unique_predictions_below_5",
+        "nonempty_bins_below_5",
+        "degenerate_binning_detected"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.5002426549813128,
+        "n_unique_support": 3,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "capopm_stage1_only": {
+      "n_samples": 3,
+      "n_unique_predictions": 3,
+      "n_nonempty_bins": 2,
+      "ece_value": 0.5002600545554925,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10",
+        "unique_predictions_below_5",
+        "nonempty_bins_below_5",
+        "degenerate_binning_detected"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.5002600545554925,
+        "n_unique_support": 3,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "uncorrected": {
+      "n_samples": 3,
+      "n_unique_predictions": 3,
+      "n_nonempty_bins": 2,
+      "ece_value": 0.4960450109906085,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10",
+        "unique_predictions_below_5",
+        "nonempty_bins_below_5",
+        "degenerate_binning_detected"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.4960450109906085,
+        "n_unique_support": 3,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "raw_parimutuel": {
+      "n_samples": 3,
+      "n_unique_predictions": 3,
+      "n_nonempty_bins": 2,
+      "ece_value": 0.5017647058823529,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10",
+        "unique_predictions_below_5",
+        "nonempty_bins_below_5",
+        "degenerate_binning_detected"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.5017647058823529,
+        "n_unique_support": 3,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    }
+  },
+  "coverage": {
+    "capopm": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 3,
+        "coverage_90": 0.6666666666666666,
+        "coverage_95": 0.6666666666666666,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "capopm_stage1_only": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 3,
+        "coverage_90": 0.6666666666666666,
+        "coverage_95": 0.6666666666666666,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "uncorrected": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 3,
+        "coverage_90": 0.6666666666666666,
+        "coverage_95": 0.6666666666666666,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "raw_parimutuel": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": []
+    }
+  },
+  "criteria_evaluation": {
+    "overall_pass": false,
+    "criteria": [
+      {
+        "id": "regime_entropy_defined",
+        "description": "Regime entropy should be finite and defined.",
+        "theorem": "Theorem 15",
+        "metric_path": [
+          "aggregated_metrics",
+          "capopm",
+          "regime_entropy"
+        ],
+        "comparator_path": null,
+        "direction": "<=",
+        "threshold": 0.0,
+        "metric_value": 0.6931471263073097,
+        "evaluated": true,
+        "pass": false,
+        "reason": null
+      },
+      {
+        "id": "grid_requirement",
+        "description": "Need multiple evidence levels to validate entropy/weight movement.",
+        "theorem": "Theorem 15",
+        "metric_path": null,
+        "comparator_path": null,
+        "direction": null,
+        "threshold": null,
+        "metric_value": null,
+        "evaluated": false,
+        "pass": null,
+        "reason": "grid_missing_for_claim"
+      }
+    ],
+    "recorded_status": {
+      "pass": null,
+      "criteria": {
+        "regime_entropy_should_decrease_with_strength": true,
+        "regime_max_weight_should_increase_with_strength": true
+      },
+      "metrics": {
+        "regime_entropy": 0.6931471263073097,
+        "regime_max_weight": 0.5001063604169546
+      }
+    },
+    "status_mismatch": false,
+    "criteria_semantics_mismatch": false,
+    "source_of_truth": "criteria_evaluation"
+  },
+  "theorem_checklist": [
+    {
+      "theorem": "Theorem 15",
+      "claim": "Mixture posterior concentrates with evidence",
+      "status": "failed",
+      "criteria_ids": [
+        "regime_entropy_defined",
+        "grid_requirement"
+      ]
+    }
+  ],
+  "seed_grid_coverage": {
+    "n_runs": 3,
+    "grid_axes": [
+      "evidence_strength"
+    ],
+    "grid_points_observed": 1,
+    "coverage_class": "smoke_only",
+    "paper_ready": false,
+    "flags": [
+      "seed_count_below_paper_ready",
+      "grid_points_below_paper_ready"
+    ]
+  },
+  "effect_sizes": {
+    "brier_vs_uncorrected": {
+      "key": "brier_vs_uncorrected",
+      "metric": "brier",
+      "baseline": "uncorrected",
+      "diff_mean": 0.000435930628888569,
+      "ci_low": -1.5257456012656155e-05,
+      "ci_high": 0.0009718038366536355,
+      "n": 3,
+      "better_if_negative": true,
+      "paired_t_p_holm": 0.3906213321649208
+    },
+    "log_score_vs_uncorrected": {
+      "key": "log_score_vs_uncorrected",
+      "metric": "log_score",
+      "baseline": "uncorrected",
+      "diff_mean": -0.008503933894020857,
+      "ci_low": -0.010053884123167545,
+      "ci_high": -0.005620898856542822,
+      "n": 3,
+      "better_if_negative": false,
+      "paired_t_p_holm": 1.5102282091561392e-08
+    },
+    "brier_vs_raw_parimutuel": {
+      "key": "brier_vs_raw_parimutuel",
+      "metric": "brier",
+      "baseline": "raw_parimutuel",
+      "diff_mean": -0.0005977553008023501,
+      "ci_low": -0.0018447966449307764,
+      "ci_high": 6.118058879213926e-05,
+      "n": 3,
+      "better_if_negative": true,
+      "paired_t_p_holm": 0.6759615975941324
+    },
+    "log_score_vs_raw_parimutuel": {
+      "key": "log_score_vs_raw_parimutuel",
+      "metric": "log_score",
+      "baseline": "raw_parimutuel",
+      "diff_mean": 0.004034006769212469,
+      "ci_low": -0.004222766360965857,
+      "ci_high": 0.017977406293450127,
+      "n": 3,
+      "better_if_negative": false,
+      "paired_t_p_holm": 0.5650363816300927
+    }
+  },
+  "reproducibility": {
+    "artifact_hashes": {
+      "summary.json": "ae3d33ade120179902229f8df214dba8d436d7b14af3cf02b2fba292eb8d793d",
+      "metrics_aggregated.csv": "d96a0eca130fc79d504a43fb0b44171f943139e6ff06c33f2c9224f381eeaa9c",
+      "tests.csv": "054769b2dae99ff9bf53bcdf33bf0753667e45d16285de5c6678a0121ed14d1a",
+      "reliability_capopm.csv": "ca07204e3a7e7f88fc81ab678bc1d301002a549ba7e5fb54420e38db23e8c78a",
+      "reliability_capopm_stage1_only.csv": "e8b10d4b940760069065a0fd919609ad037ec5606ea9c3f99f6ada65f4504d97",
+      "reliability_raw_parimutuel.csv": "244c9989f06801b6fddd828c232a284e8a44569add13a6ccfe7116ca7cad4876",
+      "reliability_uncorrected.csv": "c19520b7605a0c4dad4671d1763809cdec35f69a328871108c330698c2018577"
+    },
+    "scenario_registry_snapshot": {
+      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "scenarios": [
+        "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A3_strategic_timing__attack0__seed0__window20__scale1",
+        "A3_strategic_timing__attack0__seed1__window20__scale3",
+        "A3_strategic_timing__attack100__seed2__window20__scale1",
+        "A3_strategic_timing__attack100__seed3__window20__scale3",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed2",
+        "B2_asymptotic_rate__seed0",
+        "B3_misspec_regret__struct0__ml0__seed0",
+        "B3_misspec_regret__struct0__ml5__seed1",
+        "B3_misspec_regret__struct10__ml0__seed100",
+        "B3_misspec_regret__struct10__ml5__seed101",
+        "B4_regime_concentration__evidence150__seed1",
+        "B4_regime_concentration__evidence50__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
+        "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv10_seed99101",
+        "mini_regression",
+        "paper_artifacts",
+        "smoke_metrics_phase7"
+      ]
+    },
+    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
+    "config_hash": null,
+    "config_snapshot_path": null,
+    "reproduction_command": "python run_paper_suite.py --experiment B4",
+    "reproduce_line": "python run_paper_suite.py --experiment B4 --scenario B4_regime_concentration__evidence50__seed0"
+  },
+  "borderline_flags": {
+    "degenerate_calibration_models": [
+      "capopm",
+      "capopm_stage1_only",
+      "uncorrected",
+      "raw_parimutuel"
+    ],
+    "low_n_runs": true,
+    "coverage_flags": [
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal"
+    ],
+    "marginal_coverage_failures": [
+      "capopm_coverage90",
+      "capopm_coverage95",
+      "capopm_stage1_only_coverage90",
+      "capopm_stage1_only_coverage95",
+      "uncorrected_coverage90",
+      "uncorrected_coverage95"
+    ],
+    "status_mismatch_detected": false,
+    "criteria_semantics_mismatch": false
+  },
+  "notes": [
+    "Audit is reporting-only; no CAPOPM math/DGP changed.",
+    "Calibration alternative uses discrete predictions when ECE is not interpretable."
+  ],
+  "audit_hash": "98e8c8185f83c82dd690835b5933fab2ddc0032a1e9880f0d095d0c566745854"
+}

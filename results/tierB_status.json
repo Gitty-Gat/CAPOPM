@@ -1,0 +1,57 @@
+[
+  {
+    "experiment_id": "B1.CORRECTION_NO_REGRET",
+    "tier": "B",
+    "documented": true,
+    "implemented": true,
+    "validated": true,
+    "stress_tested": false,
+    "completed_date": "",
+    "git_commit": "",
+    "notes": ""
+  },
+  {
+    "experiment_id": "B2.ASYMPTOTIC_RATE_CHECK",
+    "tier": "B",
+    "documented": true,
+    "implemented": true,
+    "validated": true,
+    "stress_tested": false,
+    "completed_date": "",
+    "git_commit": "",
+    "notes": ""
+  },
+  {
+    "experiment_id": "B3.MISSPECIFICATION_REGRET_GRID",
+    "tier": "B",
+    "documented": true,
+    "implemented": true,
+    "validated": true,
+    "stress_tested": false,
+    "completed_date": "",
+    "git_commit": "",
+    "notes": ""
+  },
+  {
+    "experiment_id": "B4.REGIME_POSTERIOR_CONCENTRATION",
+    "tier": "B",
+    "documented": true,
+    "implemented": true,
+    "validated": true,
+    "stress_tested": false,
+    "completed_date": "",
+    "git_commit": "",
+    "notes": ""
+  },
+  {
+    "experiment_id": "B5.ARBITRAGE_PROJECTION_IMPACT",
+    "tier": "B",
+    "documented": true,
+    "implemented": true,
+    "validated": true,
+    "stress_tested": false,
+    "completed_date": "",
+    "git_commit": "",
+    "notes": ""
+  }
+]

@@ -1,0 +1,289 @@
+{
+  "audit_version": "audit_v1",
+  "scenario_name": "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+  "experiment_id": "B5.ARBITRAGE_PROJECTION_IMPACT",
+  "tier": "B",
+  "seed": 1,
+  "metadata": {
+    "scenario_name": "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+    "experiment_id": "B5.ARBITRAGE_PROJECTION_IMPACT",
+    "tier": "B",
+    "seed": 1,
+    "violation_strength": 0.5,
+    "projection_method": "euclidean",
+    "coherent_flag": false
+  },
+  "calibration": {
+    "capopm": {
+      "n_samples": 8,
+      "n_unique_predictions": 8,
+      "n_nonempty_bins": 8,
+      "ece_value": 0.5189705588155513,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.5189705588155513,
+        "n_unique_support": 8,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "before_projection": {
+      "n_samples": 8,
+      "n_unique_predictions": 8,
+      "n_nonempty_bins": 8,
+      "ece_value": 0.5627205588155513,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.5627205588155513,
+        "n_unique_support": 8,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "after_projection": {
+      "n_samples": 8,
+      "n_unique_predictions": 8,
+      "n_nonempty_bins": 8,
+      "ece_value": 0.5408455588155514,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.5408455588155513,
+        "n_unique_support": 8,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    }
+  },
+  "coverage": {
+    "capopm": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": []
+    },
+    "before_projection": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": []
+    },
+    "after_projection": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": []
+    }
+  },
+  "criteria_evaluation": {
+    "overall_pass": true,
+    "criteria": [
+      {
+        "id": "projection_distance_non_negative",
+        "description": "Projection distance must be non-negative (coherent if zero).",
+        "theorem": "Theorem 13",
+        "metric_path": [
+          "summary",
+          "status",
+          "metrics",
+          "proj_l1"
+        ],
+        "comparator_path": null,
+        "direction": ">=",
+        "threshold": 0.0,
+        "metric_value": 0.1749999999999999,
+        "evaluated": true,
+        "pass": true,
+        "reason": null
+      },
+      {
+        "id": "projection_improves_scores_when_violation",
+        "description": "If violation_strength>0, projection should not worsen Brier.",
+        "theorem": "Theorem 13",
+        "metric_path": [
+          "summary",
+          "status",
+          "metrics",
+          "delta_brier"
+        ],
+        "comparator_path": null,
+        "direction": "<=",
+        "threshold": 0.0,
+        "metric_value": -0.015405485692064107,
+        "evaluated": true,
+        "pass": true,
+        "reason": null
+      },
+      {
+        "id": "projection_improves_log_when_violation",
+        "description": "If violation_strength>0, projection should not reduce log-score.",
+        "theorem": "Theorem 13",
+        "metric_path": [
+          "summary",
+          "status",
+          "metrics",
+          "delta_log_score"
+        ],
+        "comparator_path": null,
+        "direction": ">=",
+        "threshold": 0.0,
+        "metric_value": 0.10823215049681786,
+        "evaluated": true,
+        "pass": true,
+        "reason": null
+      }
+    ],
+    "recorded_status": {
+      "pass": true,
+      "criteria": {
+        "coherent_min_adjustment": true,
+        "violated_improves_scores": true
+      },
+      "metrics": {
+        "proj_l1": 0.1749999999999999,
+        "delta_brier": -0.015405485692064107,
+        "delta_log_score": 0.10823215049681786
+      }
+    },
+    "status_mismatch": false,
+    "criteria_semantics_mismatch": false,
+    "source_of_truth": "criteria_evaluation"
+  },
+  "theorem_checklist": [
+    {
+      "theorem": "Theorem 13",
+      "claim": "Projection minimally perturbs prices unless violation",
+      "status": "validated",
+      "criteria_ids": [
+        "projection_distance_non_negative",
+        "projection_improves_scores_when_violation",
+        "projection_improves_log_when_violation"
+      ]
+    }
+  ],
+  "seed_grid_coverage": {
+    "n_runs": 8,
+    "grid_axes": [
+      "coherent_flag",
+      "projection_method",
+      "violation_strength"
+    ],
+    "grid_points_observed": 1,
+    "coverage_class": "multi_seed",
+    "paper_ready": false,
+    "flags": [
+      "seed_count_below_paper_ready",
+      "grid_points_below_paper_ready"
+    ]
+  },
+  "effect_sizes": {},
+  "reproducibility": {
+    "artifact_hashes": {
+      "summary.json": "1bf9d774ab135bab05e34e97d443157094bcdfdb40f898cd911c461c0974bc5f",
+      "metrics_aggregated.csv": "11592603305cd7f64bc00f528657159b697f94e7055ff6688bdb7f78b16d82ac",
+      "tests.csv": "2e3c19a5cf7c454c3c496a0bdb14796ac55524df8d0f59b71cb6f4c928d2705b",
+      "reliability_after_projection.csv": "f5c7ded867ce251957f196af4d14efa5bc4867bb9d6246d4657f9ce1ebae8297",
+      "reliability_before_projection.csv": "8f0a620a67c402e61ac8a3e8e506ad5076af37467e5b4c1951ff676c57bb890b",
+      "reliability_capopm.csv": "99da3c68328009d7f86cb640c5e785dea51ade77ec840d1927c31a086f7f0332"
+    },
+    "scenario_registry_snapshot": {
+      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "scenarios": [
+        "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A3_strategic_timing__attack0__seed0__window20__scale1",
+        "A3_strategic_timing__attack0__seed1__window20__scale3",
+        "A3_strategic_timing__attack100__seed2__window20__scale1",
+        "A3_strategic_timing__attack100__seed3__window20__scale3",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed2",
+        "B2_asymptotic_rate__seed0",
+        "B3_misspec_regret__struct0__ml0__seed0",
+        "B3_misspec_regret__struct0__ml5__seed1",
+        "B3_misspec_regret__struct10__ml0__seed100",
+        "B3_misspec_regret__struct10__ml5__seed101",
+        "B4_regime_concentration__evidence150__seed1",
+        "B4_regime_concentration__evidence50__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
+        "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv10_seed99101",
+        "mini_regression",
+        "paper_artifacts",
+        "smoke_metrics_phase7"
+      ]
+    },
+    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
+    "config_hash": null,
+    "config_snapshot_path": null,
+    "reproduction_command": "python run_paper_suite.py --experiment B5",
+    "reproduce_line": "python run_paper_suite.py --experiment B5 --scenario B5_arbitrage_proj__methodeuclidean__viol50__seed1"
+  },
+  "borderline_flags": {
+    "degenerate_calibration_models": [
+      "capopm",
+      "before_projection",
+      "after_projection"
+    ],
+    "low_n_runs": true,
+    "coverage_flags": [],
+    "marginal_coverage_failures": [],
+    "status_mismatch_detected": false,
+    "criteria_semantics_mismatch": false
+  },
+  "notes": [
+    "Audit is reporting-only; no CAPOPM math/DGP changed.",
+    "Calibration alternative uses discrete predictions when ECE is not interpretable."
+  ],
+  "audit_hash": "ed7c13bda4832966c4cfa8ac8317447f1664680624e56524a95626826e03ed33"
+}

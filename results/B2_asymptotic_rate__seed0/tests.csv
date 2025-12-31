@@ -1,0 +1,7 @@
+scenario_name,experiment_id,tier,seed,model,metric,test,stat,p_value,p_value_str,p_holm,p_holm_str,p_bonferroni,p_bonferroni_str,diff_mean,better_if_negative,ci_low,ci_high,n_total_grid
+B2_asymptotic_rate__seed0,B2.ASYMPTOTIC_RATE_CHECK,B,0,capopm,posterior_variance,paired_t,1.0643333935375565,0.287177695463833,2.872e-01,0.287177695463833,2.872e-01,0.287177695463833,2.872e-01,9.549920267343464e-05,True,,,"50,100,200"
+B2_asymptotic_rate__seed0,B2.ASYMPTOTIC_RATE_CHECK,B,0,capopm,posterior_variance,wilcoxon,74.0,0.42652824883677143,4.265e-01,,,,,9.549920267343464e-05,True,,,"50,100,200"
+B2_asymptotic_rate__seed0,B2.ASYMPTOTIC_RATE_CHECK,B,0,capopm,posterior_variance,bootstrap_ci,,,,,,,,9.549920267343464e-05,True,-6.80929624515474e-05,0.00026719615295888144,"50,100,200"
+B2_asymptotic_rate__seed0,B2.ASYMPTOTIC_RATE_CHECK,B,0,capopm,posterior_mean_bias,paired_t,-1.120170886712254,0.2626409476821756,2.626e-01,0.2626409476821756,2.626e-01,0.2626409476821756,2.626e-01,-0.0009301984325276217,True,,,"50,100,200"
+B2_asymptotic_rate__seed0,B2.ASYMPTOTIC_RATE_CHECK,B,0,capopm,posterior_mean_bias,wilcoxon,37.0,0.1914464035705079,1.914e-01,,,,,-0.0009301984325276217,True,,,"50,100,200"
+B2_asymptotic_rate__seed0,B2.ASYMPTOTIC_RATE_CHECK,B,0,capopm,posterior_mean_bias,bootstrap_ci,,,,,,,,-0.0009301984325276217,True,-0.002327773739297276,0.0005554371758998221,"50,100,200"

@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,coherent_flag,projection_method,violation_strength
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.0,0.4829127835502309,1,0.4061196976280883,1.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.4829127835502309,0.5318777535890871,1,0.515824106088292,1.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.5318777535890871,0.557318797523138,1,0.5559582248402796,0.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.557318797523138,0.5668428063031464,0,0.0,0.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.5668428063031464,0.5698643989659198,1,0.5695639516688632,1.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.5698643989659198,0.5755432754502082,1,0.5701648462629763,0.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.5755432754502082,0.5943677776055202,0,0.0,0.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.5943677776055202,0.6053289374745425,1,0.5970569921991361,1.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.6053289374745425,0.6110161210196718,1,0.6108435676581468,1.0,False,euclidean,1.0
+B5_arbitrage_proj__methodeuclidean__viol100__seed2,B5.ARBITRAGE_PROJECTION_IMPACT,B,2,capopm,0.6110161210196718,1.0,1,0.6114187455298967,1.0,False,euclidean,1.0

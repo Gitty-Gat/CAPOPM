@@ -1,0 +1,35 @@
+[
+  {
+    "experiment_id": "A1.INFO_EFFICIENCY_CURVES",
+    "tier": "A",
+    "documented": true,
+    "implemented": true,
+    "validated": true,
+    "stress_tested": false,
+    "completed_date": "",
+    "git_commit": "",
+    "notes": ""
+  },
+  {
+    "experiment_id": "A2.TIME_TO_CONVERGE",
+    "tier": "A",
+    "documented": true,
+    "implemented": true,
+    "validated": true,
+    "stress_tested": false,
+    "completed_date": "",
+    "git_commit": "",
+    "notes": ""
+  },
+  {
+    "experiment_id": "A3.STRATEGIC_TIMING_ATTACK",
+    "tier": "A",
+    "documented": true,
+    "implemented": true,
+    "validated": true,
+    "stress_tested": false,
+    "completed_date": "",
+    "git_commit": "",
+    "notes": ""
+  }
+]

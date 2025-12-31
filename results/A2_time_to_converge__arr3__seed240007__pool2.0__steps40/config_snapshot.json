@@ -1,0 +1,99 @@
+{
+  "p_true_dist": {
+    "type": "beta",
+    "a": 2.0,
+    "b": 2.0
+  },
+  "models": [
+    "capopm",
+    "raw_parimutuel",
+    "structural_only",
+    "ml_only",
+    "uncorrected",
+    "beta_1_1",
+    "beta_0_5_0_5"
+  ],
+  "traders": {
+    "n_traders": 60,
+    "proportions": {
+      "informed": 0.5,
+      "adversarial": 0.1,
+      "noise": 0.4
+    },
+    "params": {
+      "informed": {
+        "signal_quality": 0.7,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      },
+      "adversarial": {
+        "signal_quality": 0.7,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      },
+      "noise": {
+        "signal_quality": 0.5,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      }
+    }
+  },
+  "market": {
+    "n_steps": 40,
+    "arrivals_per_step": 3,
+    "fee_rate": 0.01,
+    "initial_yes_pool": 2.0,
+    "initial_no_pool": 2.0,
+    "signal_model": "conditional_on_state",
+    "use_realized_state_for_signals": true,
+    "herding_enabled": false,
+    "size_dist": "fixed",
+    "size_dist_params": {
+      "size": 1.0
+    }
+  },
+  "structural_cfg": {
+    "T": 1.0,
+    "K": 1.0,
+    "S0": 1.0,
+    "V0": 0.04,
+    "kappa": 1.0,
+    "theta": 0.04,
+    "xi": 0.2,
+    "rho": -0.3,
+    "alpha": 0.7,
+    "lambda": 0.1
+  },
+  "ml_cfg": {
+    "base_prob": 0.55,
+    "bias": -0.02,
+    "noise_std": 0.01,
+    "calibration": 1.0,
+    "r_ml": 0.8
+  },
+  "prior_cfg": {
+    "n_str": 10.0,
+    "n_ml_eff": 4.0,
+    "n_ml_scale": 1.0
+  },
+  "stage1_cfg": {
+    "enabled": false
+  },
+  "stage2_cfg": {
+    "enabled": false
+  },
+  "ece_bins": 10,
+  "calibration_binning": "equal_width",
+  "ece_min_nonempty_bins": 5,
+  "coverage_include_outcome": false,
+  "seed": 240007,
+  "n_runs": 30,
+  "scenario_name": "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
+  "experiment_id": "A2.TIME_TO_CONVERGE",
+  "tier": "A",
+  "sweep_params": {
+    "arrivals_per_step": 3,
+    "initial_pool": 2.0,
+    "n_steps": 40
+  }
+}

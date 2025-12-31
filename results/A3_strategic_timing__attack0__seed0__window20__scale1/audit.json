@@ -1,0 +1,461 @@
+{
+  "audit_version": "audit_v1",
+  "scenario_name": "A3_strategic_timing__attack0__seed0__window20__scale1",
+  "experiment_id": "A3.STRATEGIC_TIMING_ATTACK",
+  "tier": "A",
+  "seed": 0,
+  "metadata": {
+    "scenario_name": "A3_strategic_timing__attack0__seed0__window20__scale1",
+    "experiment_id": "A3.STRATEGIC_TIMING_ATTACK",
+    "tier": "A",
+    "seed": 0,
+    "attack_strength": 0.0,
+    "attack_window": 0.2,
+    "adversarial_size_scale": 1
+  },
+  "calibration": {
+    "capopm": {
+      "n_samples": 5,
+      "n_unique_predictions": 5,
+      "n_nonempty_bins": 5,
+      "ece_value": 0.4894615622312562,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.48946156223125625,
+        "n_unique_support": 5,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "capopm_stage1_only": {
+      "n_samples": 5,
+      "n_unique_predictions": 5,
+      "n_nonempty_bins": 5,
+      "ece_value": 0.4895211780986511,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.4895211780986511,
+        "n_unique_support": 5,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "uncorrected": {
+      "n_samples": 5,
+      "n_unique_predictions": 5,
+      "n_nonempty_bins": 5,
+      "ece_value": 0.4793503320641435,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.47935033206414357,
+        "n_unique_support": 5,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "raw_parimutuel": {
+      "n_samples": 5,
+      "n_unique_predictions": 4,
+      "n_nonempty_bins": 4,
+      "ece_value": 0.2885081967213115,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10",
+        "unique_predictions_below_5",
+        "nonempty_bins_below_5"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.28850819672131156,
+        "n_unique_support": 4,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "structural_only": {
+      "n_samples": 5,
+      "n_unique_predictions": 4,
+      "n_nonempty_bins": 4,
+      "ece_value": 0.29392307682051294,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10",
+        "unique_predictions_below_5",
+        "nonempty_bins_below_5"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.29392307682051294,
+        "n_unique_support": 4,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    },
+    "ml_only": {
+      "n_samples": 5,
+      "n_unique_predictions": 5,
+      "n_nonempty_bins": 5,
+      "ece_value": 0.4777739805544634,
+      "ece_interpretable": false,
+      "ece_reasons": [
+        "insufficient_samples<10"
+      ],
+      "ece_status": "NOT_INTERPRETABLE",
+      "discrete_calibration": {
+        "value": 0.47777398055446335,
+        "n_unique_support": 5,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "discrete_calibration"
+    }
+  },
+  "coverage": {
+    "capopm": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 5,
+        "coverage_90": 0.2,
+        "coverage_95": 0.2,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "capopm_stage1_only": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 5,
+        "coverage_90": 0.2,
+        "coverage_95": 0.2,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "uncorrected": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 5,
+        "coverage_90": 0.2,
+        "coverage_95": 0.2,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "raw_parimutuel": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": []
+    },
+    "structural_only": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 5,
+        "coverage_90": 0.2,
+        "coverage_95": 0.2,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "ml_only": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 5,
+        "coverage_90": 0.2,
+        "coverage_95": 0.2,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    }
+  },
+  "criteria_evaluation": {
+    "overall_pass": false,
+    "criteria": [
+      {
+        "id": "regret_log_non_negative",
+        "description": "Log-score regret vs uncorrected should be non-negative.",
+        "theorem": "Theorem 12",
+        "metric_path": [
+          "aggregated_metrics",
+          "capopm",
+          "regret_log"
+        ],
+        "comparator_path": null,
+        "direction": ">=",
+        "threshold": 0.0,
+        "metric_value": -0.01737691629202185,
+        "evaluated": true,
+        "pass": false,
+        "reason": null
+      },
+      {
+        "id": "grid_requirement",
+        "description": "Attack-strength sensitivity requires multi-scenario grid (early vs late attacks).",
+        "theorem": "Proposition 9",
+        "metric_path": null,
+        "comparator_path": null,
+        "direction": null,
+        "threshold": null,
+        "metric_value": null,
+        "evaluated": false,
+        "pass": null,
+        "reason": "grid_missing_for_claim"
+      }
+    ],
+    "recorded_status": {
+      "pass": null,
+      "notes": "",
+      "criteria": {}
+    },
+    "status_mismatch": false,
+    "criteria_semantics_mismatch": false,
+    "source_of_truth": "criteria_evaluation"
+  },
+  "theorem_checklist": [
+    {
+      "theorem": "Theorem 12",
+      "claim": "Stage 1+2 reduces late manipulation",
+      "status": "failed",
+      "criteria_ids": [
+        "regret_log_non_negative"
+      ]
+    },
+    {
+      "theorem": "Proposition 9",
+      "claim": "Strategic timing mitigation",
+      "status": "indeterminate",
+      "criteria_ids": [
+        "grid_requirement"
+      ]
+    }
+  ],
+  "seed_grid_coverage": {
+    "n_runs": 5,
+    "grid_axes": [
+      "adversarial_size_scale",
+      "attack_strength",
+      "attack_window"
+    ],
+    "grid_points_observed": 1,
+    "coverage_class": "smoke_only",
+    "paper_ready": false,
+    "flags": [
+      "seed_count_below_paper_ready",
+      "grid_points_below_paper_ready"
+    ]
+  },
+  "effect_sizes": {
+    "brier_vs_uncorrected": {
+      "key": "brier_vs_uncorrected",
+      "metric": "brier",
+      "baseline": "uncorrected",
+      "diff_mean": 0.0006006404328599939,
+      "ci_low": -0.006999318244859535,
+      "ci_high": 0.008264925045019083,
+      "n": 5,
+      "better_if_negative": true,
+      "paired_t_p_holm": 0.8950398182577162
+    },
+    "log_score_vs_uncorrected": {
+      "key": "log_score_vs_uncorrected",
+      "metric": "log_score",
+      "baseline": "uncorrected",
+      "diff_mean": -0.01737691629202185,
+      "ci_low": -0.05842022200836432,
+      "ci_high": 0.027631703305448306,
+      "n": 5,
+      "better_if_negative": false,
+      "paired_t_p_holm": 1.0
+    },
+    "brier_vs_raw_parimutuel": {
+      "key": "brier_vs_raw_parimutuel",
+      "metric": "brier",
+      "baseline": "raw_parimutuel",
+      "diff_mean": 0.0016377250610608001,
+      "ci_low": -0.005333178635634507,
+      "ci_high": 0.008598755743208966,
+      "n": 5,
+      "better_if_negative": true,
+      "paired_t_p_holm": 1.0
+    },
+    "log_score_vs_raw_parimutuel": {
+      "key": "log_score_vs_raw_parimutuel",
+      "metric": "log_score",
+      "baseline": "raw_parimutuel",
+      "diff_mean": -0.02680072091968282,
+      "ci_low": -0.06719757435731999,
+      "ci_high": 0.020386469054174138,
+      "n": 5,
+      "better_if_negative": false,
+      "paired_t_p_holm": 1.0
+    }
+  },
+  "reproducibility": {
+    "artifact_hashes": {
+      "summary.json": "794495e4084b2cc2073b76bdcba7708d20b3e43ea19c0ff8bda2f59e37391d65",
+      "metrics_aggregated.csv": "ccfcdb4223852ae3ef494988eacdab718ca5f98af2bd810758a3e88dea940509",
+      "tests.csv": "1aa684e9a5b6dc95e04d88a88ce6a3d14f084fd40baa42f4d20c9501889f53fd",
+      "reliability_capopm.csv": "33a7cbb764079c208ab797265e85416f5904835e1e046bd3b7010099369d57a1",
+      "reliability_capopm_stage1_only.csv": "af6253706ab94b1a8b2821d4f83619c8f11b2ebcecd06716f86d692bca8e96a7",
+      "reliability_ml_only.csv": "89872d112988c203e9e897a47b5bff092c1e6af3e3b868925bfad965639ba5b3",
+      "reliability_raw_parimutuel.csv": "b58cd09bd9aaa72985c6588ae3a07b7b338a99415c6e7b08bc2f98cf1de6e597",
+      "reliability_structural_only.csv": "3b47b75acd89eb654ca853cb8d8f183066e9ce80b799ec7e6f38c442e2e74042",
+      "reliability_uncorrected.csv": "e6190625d3f070aae8cd45bd920586cc300119cb12b9f849f29d5aeb0bb7010b"
+    },
+    "scenario_registry_snapshot": {
+      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "scenarios": [
+        "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A3_strategic_timing__attack0__seed0__window20__scale1",
+        "A3_strategic_timing__attack0__seed1__window20__scale3",
+        "A3_strategic_timing__attack100__seed2__window20__scale1",
+        "A3_strategic_timing__attack100__seed3__window20__scale3",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed2",
+        "B2_asymptotic_rate__seed0",
+        "B3_misspec_regret__struct0__ml0__seed0",
+        "B3_misspec_regret__struct0__ml5__seed1",
+        "B3_misspec_regret__struct10__ml0__seed100",
+        "B3_misspec_regret__struct10__ml5__seed101",
+        "B4_regime_concentration__evidence150__seed1",
+        "B4_regime_concentration__evidence50__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
+        "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv10_seed99101",
+        "mini_regression",
+        "paper_artifacts",
+        "smoke_metrics_phase7"
+      ]
+    },
+    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
+    "config_hash": null,
+    "config_snapshot_path": null,
+    "reproduction_command": "python run_paper_suite.py --experiment A3",
+    "reproduce_line": "python run_paper_suite.py --experiment A3 --scenario A3_strategic_timing__attack0__seed0__window20__scale1"
+  },
+  "borderline_flags": {
+    "degenerate_calibration_models": [
+      "capopm",
+      "capopm_stage1_only",
+      "uncorrected",
+      "raw_parimutuel",
+      "structural_only",
+      "ml_only"
+    ],
+    "low_n_runs": true,
+    "coverage_flags": [
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal"
+    ],
+    "marginal_coverage_failures": [
+      "capopm_coverage90",
+      "capopm_coverage95",
+      "capopm_stage1_only_coverage90",
+      "capopm_stage1_only_coverage95",
+      "uncorrected_coverage90",
+      "uncorrected_coverage95",
+      "structural_only_coverage90",
+      "structural_only_coverage95",
+      "ml_only_coverage90",
+      "ml_only_coverage95"
+    ],
+    "status_mismatch_detected": false,
+    "criteria_semantics_mismatch": false
+  },
+  "notes": [
+    "Audit is reporting-only; no CAPOPM math/DGP changed.",
+    "Calibration alternative uses discrete predictions when ECE is not interpretable."
+  ],
+  "audit_hash": "87eece28fa9d2cbf743edc6b10ead8930666e7f8eefb863a253f02cbdea8a772"
+}

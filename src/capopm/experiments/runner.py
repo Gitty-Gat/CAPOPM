@@ -11,7 +11,8 @@ from __future__ import annotations
 import csv
 import json
 import os
-from typing import Dict, List
+import hashlib
+from typing import Dict, List, Optional
 
 import numpy as np
 
@@ -40,6 +41,9 @@ from ..stats.tests import (
     paired_t_test,
     wilcoxon_signed_rank,
 )
+from .audit import AUDIT_VERSION, run_audit_for_results
+
+REPORTING_VERSION = "phase7_v1"
 
 
 def run_experiment(config: Dict) -> Dict:
@@ -52,6 +56,10 @@ def run_experiment(config: Dict) -> Dict:
     """
 
     seed = int(config.get("seed", 123))
+    experiment_id = config.get("experiment_id")
+    tier = config.get("tier")
+    reporting_version = str(config.get("reporting_version", REPORTING_VERSION))
+    extra_metadata = config.get("sweep_params", config.get("metadata", {})) or {}
     n_runs = int(config.get("n_runs", 5))
     calibration_binning = config.get("calibration_binning", config.get("ece_binning", "equal_width"))
     min_nonempty_bins = int(config.get("ece_min_nonempty_bins", 5))
@@ -286,14 +294,24 @@ def run_experiment(config: Dict) -> Dict:
                 f"Calibration diagnostics: degenerate binning detected for model '{m}'."
             )
 
+    scenario_name = derive_scenario_name(config)
+    meta = {
+        "scenario_name": scenario_name,
+        "experiment_id": experiment_id,
+        "tier": tier,
+        "seed": seed,
+    }
+    extra_metadata = filter_extra_metadata(extra_metadata, meta)
+    meta.update(extra_metadata)
     results = {
         "per_run_metrics": per_run_metrics,
         "aggregated_metrics": aggregated,
         "tests": tests,
         "warnings": warnings,
         "note": "Partial validation under controlled synthetic assumptions.",
+        "metadata": meta,
+        "reporting_version": reporting_version,
     }
-    scenario_name = derive_scenario_name(config)
     write_scenario_outputs(
         scenario_name=scenario_name,
         results=results,
@@ -302,6 +320,11 @@ def run_experiment(config: Dict) -> Dict:
         n_bins=n_bins,
         binning=calibration_binning,
         min_nonempty_bins=min_nonempty_bins,
+        experiment_id=experiment_id,
+        tier=tier,
+        seed=seed,
+        extra_metadata=extra_metadata,
+        config_snapshot=sanitize_for_json(config),
     )
     return results
 
@@ -361,7 +384,16 @@ def aggregate_metrics(per_run_metrics: List[Dict], model_names: List[str]) -> Di
         for k, vals in metric_lists.items():
             if k == "calibration_diagnostics":
                 continue
-            agg[m][k] = float(np.nanmean(vals)) if vals else None
+            if not vals:
+                agg[m][k] = None
+                continue
+            vals_arr = np.asarray(vals, dtype=float)
+            if vals_arr.size == 0:
+                agg[m][k] = None
+            elif np.all(np.isnan(vals_arr)):
+                agg[m][k] = np.nan
+            else:
+                agg[m][k] = float(np.nanmean(vals_arr))
         # Ensure legacy coverage aliases exist even if missing.
         if "coverage_90_ptrue" in agg[m]:
             agg[m]["coverage_90"] = agg[m].get("coverage_90_ptrue", np.nan)
@@ -452,6 +484,12 @@ def write_scenario_outputs(
     n_bins: int,
     binning: str,
     min_nonempty_bins: int,
+    experiment_id: Optional[str] = None,
+    tier: Optional[str] = None,
+    seed: Optional[int] = None,
+    extra_metadata: Optional[Dict] = None,
+    config_snapshot: Optional[Dict] = None,
+    run_audit: bool = True,
 ) -> None:
     """Persist scenario-level artifacts for interpretability."""
 
@@ -459,14 +497,25 @@ def write_scenario_outputs(
     os.makedirs(results_dir, exist_ok=True)
 
     serializable_results = sanitize_for_json(results)
-    summary_path = os.path.join(results_dir, "summary.json")
-    with open(summary_path, "w", encoding="utf-8") as f:
-        json.dump(serializable_results, f, indent=2)
+    serializable_results["audit_file"] = "audit.json"
+    serializable_results["audit_version"] = AUDIT_VERSION
 
     aggregated = serializable_results.get("aggregated_metrics", {})
+    meta_columns = {
+        "scenario_name": scenario_name,
+        "experiment_id": experiment_id,
+        "tier": tier,
+        "seed": seed,
+    }
+    extra_metadata = filter_extra_metadata(extra_metadata, meta_columns)
+    extra_keys = sorted(extra_metadata.keys())
+    agg_path = None
     if aggregated:
-        metric_columns = [
+        base_metric_columns = [
             "scenario_name",
+            "experiment_id",
+            "tier",
+            "seed",
             "model",
             "abs_error_outcome",
             "brier",
@@ -491,17 +540,29 @@ def write_scenario_outputs(
             "coverage_90",
             "coverage_95",
             "p_hat",
-            "calibration_diagnostics",
         ]
+        known_metric_keys = set(base_metric_columns) | {"calibration_diagnostics"}
+        extra_metric_keys = sorted(
+            {
+                key
+                for vals in aggregated.values()
+                for key in (vals or {}).keys()
+                if key not in known_metric_keys
+            }
+        )
+        metric_columns = base_metric_columns + extra_metric_keys + ["calibration_diagnostics"]
+        metric_columns.extend(extra_keys)
         agg_path = os.path.join(results_dir, "metrics_aggregated.csv")
         rows = []
         for model_name, vals in aggregated.items():
             row = []
             for k in metric_columns:
-                if k == "scenario_name":
-                    row.append(scenario_name)
-                elif k == "model":
+                if k == "model":
                     row.append(model_name)
+                elif k in meta_columns:
+                    row.append(meta_columns[k])
+                elif k in extra_metadata:
+                    row.append(extra_metadata[k])
                 elif k == "calibration_diagnostics":
                     row.append(json.dumps(vals.get(k, {})))
                 else:
@@ -524,37 +585,70 @@ def write_scenario_outputs(
             writer.writerows(rows)
 
     tests = serializable_results.get("tests", {})
+    tests_path = None
     if tests:
         tests_path = os.path.join(results_dir, "tests.csv")
         with open(tests_path, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
-            writer.writerow(
-                [
-                    "model",
-                    "metric",
-                    "test",
-                    "stat",
-                    "p_value",
-                    "p_value_str",
-                    "p_holm",
-                    "p_holm_str",
-                    "p_bonferroni",
-                    "p_bonferroni_str",
-                    "diff_mean",
-                    "better_if_negative",
-                    "ci_low",
-                    "ci_high",
-                ]
-            )
-            for model, res in tests.items():
-                metric_name = res.get("metric")
-                diff_mean = res.get("diff_mean")
-                better_if_negative = res.get("better_if_negative")
-                safe = lambda v: max(v, 1e-300) if isinstance(v, (int, float)) else v
-                # paired t-test row
-                pt = res.get("paired_t", {})
-                writer.writerow(
-                    [
+            test_columns = [
+                "scenario_name",
+                "experiment_id",
+                "tier",
+                "seed",
+                "model",
+                "metric",
+                "test",
+                "stat",
+                "p_value",
+                "p_value_str",
+                "p_holm",
+                "p_holm_str",
+                "p_bonferroni",
+                "p_bonferroni_str",
+                "diff_mean",
+                "better_if_negative",
+                "ci_low",
+                "ci_high",
+            ]
+            test_columns.extend(extra_keys)
+            writer.writerow(test_columns)
+            if isinstance(tests, list):
+                for res in tests:
+                    row = [
+                        scenario_name,
+                        experiment_id,
+                        tier,
+                        seed,
+                        res.get("model"),
+                        res.get("metric"),
+                        res.get("test"),
+                        res.get("stat"),
+                        res.get("p_value"),
+                        res.get("p_value_str"),
+                        res.get("p_holm"),
+                        res.get("p_holm_str"),
+                        res.get("p_bonferroni"),
+                        res.get("p_bonferroni_str"),
+                        res.get("diff_mean"),
+                        res.get("better_if_negative"),
+                        res.get("ci_low"),
+                        res.get("ci_high"),
+                    ]
+                    row.extend([extra_metadata[k] for k in extra_keys])
+                    writer.writerow(row)
+            else:
+                for model, res in tests.items():
+                    metric_name = res.get("metric")
+                    diff_mean = res.get("diff_mean")
+                    better_if_negative = res.get("better_if_negative")
+                    safe = lambda v: max(v, 1e-300) if isinstance(v, (int, float)) else v
+                    # paired t-test row
+                    pt = res.get("paired_t", {})
+                    row_base = [
+                        scenario_name,
+                        experiment_id,
+                        tier,
+                        seed,
                         model,
                         metric_name,
                         "paired_t",
@@ -570,11 +664,15 @@ def write_scenario_outputs(
                         None,
                         None,
                     ]
-                )
-                # wilcoxon row
-                wil = res.get("wilcoxon", {})
-                writer.writerow(
-                    [
+                    row_base.extend([extra_metadata[k] for k in extra_keys])
+                    writer.writerow(row_base)
+                    # wilcoxon row
+                    wil = res.get("wilcoxon", {})
+                    row_wil = [
+                        scenario_name,
+                        experiment_id,
+                        tier,
+                        seed,
                         model,
                         metric_name,
                         "wilcoxon",
@@ -590,11 +688,15 @@ def write_scenario_outputs(
                         None,
                         None,
                     ]
-                )
-                # bootstrap CI row
-                ci = res.get("bootstrap_ci", {})
-                writer.writerow(
-                    [
+                    row_wil.extend([extra_metadata[k] for k in extra_keys])
+                    writer.writerow(row_wil)
+                    # bootstrap CI row
+                    ci = res.get("bootstrap_ci", {})
+                    row_ci = [
+                        scenario_name,
+                        experiment_id,
+                        tier,
+                        seed,
                         model,
                         metric_name,
                         "bootstrap_ci",
@@ -610,12 +712,14 @@ def write_scenario_outputs(
                         ci.get("low"),
                         ci.get("high"),
                     ]
-                )
+                    row_ci.extend([extra_metadata[k] for k in extra_keys])
+                    writer.writerow(row_ci)
 
     # Reliability tables per model using the binning actually used for ECE.
     aggregated_diags = {
         m: aggregated.get(m, {}).get("calibration_diagnostics", {}) for m in aggregated.keys()
     }
+    reliability_paths: List[str] = []
     for model, p_list in p_hat_lists.items():
         outcomes = outcome_lists.get(model, [])
         diag = aggregated_diags.get(model, {})
@@ -631,21 +735,58 @@ def write_scenario_outputs(
         rel_path = os.path.join(results_dir, f"reliability_{model}.csv")
         with open(rel_path, "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
-            writer.writerow(
-                ["scenario_name", "model", "bin_low", "bin_high", "count", "mean_pred", "mean_outcome"]
-            )
+            rel_columns = [
+                "scenario_name",
+                "experiment_id",
+                "tier",
+                "seed",
+                "model",
+                "bin_low",
+                "bin_high",
+                "count",
+                "mean_pred",
+                "mean_outcome",
+            ]
+            rel_columns.extend(extra_keys)
+            writer.writerow(rel_columns)
             for row in rows:
-                writer.writerow(
-                    [
-                        scenario_name,
-                        model,
-                        row["bin_low"],
-                        row["bin_high"],
-                        row["count"],
-                        row["mean_pred"],
-                        row["mean_outcome"],
-                    ]
-                )
+                rel_row = [
+                    scenario_name,
+                    experiment_id,
+                    tier,
+                    seed,
+                    model,
+                    row["bin_low"],
+                    row["bin_high"],
+                    row["count"],
+                    row["mean_pred"],
+                    row["mean_outcome"],
+                ]
+                rel_row.extend([extra_metadata[k] for k in extra_keys])
+                writer.writerow(rel_row)
+        reliability_paths.append(rel_path)
+
+    config_hash = None
+    if config_snapshot:
+        config_hash = _write_config_snapshot(results_dir, config_snapshot)
+        serializable_results.setdefault("metadata", {})["config_hash"] = config_hash
+
+    summary_path = os.path.join(results_dir, "summary.json")
+    with open(summary_path, "w", encoding="utf-8") as f:
+        json.dump(serializable_results, f, indent=2)
+
+    if run_audit:
+        audit_report = run_audit_for_results(
+            scenario_name=scenario_name,
+            summary_path=summary_path,
+            metrics_path=agg_path if aggregated else None,
+            tests_path=tests_path,
+            reliability_paths=reliability_paths,
+            registry_root="results",
+        )
+        audit_path = os.path.join(results_dir, "audit.json")
+        with open(audit_path, "w", encoding="utf-8") as f:
+            json.dump(audit_report, f, indent=2)
 
 
 def sanitize_for_json(obj):
@@ -673,3 +814,45 @@ def sanitize_for_json(obj):
     if isinstance(obj, float) and (obj != obj):  # NaN check
         return None
     return obj
+
+
+def filter_extra_metadata(extra_metadata: Optional[Dict], meta_columns: Dict) -> Dict:
+    """Remove keys that collide with core metadata columns."""
+
+    if not extra_metadata:
+        return {}
+    reserved = set(meta_columns.keys()) | {
+        "model",
+        "metric",
+        "test",
+        "stat",
+        "p_value",
+        "p_value_str",
+        "p_holm",
+        "p_holm_str",
+        "p_bonferroni",
+        "p_bonferroni_str",
+        "diff_mean",
+        "better_if_negative",
+        "ci_low",
+        "ci_high",
+        "bin_low",
+        "bin_high",
+        "count",
+        "mean_pred",
+        "mean_outcome",
+        "calibration_diagnostics",
+    }
+    return {k: v for k, v in extra_metadata.items() if k not in reserved}
+
+
+def _write_config_snapshot(results_dir: str, cfg: Dict) -> str:
+    """Write config snapshot and return hash (reporting-only)."""
+
+    cfg_clean = sanitize_for_json(cfg)
+    snapshot_path = os.path.join(results_dir, "config_snapshot.json")
+    with open(snapshot_path, "w", encoding="utf-8") as f:
+        json.dump(cfg_clean, f, indent=2)
+    h = hashlib.sha256()
+    h.update(json.dumps(cfg_clean, sort_keys=True).encode("utf-8"))
+    return h.hexdigest()
