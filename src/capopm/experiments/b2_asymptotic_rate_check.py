@@ -45,6 +45,14 @@ from .runner import (
     format_p_value,
     write_scenario_outputs,
 )
+from ..invariant_runtime import (
+    InvariantContext,
+    current_context,
+    require_invariant,
+    reset_invariant_context,
+    set_invariant_context,
+    stable_config_hash,
+)
 
 EXPERIMENT_ID = "B2.ASYMPTOTIC_RATE_CHECK"
 TIER = "B"
@@ -96,6 +104,7 @@ def run_b2_scenario(config: Dict) -> Dict:
     """Run B2 scenario across n_total levels and write artifacts."""
 
     cfg = copy.deepcopy(config)
+    scenario_name = cfg.get("scenario_name")
     base_seed = int(cfg.get("seed", 123))
     n_runs = int(cfg.get("n_runs", 5))
     calibration_binning = cfg.get("calibration_binning", cfg.get("ece_binning", "equal_width"))
@@ -116,6 +125,7 @@ def run_b2_scenario(config: Dict) -> Dict:
     per_run_rows = []
     p_hat_lists = {m: [] for m in model_names}
     outcome_lists = {m: [] for m in model_names}
+    config_hash = stable_config_hash(cfg)
 
     n_total_grid = cfg.get("n_total_grid", DEFAULT_N_TOTAL)
     base_arrivals = int(cfg["market"]["arrivals_per_step"])
@@ -135,170 +145,221 @@ def run_b2_scenario(config: Dict) -> Dict:
             run_seed = int(rng_level.integers(0, 2**32 - 1))
             rng = np.random.default_rng(run_seed)
 
-            p_true = draw_p_true(rng, cfg.get("p_true_dist", {"type": "fixed", "value": 0.55}))
-            outcome = 1 if float(rng.random()) < p_true else 0
-
-            traders = build_traders(
-                n_traders=int(cfg["traders"]["n_traders"]),
-                proportions=cfg["traders"]["proportions"],
-                params_by_type=build_trader_params(cfg["traders"].get("params", {})),
+            ctx_token = set_invariant_context(
+                InvariantContext(
+                    experiment_id=cfg.get("experiment_id"),
+                    scenario_name=cfg.get("scenario_name"),
+                    run_seed=run_seed,
+                    config_hash=config_hash,
+                )
             )
+            try:
+                p_true = draw_p_true(rng, cfg.get("p_true_dist", {"type": "fixed", "value": 0.55}))
+                outcome = 1 if float(rng.random()) < p_true else 0
 
-            market_cfg = MarketConfig(**{**cfg["market"], "n_steps": n_steps, "arrivals_per_step": arrivals})
-            trade_tape, pool_path = simulate_market(rng, market_cfg, traders, p_true)
-            y_raw, n_raw = counts_from_trade_tape(trade_tape)
-
-            base_out = capopm_pipeline(
-                rng=rng,
-                trade_tape=trade_tape,
-                structural_cfg=cfg["structural_cfg"],
-                ml_cfg=cfg["ml_cfg"],
-                prior_cfg=cfg["prior_cfg"],
-                stage1_cfg={"enabled": False},
-                stage2_cfg={"enabled": False},
-            )
-            var_independent = posterior_moments(base_out["alpha_post"], base_out["beta_post"])[1]
-
-            model_outputs = build_model_outputs(rng, trade_tape, pool_path, cfg, base_out, y_raw, n_raw)
-
-            metrics = {}
-            coverage_include_outcome = bool(
-                cfg.get("coverage_include_outcome", cfg.get("include_outcome_coverage", False))
-            )
-            for model, out in model_outputs.items():
-                p_hat = out["p_hat"]
-                alpha = out["alpha"]
-                beta = out["beta"]
-                n_eff = out.get("n_effective", n_raw)
-                metrics[model] = {
-                    "brier": brier(p_true, p_hat),
-                    "log_score": log_score(p_hat, outcome),
-                    "mae_prob": mae_prob(p_true, p_hat),
-                    "abs_error_outcome": abs(p_hat - outcome),
-                    "calibration_ece": None,
-                    "calibration_diagnostics": {},
-                    "posterior_mean_bias": posterior_mean_bias(p_hat, p_true),
-                    "p_hat": p_hat,
-                    "posterior_variance": float("nan"),
-                    "log_variance": float("nan"),
-                    "n_effective": n_eff,
-                }
-                if alpha is not None and beta is not None:
-                    cov90 = interval_coverage_ptrue(alpha, beta, p_true, 0.90)
-                    cov95 = interval_coverage_ptrue(alpha, beta, p_true, 0.95)
-                    _, var_adj = posterior_moments(alpha, beta)
-                    metrics[model].update(
-                        {
-                            "posterior_variance_ratio": posterior_variance_ratio(var_adj, var_independent),
-                            "mad_posterior_median": mad_posterior_median(alpha, beta, p_true),
-                            "wasserstein_distance_beta": wasserstein_distance_beta(alpha, beta, p_true),
-                            "coverage_90": cov90,
-                            "coverage_95": cov95,
-                            "coverage_90_outcome": float("nan"),
-                            "coverage_95_outcome": float("nan"),
-                            "coverage_outcome_90": float("nan"),
-                            "coverage_outcome_95": float("nan"),
-                            # Backward-compatible aliases
-                            "coverage_90_ptrue": cov90,
-                            "coverage_95_ptrue": cov95,
-                            "posterior_variance": var_adj,
-                            "log_variance": math.log(max(var_adj, LOG_EPS)),
-                        }
-                    )
-                    if coverage_include_outcome:
-                        cov_out_90 = interval_coverage_outcome(alpha, beta, outcome, 0.90)
-                        cov_out_95 = interval_coverage_outcome(alpha, beta, outcome, 0.95)
-                        metrics[model].update(
-                            {
-                                "coverage_90_outcome": cov_out_90,
-                                "coverage_95_outcome": cov_out_95,
-                                "coverage_outcome_90": cov_out_90,
-                                "coverage_outcome_95": cov_out_95,
-                            }
-                        )
-                else:
-                    metrics[model].update(
-                        {
-                            "posterior_variance_ratio": None,
-                            "mad_posterior_median": None,
-                            "wasserstein_distance_beta": None,
-                            "coverage_90": float("nan"),
-                            "coverage_95": float("nan"),
-                            "coverage_90_ptrue": float("nan"),
-                            "coverage_95_ptrue": float("nan"),
-                            "coverage_90_outcome": float("nan") if coverage_include_outcome else float("nan"),
-                            "coverage_95_outcome": float("nan") if coverage_include_outcome else float("nan"),
-                            "coverage_outcome_90": float("nan") if coverage_include_outcome else float("nan"),
-                            "coverage_outcome_95": float("nan") if coverage_include_outcome else float("nan"),
-                        }
-                    )
-
-                p_hat_lists[model].append(p_hat)
-                outcome_lists[model].append(int(outcome))
-
-                per_run_rows.append(
-                    {
-                        "scenario_name": cfg.get("scenario_name"),
-                        "experiment_id": cfg.get("experiment_id"),
-                        "tier": cfg.get("tier"),
-                        "model": model,
-                        "seed": run_seed,
-                        "n_total_level": n_total,
-                        "n_steps": n_steps,
-                        "arrivals_per_step": arrivals,
-                        "n_effective": n_eff,
-                        **metrics[model],
-                    }
+                traders = build_traders(
+                    n_traders=int(cfg["traders"]["n_traders"]),
+                    proportions=cfg["traders"]["proportions"],
+                    params_by_type=build_trader_params(cfg["traders"].get("params", {})),
                 )
 
-                if model in fit_data:
-                    bias_abs = abs(metrics[model]["posterior_mean_bias"])
-                    fit_data[model].setdefault(n_total, []).append(
-                        (float(n_eff), float(metrics[model]["posterior_variance"]), float(bias_abs))
+                market_cfg = MarketConfig(**{**cfg["market"], "n_steps": n_steps, "arrivals_per_step": arrivals})
+                trade_tape, pool_path = simulate_market(rng, market_cfg, traders, p_true)
+                y_raw, n_raw = counts_from_trade_tape(trade_tape)
+
+                base_out = capopm_pipeline(
+                    rng=rng,
+                    trade_tape=trade_tape,
+                    structural_cfg=cfg["structural_cfg"],
+                    ml_cfg=cfg["ml_cfg"],
+                    prior_cfg=cfg["prior_cfg"],
+                    stage1_cfg={"enabled": False},
+                    stage2_cfg={"enabled": False},
+                )
+                var_independent = posterior_moments(base_out["alpha_post"], base_out["beta_post"])[1]
+
+                model_outputs = build_model_outputs(rng, trade_tape, pool_path, cfg, base_out, y_raw, n_raw)
+
+                metrics = {}
+                coverage_include_outcome = bool(
+                    cfg.get("coverage_include_outcome", cfg.get("include_outcome_coverage", False))
+                )
+                for model, out in model_outputs.items():
+                    p_hat = out["p_hat"]
+                    alpha = out["alpha"]
+                    beta = out["beta"]
+                    n_eff = out.get("n_effective", n_raw)
+                    metrics[model] = {
+                        "brier": brier(p_true, p_hat),
+                        "log_score": log_score(p_hat, outcome),
+                        "mae_prob": mae_prob(p_true, p_hat),
+                        "abs_error_outcome": abs(p_hat - outcome),
+                        "calibration_ece": None,
+                        "calibration_diagnostics": {},
+                        "posterior_mean_bias": posterior_mean_bias(p_hat, p_true),
+                        "p_hat": p_hat,
+                        "posterior_variance": float("nan"),
+                        "log_variance": float("nan"),
+                        "n_effective": n_eff,
+                    }
+                    if alpha is not None and beta is not None:
+                        cov90 = interval_coverage_ptrue(alpha, beta, p_true, 0.90)
+                        cov95 = interval_coverage_ptrue(alpha, beta, p_true, 0.95)
+                        _, var_adj = posterior_moments(alpha, beta)
+                        metrics[model].update(
+                            {
+                                "posterior_variance_ratio": posterior_variance_ratio(var_adj, var_independent),
+                                "mad_posterior_median": mad_posterior_median(alpha, beta, p_true),
+                                "wasserstein_distance_beta": wasserstein_distance_beta(alpha, beta, p_true),
+                                "coverage_90": cov90,
+                                "coverage_95": cov95,
+                                "coverage_90_outcome": float("nan"),
+                                "coverage_95_outcome": float("nan"),
+                                "coverage_outcome_90": float("nan"),
+                                "coverage_outcome_95": float("nan"),
+                                # Backward-compatible aliases
+                                "coverage_90_ptrue": cov90,
+                                "coverage_95_ptrue": cov95,
+                                "posterior_variance": var_adj,
+                                "log_variance": math.log(max(var_adj, LOG_EPS)),
+                            }
+                        )
+                        if coverage_include_outcome:
+                            cov_out_90 = interval_coverage_outcome(alpha, beta, outcome, 0.90)
+                            cov_out_95 = interval_coverage_outcome(alpha, beta, outcome, 0.95)
+                            metrics[model].update(
+                                {
+                                    "coverage_90_outcome": cov_out_90,
+                                    "coverage_95_outcome": cov_out_95,
+                                    "coverage_outcome_90": cov_out_90,
+                                    "coverage_outcome_95": cov_out_95,
+                                }
+                            )
+                    else:
+                        metrics[model].update(
+                            {
+                                "posterior_variance_ratio": None,
+                                "mad_posterior_median": None,
+                                "wasserstein_distance_beta": None,
+                                "coverage_90": float("nan"),
+                                "coverage_95": float("nan"),
+                                "coverage_90_ptrue": float("nan"),
+                                "coverage_95_ptrue": float("nan"),
+                                "coverage_90_outcome": float("nan") if coverage_include_outcome else float("nan"),
+                                "coverage_95_outcome": float("nan") if coverage_include_outcome else float("nan"),
+                                "coverage_outcome_90": float("nan") if coverage_include_outcome else float("nan"),
+                                "coverage_outcome_95": float("nan") if coverage_include_outcome else float("nan"),
+                            }
+                        )
+
+                    p_hat_lists[model].append(p_hat)
+                    outcome_lists[model].append(int(outcome))
+
+                    per_run_rows.append(
+                        {
+                            "scenario_name": cfg.get("scenario_name"),
+                            "experiment_id": cfg.get("experiment_id"),
+                            "tier": cfg.get("tier"),
+                            "model": model,
+                            "seed": run_seed,
+                            "n_total_level": n_total,
+                            "n_steps": n_steps,
+                            "arrivals_per_step": arrivals,
+                            "n_effective": n_eff,
+                            **metrics[model],
+                        }
                     )
 
-            per_run_metrics.append(
-                {"run": run_idx, "p_true": p_true, "outcome": outcome, "metrics": metrics}
-            )
+                    if model in fit_data:
+                        bias_abs = abs(metrics[model]["posterior_mean_bias"])
+                        fit_data[model].setdefault(n_total, []).append(
+                            (float(n_eff), float(metrics[model]["posterior_variance"]), float(bias_abs))
+                        )
+
+                per_run_metrics.append(
+                    {
+                        "run": run_idx,
+                        "p_true": p_true,
+                        "outcome": outcome,
+                        "metrics": metrics,
+                        "invariants": [vars(rec) for rec in (current_context().invariant_log if current_context() else [])],
+                        "fallbacks": [vars(rec) for rec in (current_context().fallback_log if current_context() else [])],
+                    }
+                )
+            finally:
+                reset_invariant_context(ctx_token)
 
     aggregated = aggregate_metrics(per_run_metrics, model_names)
-    ece_by_model = {}
-    for m in model_names:
-        if len(p_hat_lists[m]) != len(outcome_lists[m]) or len(p_hat_lists[m]) < 2:
-            raise ValueError("ECE requires at least 2 matched predictions/outcomes per model")
-        unique_outcomes = set(outcome_lists[m])
-        if not unique_outcomes.issubset({0, 1}):
-            raise ValueError(f"Outcome list contains invalid values: {sorted(unique_outcomes)}")
-        ece, diag = calibration_ece(
-            p_hat_lists[m],
-            outcome_lists[m],
-            n_bins=n_bins,
-            binning=calibration_binning,
-            min_nonempty_bins=min_nonempty_bins,
-            allow_fallback=True,
-        )
-        aggregated[m]["calibration_ece"] = ece
-        aggregated[m]["calibration_diagnostics"] = diag
-        aggregated[m]["calib_n_unique_predictions"] = diag.get("n_unique_predictions")
-        aggregated[m]["calib_n_nonempty_bins"] = diag.get("n_nonempty_bins")
-        aggregated[m]["calib_degenerate_binning"] = diag.get("degenerate_binning")
-        aggregated[m]["calib_binning_mode_used"] = diag.get("binning_mode_used")
-        aggregated[m]["calib_binning_mode_requested"] = diag.get("binning_mode_requested")
-        aggregated[m]["calib_fallback_applied"] = diag.get("fallback_applied")
-        ece_by_model[m] = ece
-
-    fit_rows, fit_summary = build_fit_rows(aggregated, fit_data, cfg)
-    metrics_rows = finalize_metrics_rows(per_run_rows, fit_rows, ece_by_model)
-
-    tests = run_b2_tests(per_run_metrics)
-
-    warnings = []
-    for m in model_names:
-        diag = aggregated[m].get("calibration_diagnostics", {})
-        if diag and diag.get("degenerate_binning"):
-            warnings.append(
-                f"Calibration diagnostics: degenerate binning detected for model '{m}'."
+    scenario_ctx = InvariantContext(
+        experiment_id=cfg.get("experiment_id"),
+        scenario_name=scenario_name,
+        run_seed=base_seed,
+        config_hash=config_hash,
+    )
+    scenario_token = set_invariant_context(scenario_ctx)
+    try:
+        ece_by_model = {}
+        if "capopm" in aggregated and "uncorrected" in aggregated:
+            cap_brier = aggregated["capopm"].get("brier")
+            base_brier = aggregated["uncorrected"].get("brier")
+            if cap_brier is not None and base_brier is not None:
+                require_invariant(
+                    cap_brier <= base_brier + 1e-8,
+                    invariant_id="M-3",
+                    message="Expected-loss non-worsening (Brier, synthetic)",
+                    tolerance=1e-8,
+                    data={"capopm_brier": cap_brier, "uncorrected_brier": base_brier},
+                )
+            cap_log = aggregated["capopm"].get("log_score")
+            base_log = aggregated["uncorrected"].get("log_score")
+            if cap_log is not None and base_log is not None:
+                require_invariant(
+                    cap_log + 1e-8 >= base_log,
+                    invariant_id="M-3",
+                    message="Expected-loss non-worsening (log_score, synthetic)",
+                    tolerance=1e-8,
+                    data={"capopm_log": cap_log, "uncorrected_log": base_log},
+                )
+        for m in model_names:
+            if len(p_hat_lists[m]) != len(outcome_lists[m]) or len(p_hat_lists[m]) < 2:
+                raise ValueError("ECE requires at least 2 matched predictions/outcomes per model")
+            unique_outcomes = set(outcome_lists[m])
+            if not unique_outcomes.issubset({0, 1}):
+                raise ValueError(f"Outcome list contains invalid values: {sorted(unique_outcomes)}")
+            ece, diag = calibration_ece(
+                p_hat_lists[m],
+                outcome_lists[m],
+                n_bins=n_bins,
+                binning=calibration_binning,
+                min_nonempty_bins=min_nonempty_bins,
+                allow_fallback=True,
             )
+            aggregated[m]["calibration_ece"] = ece
+            aggregated[m]["calibration_diagnostics"] = diag
+            aggregated[m]["calib_n_unique_predictions"] = diag.get("n_unique_predictions")
+            aggregated[m]["calib_n_nonempty_bins"] = diag.get("n_nonempty_bins")
+            aggregated[m]["calib_degenerate_binning"] = diag.get("degenerate_binning")
+            aggregated[m]["calib_binning_mode_used"] = diag.get("binning_mode_used")
+            aggregated[m]["calib_binning_mode_requested"] = diag.get("binning_mode_requested")
+            aggregated[m]["calib_fallback_applied"] = diag.get("fallback_applied")
+            ece_by_model[m] = ece
+
+        fit_rows, fit_summary = build_fit_rows(aggregated, fit_data, cfg)
+        metrics_rows = finalize_metrics_rows(per_run_rows, fit_rows, ece_by_model)
+
+        tests = run_b2_tests(per_run_metrics)
+
+        warnings = []
+        for m in model_names:
+            diag = aggregated[m].get("calibration_diagnostics", {})
+            if diag and diag.get("degenerate_binning"):
+                warnings.append(
+                    f"Calibration diagnostics: degenerate binning detected for model '{m}'."
+                )
+        scenario_invariant_log = [vars(rec) for rec in scenario_ctx.invariant_log]
+        scenario_fallback_log = [vars(rec) for rec in scenario_ctx.fallback_log]
+    finally:
+        reset_invariant_context(scenario_token)
 
     summary = build_summary(fit_summary)
     scenario_name = cfg.get("scenario_name")
@@ -313,7 +374,14 @@ def run_b2_scenario(config: Dict) -> Dict:
         "status": summary["status"],
         "sweep_params": {"n_total_grid": n_total_grid},
         "summary": summary,
+        "scenario_invariants": scenario_invariant_log,
+        "scenario_fallbacks": scenario_fallback_log,
+        "grid_status": {
+            "grid_axes": ["n_total_grid"],
+            "grid_point": {"n_total_grid": n_total_grid},
+        },
     }
+    results["metadata"]["config_hash"] = config_hash
 
     write_scenario_outputs(
         scenario_name=scenario_name,
@@ -609,6 +677,14 @@ def build_model_outputs(
         else:
             raise ValueError(f"Unknown model: {model}")
 
+        require_invariant(
+            0.0 <= model_outputs[model]["p_hat"] <= 1.0,
+            invariant_id="M-1",
+            message="Model price in [0,1]",
+            tolerance=1e-8,
+            data={"model": model, "p_hat": float(model_outputs[model]["p_hat"])},
+        )
+
     return model_outputs
 
 
@@ -748,6 +824,7 @@ def build_metadata(config: Dict) -> Dict:
         "experiment_id": config.get("experiment_id"),
         "tier": config.get("tier"),
         "seed": int(config.get("seed", 0)),
+        "structural_prior_mode": config.get("structural_cfg", {}).get("mode", "surrogate_heston"),
     }
 
 

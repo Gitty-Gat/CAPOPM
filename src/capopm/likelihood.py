@@ -8,22 +8,44 @@ from __future__ import annotations
 
 from typing import Iterable, Tuple
 
+from .invariant_runtime import require_invariant
+
 
 def beta_binomial_update(alpha0: float, beta0: float, y: float, n: float) -> Tuple[float, float]:
     """Phase 4 update: Beta prior + Binomial likelihood -> Beta posterior."""
 
-    assert alpha0 > 0.0 and beta0 > 0.0
-    assert n >= 0.0 and 0.0 <= y <= n
+    require_invariant(
+        alpha0 > 0.0 and beta0 > 0.0,
+        invariant_id="B-1",
+        message="Prior parameters must be positive",
+        data={"alpha0": float(alpha0), "beta0": float(beta0)},
+    )
+    require_invariant(
+        n >= 0.0 and 0.0 <= y <= n,
+        invariant_id="B-1",
+        message="Counts must satisfy 0 <= y <= n and n >= 0",
+        data={"y": float(y), "n": float(n)},
+    )
     alpha_post = alpha0 + y
     beta_post = beta0 + (n - y)
-    assert alpha_post > 0.0 and beta_post > 0.0
+    require_invariant(
+        alpha_post > 0.0 and beta_post > 0.0,
+        invariant_id="B-2",
+        message="Posterior parameters must be positive",
+        data={"alpha_post": float(alpha_post), "beta_post": float(beta_post)},
+    )
     return alpha_post, beta_post
 
 
 def posterior_moments(alpha: float, beta: float) -> Tuple[float, float]:
     """Phase 4 closed-form Beta posterior mean and variance."""
 
-    assert alpha > 0.0 and beta > 0.0
+    require_invariant(
+        alpha > 0.0 and beta > 0.0,
+        invariant_id="B-2",
+        message="Posterior parameters must be positive for moments",
+        data={"alpha": float(alpha), "beta": float(beta)},
+    )
     denom = alpha + beta
     mean = alpha / denom
     var = (alpha * beta) / (denom * denom * (denom + 1.0))
@@ -37,6 +59,12 @@ def counts_from_trade_tape(trade_tape: Iterable) -> Tuple[float, float]:
     n = 0.0
     for trade in trade_tape:
         size = float(trade.size)
+        require_invariant(
+            size > 0.0,
+            invariant_id="B-1",
+            message="Trade size must be positive",
+            data={"size": size},
+        )
         n += size
         if trade.side == "YES":
             y += size

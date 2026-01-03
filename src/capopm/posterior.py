@@ -11,7 +11,7 @@ from typing import Dict, Optional
 
 import numpy as np
 
-from .structural_prior import compute_q_str
+from .structural_prior import compute_q_str, enforce_structural_invariants
 from .ml_prior import compute_n_ml, compute_r_ml, simulate_p_ml
 from .hybrid_prior import build_ml_beta, build_structural_beta, fuse_priors
 from .likelihood import beta_binomial_update, counts_from_trade_tape
@@ -23,6 +23,7 @@ from .corrections.stage2_structural import (
     summarize_stage1_stats,
     mixture_posterior_params,
 )
+from .invariant_runtime import require_invariant
 
 
 def capopm_pipeline(
@@ -36,9 +37,16 @@ def capopm_pipeline(
 ) -> Dict:
     """Phase 1-5 pipeline: structural prior -> ML prior -> hybrid -> update -> prices."""
 
+    structural_mode = structural_cfg.get("mode", "surrogate_heston")
+    require_invariant(
+        structural_mode == "surrogate_heston",
+        invariant_id="S-0",
+        message="Only surrogate_heston structural prior mode is permitted in Stage B.1",
+        data={"mode": structural_mode},
+    )
     # Phase 1: Structural prior (SURROGATE).
     q_str = compute_q_str(structural_cfg, rng=rng if structural_cfg.get("use_rng") else None)
-    assert 0.0 < q_str < 1.0
+    enforce_structural_invariants(structural_cfg, q_str)
 
     # Phase 2: ML prior.
     if rng is None:
@@ -46,14 +54,33 @@ def capopm_pipeline(
     p_ml = simulate_p_ml(rng, ml_cfg)
     r_ml = compute_r_ml(ml_cfg)
     n_ml = compute_n_ml(r_ml, float(prior_cfg.get("n_ml_eff", 0.0)), float(prior_cfg.get("n_ml_scale", 1.0)))
-    assert 0.0 <= n_ml
+    require_invariant(
+        0.0 <= p_ml <= 1.0,
+        invariant_id="M-1",
+        message="ML prior probability in [0,1]",
+        tolerance=1e-8,
+        data={"p_ml": float(p_ml)},
+    )
+    require_invariant(
+        n_ml >= 0.0,
+        invariant_id="B-1",
+        message="n_ml nonnegative",
+        tolerance=0.0,
+        data={"n_ml": float(n_ml)},
+    )
 
     # Phase 2: Hybrid prior fusion.
     n_str = float(prior_cfg.get("n_str", 0.0))
     alpha_str, beta_str = build_structural_beta(q_str, n_str)
     alpha_ml, beta_ml = build_ml_beta(p_ml, n_ml)
     alpha0, beta0 = fuse_priors(alpha_str, beta_str, alpha_ml, beta_ml)
-    assert alpha0 > 0.0 and beta0 > 0.0
+    require_invariant(
+        alpha0 > 0.0 and beta0 > 0.0,
+        invariant_id="B-1",
+        message="Prior alpha0/beta0 positive (likelihood normalization)",
+        tolerance=0.0,
+        data={"alpha0": float(alpha0), "beta0": float(beta0)},
+    )
 
     # Phase 4: Counts and Beta-Binomial update (optional Phase 6.2 Stage 1).
     y_raw, n_raw = counts_from_trade_tape(trade_tape)
@@ -82,10 +109,30 @@ def capopm_pipeline(
         y_used, n_used = y_stage2, n_stage2
 
     alpha_post, beta_post = beta_binomial_update(alpha0, beta0, y_used, n_used)
-    assert alpha_post > 0.0 and beta_post > 0.0
+    require_invariant(
+        alpha_post > 0.0 and beta_post > 0.0,
+        invariant_id="B-2",
+        message="Posterior alpha/beta positive",
+        tolerance=0.0,
+        data={"alpha_post": float(alpha_post), "beta_post": float(beta_post)},
+    )
 
     # Phase 5: Posterior prices and credible intervals.
     pi_yes, pi_no = posterior_prices(alpha_post, beta_post)
+    require_invariant(
+        0.0 <= pi_yes <= 1.0 and 0.0 <= pi_no <= 1.0,
+        invariant_id="M-1",
+        message="Posterior prices within [0,1]",
+        tolerance=1e-8,
+        data={"pi_yes": float(pi_yes), "pi_no": float(pi_no)},
+    )
+    require_invariant(
+        abs((pi_yes + pi_no) - 1.0) <= 1e-8,
+        invariant_id="B-2",
+        message="Posterior normalization pi_yes+pi_no=1",
+        tolerance=1e-8,
+        data={"pi_yes": float(pi_yes), "pi_no": float(pi_no)},
+    )
     ci90 = credible_intervals(alpha_post, beta_post, level=0.90)
     ci95 = credible_intervals(alpha_post, beta_post, level=0.95)
 
@@ -104,6 +151,20 @@ def capopm_pipeline(
         mixture_weights = mix["regime_weights"]
         regime_params = mix["regime_params"]
         mixture_diagnostics = mix["diagnostics"]
+        require_invariant(
+            all(w >= 0.0 for w in mixture_weights) and abs(sum(mixture_weights) - 1.0) <= 1e-8,
+            invariant_id="M-2",
+            message="Mixture weights normalized",
+            tolerance=1e-8,
+            data={"sum_weights": float(sum(mixture_weights)), "min_weight": float(min(mixture_weights or [0.0]))},
+        )
+        require_invariant(
+            0.0 <= mixture_mean <= 1.0,
+            invariant_id="M-1",
+            message="Mixture mean within [0,1]",
+            tolerance=1e-8,
+            data={"mixture_mean": float(mixture_mean)},
+        )
 
     return {
         "q_str": q_str,

@@ -11,6 +11,8 @@ from __future__ import annotations
 import math
 from typing import Dict, Iterable, List, Tuple
 
+from ..invariant_runtime import record_fallback, require_invariant
+
 
 def apply_linear_offsets(y1: float, n1: float, cfg: Dict) -> Tuple[float, float]:
     """Apply linear offsets: y* = y1 + delta_plus, n* = n1 + delta_plus + delta_minus."""
@@ -170,6 +172,17 @@ def mixture_posterior_params(
         beta_r_prior = beta_base + g_minus
         if alpha_r_prior <= 0.0 or beta_r_prior <= 0.0:
             raise ValueError("Regime parameters must be positive after clamping")
+        if clamp_flags.get("g_plus_clamped") or clamp_flags.get("g_minus_clamped"):
+            record_fallback(
+                "AF-02",
+                {
+                    "alpha_base": alpha_base,
+                    "beta_base": beta_base,
+                    "g_plus": g_plus,
+                    "g_minus": g_minus,
+                    "regime_index": len(alphas_betas),
+                },
+            )
         alpha_r_post = alpha_r_prior + y_used
         beta_r_post = beta_r_prior + (n_used - y_used)
         alphas_betas.append((alpha_r_post, beta_r_post))

@@ -14,6 +14,7 @@ import json
 import math
 import os
 from dataclasses import dataclass
+from itertools import product
 from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
@@ -28,6 +29,7 @@ from .paper_config import (
     EFFECT_ALPHA,
     EFFECT_BOOTSTRAP_SAMPLES,
     EXTREME_P_THRESHOLD,
+    PAPER_GRIDS,
     PAPER_READY_MIN_GRID,
     PAPER_READY_MIN_RUNS,
     SMOKE_RUN_THRESHOLD,
@@ -97,16 +99,18 @@ def run_audit_for_results(
         thresholds=thresholds,
     )
     coverage = _audit_coverage(per_run_metrics, model_names, thresholds)
+    grid_snapshot = _grid_snapshot(experiment_id, sweep_params, registry_root, thresholds)
     criteria_eval = _evaluate_criteria(
         contract=contract,
         summary=summary,
         aggregated=aggregated,
         sweep_params=sweep_params,
         thresholds=thresholds,
+        grid_snapshot=grid_snapshot,
     )
     theorem_checklist = _build_theorem_checklist(contract, criteria_eval)
     effect_sizes = _effect_sizes(per_run_metrics, model_names, thresholds)
-    seed_grid = _seed_and_grid_coverage(per_run_metrics, sweep_params, thresholds)
+    seed_grid = _seed_and_grid_coverage(per_run_metrics, sweep_params, thresholds, grid_snapshot)
     reproducibility = _reproducibility_layer(
         summary_path=summary_path,
         metrics_path=metrics_path,
@@ -335,11 +339,12 @@ def _evaluate_criteria(
     aggregated: Dict,
     sweep_params: Dict,
     thresholds: AuditThresholds,
+    grid_snapshot: Optional[Dict] = None,
 ) -> Dict:
     """Programmatically evaluate pass/fail criteria with full trace."""
 
     criteria_results: List[Dict] = []
-    grid_points_observed = 1
+    grid_points_observed = (grid_snapshot or {}).get("observed_count", 1)
     recorded_status = summary.get("status", {})
     recorded_pass = recorded_status.get("pass")
     for crit in contract.get("criteria", []):
@@ -415,6 +420,7 @@ def _evaluate_criteria(
         "status_mismatch": (recorded_pass is not None and overall is not None and bool(recorded_pass) != bool(overall)),
         "criteria_semantics_mismatch": semantics_mismatch,
         "source_of_truth": "criteria_evaluation",
+        "grid_snapshot": grid_snapshot,
     }
 
 
@@ -571,40 +577,87 @@ def _holm_correction(p_values: List[float]) -> List[float]:
     return corrected
 
 
+def _grid_snapshot(experiment_id: Optional[str], sweep_params: Dict, registry_root: str, thresholds: AuditThresholds) -> Dict:
+    """Aggregate grid coverage across scenarios for the same experiment."""
+    # B1-CHG-01: cross-scenario grid aggregation semantics.
+
+    exp_prefix = experiment_id.split(".")[0] if experiment_id else None
+    expected_cfg = PAPER_GRIDS.get(exp_prefix, {})
+    expected_axes = [k for k, v in expected_cfg.items() if isinstance(v, list)]
+    if (not expected_axes) or (expected_axes and not any(k in sweep_params for k in expected_axes)):
+        expected_axes = sorted(list(sweep_params.keys()))
+    observed_points = set()
+    if os.path.exists(registry_root):
+        for name in sorted(os.listdir(registry_root)):
+            summary_path = os.path.join(registry_root, name, "summary.json")
+            if not os.path.exists(summary_path):
+                continue
+            try:
+                with open(summary_path, "r", encoding="utf-8") as f:
+                    summ = json.load(f)
+            except Exception:
+                continue
+            meta = summ.get("metadata", {}) or {}
+            if meta.get("experiment_id") != experiment_id:
+                continue
+            sp = summ.get("sweep_params", {})
+            point = tuple(sp.get(ax) for ax in expected_axes) if expected_axes else ()
+            if expected_axes and all(p is not None for p in point):
+                observed_points.add(point)
+    expected_points: List[tuple] = []
+    if expected_axes:
+        grids = [expected_cfg.get(ax, []) for ax in expected_axes]
+        if grids and all(isinstance(g, list) for g in grids):
+            for combo in product(*grids):
+                expected_points.append(tuple(combo))
+    missing_points = [pt for pt in expected_points if pt not in observed_points]
+    observed_count = len(observed_points) if observed_points else 1
+    return {
+        "expected_axes": expected_axes,
+        "expected_points": expected_points,
+        "observed_points": list(observed_points),
+        "observed_count": observed_count,
+        "missing_points": missing_points,
+        "registry_root": registry_root,
+        "threshold_min_grid": thresholds.paper_ready_min_grid,
+    }
+
+
 def _seed_and_grid_coverage(
     per_run_metrics: List[Dict],
     sweep_params: Dict,
     thresholds: AuditThresholds,
+    grid_snapshot: Optional[Dict],
 ) -> Dict:
     """Classify seed/grid coverage for reproducibility audits."""
 
     n_runs = len(per_run_metrics)
     grid_axes = sorted(list(sweep_params.keys()))
-    grid_points_observed = 1  # Each summary corresponds to a single grid point.
-
+    observed_count = (grid_snapshot or {}).get("observed_count", 1)
     flags: List[str] = []
     if n_runs < thresholds.paper_ready_min_runs:
         flags.append("seed_count_below_paper_ready")
-    if grid_points_observed < thresholds.paper_ready_min_grid and grid_axes:
+    if observed_count < thresholds.paper_ready_min_grid and grid_axes:
         flags.append("grid_points_below_paper_ready")
     if n_runs <= thresholds.smoke_run_threshold:
         coverage_class = "smoke_only"
-    elif grid_points_observed >= thresholds.paper_ready_min_grid:
+    elif observed_count >= thresholds.paper_ready_min_grid:
         coverage_class = "multi_grid"
     else:
         coverage_class = "multi_seed"
 
     paper_ready = (n_runs >= thresholds.paper_ready_min_runs) and (
-        grid_points_observed >= thresholds.paper_ready_min_grid or not grid_axes
+        observed_count >= thresholds.paper_ready_min_grid or not grid_axes
     )
 
     return {
         "n_runs": n_runs,
         "grid_axes": grid_axes,
-        "grid_points_observed": grid_points_observed,
+        "grid_points_observed": observed_count,
         "coverage_class": coverage_class,
         "paper_ready": paper_ready,
         "flags": flags,
+        "grid_snapshot": grid_snapshot,
     }
 
 

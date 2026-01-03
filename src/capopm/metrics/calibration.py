@@ -9,6 +9,7 @@ from typing import Dict, List, Tuple
 import numpy as np
 
 from ..pricing import beta_ppf, credible_intervals
+from ..invariant_runtime import record_fallback
 
 
 def reliability_bins(
@@ -131,6 +132,17 @@ def calibration_ece(
         ece, nonempty = _ece_from_bins(bins)
         used_binning = "equal_mass"
         fallback_applied = True
+        record_fallback(
+            "AF-03",
+            {
+                "reason": "nonempty_bins_below_min",
+                "requested_binning": binning,
+                "used_binning": used_binning,
+                "n_nonempty_bins": nonempty,
+                "min_nonempty_bins": min_nonempty_bins,
+                "n_samples": len(p_hat_list),
+            },
+        )
 
     p_hat = np.asarray(p_hat_list, dtype=float)
     unique = int(np.unique(np.round(p_hat, 6)).size)
@@ -143,6 +155,16 @@ def calibration_ece(
         "binning_mode_requested": binning,
         "fallback_applied": fallback_applied,
     }
+    if degenerate:
+        record_fallback(
+            "AF-03",
+            {
+                "reason": "degenerate_binning",
+                "n_unique_predictions": unique,
+                "n_nonempty_bins": nonempty,
+                "binning_mode_used": used_binning,
+            },
+        )
     return float(ece), diagnostics
 
 

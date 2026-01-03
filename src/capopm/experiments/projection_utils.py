@@ -7,21 +7,44 @@ from __future__ import annotations
 import math
 from typing import Dict, Iterable, List
 
+from ..invariant_runtime import record_fallback, require_invariant
+
 
 def project_probs(prob_vector: Iterable[float], method: str = "euclidean", eps: float = 1e-12) -> List[float]:
     """Project probability vector onto the simplex using the chosen method."""
 
-    v = [max(float(p), eps) for p in prob_vector]
+    v_raw = [float(p) for p in prob_vector]
+    v = [max(p, eps) for p in v_raw]
+    if any(p < eps for p in v_raw):
+        record_fallback(
+            "AF-04",
+            {
+                "reason": "eps_clamp",
+                "eps": eps,
+                "min_before": min(v_raw) if v_raw else None,
+            },
+        )
     if not v:
         raise ValueError("prob_vector must be non-empty")
     if method == "kl":
         total = sum(v)
         if total <= 0.0:
             raise ValueError("Sum of probabilities must be positive for KL projection")
-        return [max(p / total, eps) for p in v]
+        projected = [max(p / total, eps) for p in v]
     if method == "euclidean":
-        return _euclidean_simplex_projection(v, eps=eps)
-    raise ValueError(f"Unknown projection method: {method}")
+        projected = _euclidean_simplex_projection(v, eps=eps)
+    else:
+        raise ValueError(f"Unknown projection method: {method}")
+
+    # B1-CHG-02: Projection invariant enforcement (M-2).
+    require_invariant(
+        all(0.0 <= p <= 1.0 + 1e-8 for p in projected) and abs(sum(projected) - 1.0) <= 1e-8,
+        invariant_id="M-2",
+        message="Projection outputs must lie on simplex",
+        tolerance=1e-8,
+        data={"sum": sum(projected), "min": min(projected), "max": max(projected)},
+    )
+    return projected
 
 
 def projection_distance(before: Iterable[float], after: Iterable[float], metrics=None, eps: float = 1e-12) -> Dict[str, float]:
@@ -93,4 +116,3 @@ def _euclidean_simplex_projection(v: List[float], eps: float) -> List[float]:
     if total <= 0.0:
         return [1.0 / n for _ in w]
     return [x / total for x in w]
-

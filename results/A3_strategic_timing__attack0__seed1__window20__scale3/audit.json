@@ -11,7 +11,8 @@
     "seed": 1,
     "attack_strength": 0.0,
     "attack_window": 0.2,
-    "adversarial_size_scale": 3
+    "adversarial_size_scale": 3,
+    "config_hash": "fc8bbce4409641398b0e3cade0baa1d213f0e0550a225664e24686b591a9a7e2"
   },
   "calibration": {
     "capopm": {
@@ -265,25 +266,8 @@
     }
   },
   "criteria_evaluation": {
-    "overall_pass": false,
+    "overall_pass": null,
     "criteria": [
-      {
-        "id": "regret_log_non_negative",
-        "description": "Log-score regret vs uncorrected should be non-negative.",
-        "theorem": "Theorem 12",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "regret_log"
-        ],
-        "comparator_path": null,
-        "direction": ">=",
-        "threshold": 0.0,
-        "metric_value": -0.026166778976910908,
-        "evaluated": true,
-        "pass": false,
-        "reason": null
-      },
       {
         "id": "grid_requirement",
         "description": "Attack-strength sensitivity requires multi-scenario grid (early vs late attacks).",
@@ -295,7 +279,7 @@
         "metric_value": null,
         "evaluated": false,
         "pass": null,
-        "reason": "grid_missing_for_claim"
+        "reason": "metric_missing"
       }
     ],
     "recorded_status": {
@@ -305,16 +289,48 @@
     },
     "status_mismatch": false,
     "criteria_semantics_mismatch": false,
-    "source_of_truth": "criteria_evaluation"
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "adversarial_size_scale",
+        "attack_strength",
+        "attack_window"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          3,
+          1.0,
+          0.2
+        ],
+        [
+          3,
+          0.0,
+          0.2
+        ],
+        [
+          1,
+          0.0,
+          0.2
+        ],
+        [
+          1,
+          1.0,
+          0.2
+        ]
+      ],
+      "observed_count": 4,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "theorem_checklist": [
     {
       "theorem": "Theorem 12",
       "claim": "Stage 1+2 reduces late manipulation",
-      "status": "failed",
-      "criteria_ids": [
-        "regret_log_non_negative"
-      ]
+      "status": "not_covered",
+      "criteria_ids": []
     },
     {
       "theorem": "Proposition 9",
@@ -332,13 +348,46 @@
       "attack_strength",
       "attack_window"
     ],
-    "grid_points_observed": 1,
+    "grid_points_observed": 4,
     "coverage_class": "smoke_only",
     "paper_ready": false,
     "flags": [
-      "seed_count_below_paper_ready",
-      "grid_points_below_paper_ready"
-    ]
+      "seed_count_below_paper_ready"
+    ],
+    "grid_snapshot": {
+      "expected_axes": [
+        "adversarial_size_scale",
+        "attack_strength",
+        "attack_window"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          3,
+          1.0,
+          0.2
+        ],
+        [
+          3,
+          0.0,
+          0.2
+        ],
+        [
+          1,
+          0.0,
+          0.2
+        ],
+        [
+          1,
+          1.0,
+          0.2
+        ]
+      ],
+      "observed_count": 4,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "effect_sizes": {
     "brier_vs_uncorrected": {
@@ -388,21 +437,29 @@
   },
   "reproducibility": {
     "artifact_hashes": {
-      "summary.json": "f029d0e81608a7ea65d34b892032ca28ed1de8bf36481fd12b5629e97a219335",
-      "metrics_aggregated.csv": "913283f8fe59914ece22708387e358ac42f34374a72797046d69624d2022dd08",
+      "summary.json": "635dd2f6c6c55a2822d0b3fa785c028d5dcec8b277917dcdb8e4f01d01a68438",
+      "metrics_aggregated.csv": "51185bfa2e94db640c9b5c604f1be710535f44e429c45e45b783eab39c3c6cbd",
       "tests.csv": "98d0347bfa0891c02c60e335ba899745718a4218c82e5525609c5d7d63690e6d",
       "reliability_capopm.csv": "28a467f885449050390eb98796e0f5caa207e209957e16ada8df6f2f891d534a",
       "reliability_capopm_stage1_only.csv": "a3ec3bc8747144e8010669877ce6d01251eb8ad581befe2cab3c37669ef537f7",
-      "reliability_ml_only.csv": "412ccd640eedc41955989965a10c8c7fdbbdcb0bfc56a0424393ba8693edf63e",
+      "reliability_uncorrected.csv": "7fec8a00090c34543d6358bf02bee873cca4f94e4143466c329fc2cfd7d43088",
       "reliability_raw_parimutuel.csv": "3d6c057811fca7284a2835cd0ab2aac83e2880dd2b459d09f68d8f4b7dbb7f63",
       "reliability_structural_only.csv": "82cf44b9485362ac7baaf1137e6abb3f565a9fcc7f3e13e4393b6e5adb9834f8",
-      "reliability_uncorrected.csv": "7fec8a00090c34543d6358bf02bee873cca4f94e4143466c329fc2cfd7d43088"
+      "reliability_ml_only.csv": "412ccd640eedc41955989965a10c8c7fdbbdcb0bfc56a0424393ba8693edf63e"
     },
     "scenario_registry_snapshot": {
-      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "root": "results",
       "scenarios": [
         "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+        "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
         "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+        "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
         "A3_strategic_timing__attack0__seed0__window20__scale1",
         "A3_strategic_timing__attack0__seed1__window20__scale3",
         "A3_strategic_timing__attack100__seed2__window20__scale1",
@@ -421,16 +478,24 @@
         "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
         "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
         "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv0_seed99101",
         "a1_info_eff_q65_inf30_adv10_seed99101",
+        "a1_info_eff_q65_inf30_adv20_seed99102",
+        "a1_info_eff_q65_inf50_adv0_seed99103",
+        "a1_info_eff_q65_inf50_adv20_seed99104",
+        "a1_info_eff_q85_inf30_adv0_seed99105",
+        "a1_info_eff_q85_inf30_adv20_seed99106",
+        "a1_info_eff_q85_inf50_adv0_seed99107",
+        "a1_info_eff_q85_inf50_adv20_seed99108",
         "mini_regression",
         "paper_artifacts",
         "smoke_metrics_phase7"
       ]
     },
-    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_hash": "2a1d58fc793163d303628d749163cf439e7bcb6fc8b1bfe33e043cec7b677f13",
     "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
-    "config_hash": null,
-    "config_snapshot_path": null,
+    "config_hash": "192e510dafa347d16db919df2b4cdb955538b77bc62618be442c3c2833395686",
+    "config_snapshot_path": "results\\A3_strategic_timing__attack0__seed1__window20__scale3\\config_snapshot.json",
     "reproduction_command": "python run_paper_suite.py --experiment A3",
     "reproduce_line": "python run_paper_suite.py --experiment A3 --scenario A3_strategic_timing__attack0__seed1__window20__scale3"
   },
@@ -485,5 +550,5 @@
     "Audit is reporting-only; no CAPOPM math/DGP changed.",
     "Calibration alternative uses discrete predictions when ECE is not interpretable."
   ],
-  "audit_hash": "8ed1000c7002b9a46c2de8007996f4751abac01b2962d36eda66c22d2aecd581"
+  "audit_hash": "eac184797ac65f765a2c7fa60fe6bb989475163e029d05b751926a94d04bda8a"
 }

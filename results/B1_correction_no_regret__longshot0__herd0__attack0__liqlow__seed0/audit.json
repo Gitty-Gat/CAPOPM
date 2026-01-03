@@ -12,7 +12,8 @@
     "longshot_bias": 0,
     "herding": 0,
     "timing_attack_strength": 0.0,
-    "liquidity_level": "low"
+    "liquidity_level": "low",
+    "config_hash": "ed72ae56258fd2052f5f9439a32d6af3760f102da2e0d06594e1b053720b7775"
   },
   "calibration": {
     "capopm": {
@@ -262,43 +263,8 @@
     }
   },
   "criteria_evaluation": {
-    "overall_pass": true,
-    "criteria": [
-      {
-        "id": "regret_brier_non_positive",
-        "description": "Mean Brier regret vs uncorrected should be \u2264 0.",
-        "theorem": "Theorem 14",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "regret_brier"
-        ],
-        "comparator_path": null,
-        "direction": "<=",
-        "threshold": 0.0,
-        "metric_value": -0.005692512482521763,
-        "evaluated": true,
-        "pass": true,
-        "reason": null
-      },
-      {
-        "id": "regret_log_bad_non_positive",
-        "description": "Mean log-score regret (bad if positive) should be \u2264 0.",
-        "theorem": "Theorem 14",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "regret_log_bad"
-        ],
-        "comparator_path": null,
-        "direction": "<=",
-        "threshold": 0.0,
-        "metric_value": -0.04242597130675744,
-        "evaluated": true,
-        "pass": true,
-        "reason": null
-      }
-    ],
+    "overall_pass": null,
+    "criteria": [],
     "recorded_status": {
       "pass": true,
       "criteria": {
@@ -313,18 +279,54 @@
       }
     },
     "status_mismatch": false,
-    "criteria_semantics_mismatch": false,
-    "source_of_truth": "criteria_evaluation"
+    "criteria_semantics_mismatch": true,
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "herding",
+        "liquidity_level",
+        "longshot_bias",
+        "timing_attack_strength"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0,
+          "low",
+          0,
+          1.0
+        ],
+        [
+          0,
+          "low",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          1.0
+        ]
+      ],
+      "observed_count": 4,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "theorem_checklist": [
     {
       "theorem": "Theorem 14",
       "claim": "Corrections do not increase regret",
-      "status": "validated",
-      "criteria_ids": [
-        "regret_brier_non_positive",
-        "regret_log_bad_non_positive"
-      ]
+      "status": "not_covered",
+      "criteria_ids": []
     }
   ],
   "seed_grid_coverage": {
@@ -335,13 +337,51 @@
       "longshot_bias",
       "timing_attack_strength"
     ],
-    "grid_points_observed": 1,
+    "grid_points_observed": 4,
     "coverage_class": "smoke_only",
     "paper_ready": false,
     "flags": [
-      "seed_count_below_paper_ready",
-      "grid_points_below_paper_ready"
-    ]
+      "seed_count_below_paper_ready"
+    ],
+    "grid_snapshot": {
+      "expected_axes": [
+        "herding",
+        "liquidity_level",
+        "longshot_bias",
+        "timing_attack_strength"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0,
+          "low",
+          0,
+          1.0
+        ],
+        [
+          0,
+          "low",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          1.0
+        ]
+      ],
+      "observed_count": 4,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "effect_sizes": {
     "brier_vs_uncorrected": {
@@ -391,21 +431,29 @@
   },
   "reproducibility": {
     "artifact_hashes": {
-      "summary.json": "85786c209850f9d02302a6f5cc4e516e717b2c3caf7cbc6c618db8dfd46a345f",
-      "metrics_aggregated.csv": "2b5b47561552191a94c12750c5027a9cef7c76cf3b5ec53fed41f6fd7f1e8efc",
+      "summary.json": "45d99ff5a44897c6a39601c627f4c594fd0daf8d63a0372bda699ae270672fa7",
+      "metrics_aggregated.csv": "ba2546fc3950d04ce5af9f0d6ada303d13de951d192cc688b819921b5498353d",
       "tests.csv": "a73546f2821bde83ccb10a42960e67e3b15127ab1a959c26b0a48692df053a9f",
       "reliability_capopm.csv": "737ca29d559502340326dfcd55dcd3656f233e3ea93a15910a3bbd7d127bea5f",
       "reliability_capopm_stage1_only.csv": "a014c0a8fd4b7503989419338cad95b2e0abc022aee54c963acbd7f213368b95",
-      "reliability_ml_only.csv": "1a2e4608db4936c5fee29e571134725d484724a041d5696a05934e775ffd338f",
+      "reliability_uncorrected.csv": "722f7359eac24cbc241e11679720aeab82b491bc66614b67f33cd8ba7101c961",
       "reliability_raw_parimutuel.csv": "6e24cdf3f0052a1a7daef0a0c3bc0aafa0ba322098e3d16611d90462e078609b",
       "reliability_structural_only.csv": "2387f64f48b8180addef99c0ceab32dcf0ead6122da5f0219f0fd0958aa55175",
-      "reliability_uncorrected.csv": "722f7359eac24cbc241e11679720aeab82b491bc66614b67f33cd8ba7101c961"
+      "reliability_ml_only.csv": "1a2e4608db4936c5fee29e571134725d484724a041d5696a05934e775ffd338f"
     },
     "scenario_registry_snapshot": {
-      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "root": "results",
       "scenarios": [
         "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+        "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
         "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+        "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
         "A3_strategic_timing__attack0__seed0__window20__scale1",
         "A3_strategic_timing__attack0__seed1__window20__scale3",
         "A3_strategic_timing__attack100__seed2__window20__scale1",
@@ -424,16 +472,24 @@
         "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
         "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
         "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv0_seed99101",
         "a1_info_eff_q65_inf30_adv10_seed99101",
+        "a1_info_eff_q65_inf30_adv20_seed99102",
+        "a1_info_eff_q65_inf50_adv0_seed99103",
+        "a1_info_eff_q65_inf50_adv20_seed99104",
+        "a1_info_eff_q85_inf30_adv0_seed99105",
+        "a1_info_eff_q85_inf30_adv20_seed99106",
+        "a1_info_eff_q85_inf50_adv0_seed99107",
+        "a1_info_eff_q85_inf50_adv20_seed99108",
         "mini_regression",
         "paper_artifacts",
         "smoke_metrics_phase7"
       ]
     },
-    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_hash": "2a1d58fc793163d303628d749163cf439e7bcb6fc8b1bfe33e043cec7b677f13",
     "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
-    "config_hash": null,
-    "config_snapshot_path": null,
+    "config_hash": "15fdc5ff0048722d604c6d9b2bed0fdd9dfc376b2f3e128f5bcc6cfcfc47f1a1",
+    "config_snapshot_path": "results\\B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0\\config_snapshot.json",
     "reproduction_command": "python run_paper_suite.py --experiment B1",
     "reproduce_line": "python run_paper_suite.py --experiment B1 --scenario B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0"
   },
@@ -472,11 +528,11 @@
       "ml_only_coverage95"
     ],
     "status_mismatch_detected": false,
-    "criteria_semantics_mismatch": false
+    "criteria_semantics_mismatch": true
   },
   "notes": [
     "Audit is reporting-only; no CAPOPM math/DGP changed.",
     "Calibration alternative uses discrete predictions when ECE is not interpretable."
   ],
-  "audit_hash": "474ab85c6b43bce5badea6a540e6700e3d02d316257e7f72da3c6cffb89e5fa7"
+  "audit_hash": "4eb92ff362b6921b2c40ae1a7364b666f6e9ee492585fe47127d77f3bfa3277a"
 }

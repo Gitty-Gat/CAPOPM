@@ -16,6 +16,8 @@ from __future__ import annotations
 
 from typing import Dict, Iterable, List, Tuple
 
+from ..invariant_runtime import record_fallback
+
 
 def compute_w_ls(p_mkt: float, cfg: Dict) -> float:
     """Long-shot downweighting w_LS(p_mkt) per Phase 6.2 Stage 1."""
@@ -78,6 +80,8 @@ def apply_behavioral_weights(
     w_sum = 0.0
     downweighted = 0
     total = 0
+    clipped_to_min = 0
+    clipped_to_max = 0
 
     for trade in trade_tape:
         if len(history) > window:
@@ -87,6 +91,10 @@ def apply_behavioral_weights(
         if size <= 0.0:
             raise ValueError("trade size must be positive")
         total += 1
+        if w <= w_min:
+            clipped_to_min += 1
+        if w >= w_max:
+            clipped_to_max += 1
         if w < 1.0:
             downweighted += 1
         w_sum += w
@@ -111,7 +119,19 @@ def apply_behavioral_weights(
         "mean_weight": (w_sum / total) if total > 0 else 0.0,
         "downweighted_trades": downweighted,
         "total_trades": total,
+        "clipped_to_min": clipped_to_min,
+        "clipped_to_max": clipped_to_max,
     }
+    record_fallback(
+        "AF-01",
+        {
+            "w_min": w_min,
+            "w_max": w_max,
+            "clipped_to_min": clipped_to_min,
+            "clipped_to_max": clipped_to_max,
+            "total_trades": total,
+        },
+    )
     return y1, n1, weights_summary
 
 

@@ -1,0 +1,95 @@
+{
+  "p_true_dist": {
+    "type": "fixed",
+    "value": 0.55
+  },
+  "models": [
+    "capopm",
+    "before_projection",
+    "after_projection"
+  ],
+  "traders": {
+    "n_traders": 40,
+    "proportions": {
+      "informed": 0.5,
+      "adversarial": 0.1,
+      "noise": 0.4
+    },
+    "params": {
+      "informed": {
+        "signal_quality": 0.7,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      },
+      "adversarial": {
+        "signal_quality": 0.7,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      },
+      "noise": {
+        "signal_quality": 0.5,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      }
+    }
+  },
+  "market": {
+    "n_steps": 20,
+    "arrivals_per_step": 3,
+    "fee_rate": 0.01,
+    "initial_yes_pool": 1.0,
+    "initial_no_pool": 1.0,
+    "signal_model": "conditional_on_state",
+    "use_realized_state_for_signals": true,
+    "herding_enabled": false,
+    "size_dist": "fixed",
+    "size_dist_params": {
+      "size": 1.0
+    }
+  },
+  "structural_cfg": {
+    "T": 1.0,
+    "K": 1.0,
+    "S0": 1.0,
+    "V0": 0.04,
+    "kappa": 1.0,
+    "theta": 0.04,
+    "xi": 0.2,
+    "rho": -0.3,
+    "alpha": 0.7,
+    "lambda": 0.1
+  },
+  "ml_cfg": {
+    "base_prob": 0.55,
+    "bias": -0.02,
+    "noise_std": 0.01,
+    "calibration": 1.0,
+    "r_ml": 0.8
+  },
+  "prior_cfg": {
+    "n_str": 10.0,
+    "n_ml_eff": 4.0,
+    "n_ml_scale": 1.0
+  },
+  "stage1_cfg": {
+    "enabled": false
+  },
+  "stage2_cfg": {
+    "enabled": false
+  },
+  "ece_bins": 10,
+  "calibration_binning": "equal_width",
+  "ece_min_nonempty_bins": 5,
+  "coverage_include_outcome": false,
+  "seed": 0,
+  "n_runs": 8,
+  "scenario_name": "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
+  "experiment_id": "B5.ARBITRAGE_PROJECTION_IMPACT",
+  "tier": "B",
+  "projection_method": "euclidean",
+  "sweep_params": {
+    "violation_strength": 0.0,
+    "projection_method": "euclidean",
+    "coherent_flag": true
+  }
+}

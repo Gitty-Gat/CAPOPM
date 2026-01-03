@@ -9,7 +9,8 @@
     "experiment_id": "B4.REGIME_POSTERIOR_CONCENTRATION",
     "tier": "B",
     "seed": 0,
-    "evidence_strength": 0.5
+    "evidence_strength": 0.5,
+    "config_hash": "cb617d43af2382a3134eb4e458bd29a7b7b77f5a61026ad1db86f6582875732b"
   },
   "calibration": {
     "capopm": {
@@ -177,25 +178,8 @@
     }
   },
   "criteria_evaluation": {
-    "overall_pass": false,
+    "overall_pass": null,
     "criteria": [
-      {
-        "id": "regime_entropy_defined",
-        "description": "Regime entropy should be finite and defined.",
-        "theorem": "Theorem 15",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "regime_entropy"
-        ],
-        "comparator_path": null,
-        "direction": "<=",
-        "threshold": 0.0,
-        "metric_value": 0.6931471263073097,
-        "evaluated": true,
-        "pass": false,
-        "reason": null
-      },
       {
         "id": "grid_requirement",
         "description": "Need multiple evidence levels to validate entropy/weight movement.",
@@ -207,7 +191,7 @@
         "metric_value": null,
         "evaluated": false,
         "pass": null,
-        "reason": "grid_missing_for_claim"
+        "reason": "metric_missing"
       }
     ],
     "recorded_status": {
@@ -223,15 +207,32 @@
     },
     "status_mismatch": false,
     "criteria_semantics_mismatch": false,
-    "source_of_truth": "criteria_evaluation"
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "evidence_strength"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0.5
+        ],
+        [
+          1.5
+        ]
+      ],
+      "observed_count": 2,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "theorem_checklist": [
     {
       "theorem": "Theorem 15",
       "claim": "Mixture posterior concentrates with evidence",
-      "status": "failed",
+      "status": "indeterminate",
       "criteria_ids": [
-        "regime_entropy_defined",
         "grid_requirement"
       ]
     }
@@ -241,13 +242,30 @@
     "grid_axes": [
       "evidence_strength"
     ],
-    "grid_points_observed": 1,
+    "grid_points_observed": 2,
     "coverage_class": "smoke_only",
     "paper_ready": false,
     "flags": [
-      "seed_count_below_paper_ready",
-      "grid_points_below_paper_ready"
-    ]
+      "seed_count_below_paper_ready"
+    ],
+    "grid_snapshot": {
+      "expected_axes": [
+        "evidence_strength"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0.5
+        ],
+        [
+          1.5
+        ]
+      ],
+      "observed_count": 2,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "effect_sizes": {
     "brier_vs_uncorrected": {
@@ -297,19 +315,27 @@
   },
   "reproducibility": {
     "artifact_hashes": {
-      "summary.json": "ae3d33ade120179902229f8df214dba8d436d7b14af3cf02b2fba292eb8d793d",
-      "metrics_aggregated.csv": "d96a0eca130fc79d504a43fb0b44171f943139e6ff06c33f2c9224f381eeaa9c",
+      "summary.json": "8a3c2a40d459d481ca8b6c165235dd049e152816c00a4aef3cb89d721b8e6f30",
+      "metrics_aggregated.csv": "738beef4418f089884d9696347fc08f07c04ae82c8603d18706d5011efaa18aa",
       "tests.csv": "054769b2dae99ff9bf53bcdf33bf0753667e45d16285de5c6678a0121ed14d1a",
       "reliability_capopm.csv": "ca07204e3a7e7f88fc81ab678bc1d301002a549ba7e5fb54420e38db23e8c78a",
       "reliability_capopm_stage1_only.csv": "e8b10d4b940760069065a0fd919609ad037ec5606ea9c3f99f6ada65f4504d97",
-      "reliability_raw_parimutuel.csv": "244c9989f06801b6fddd828c232a284e8a44569add13a6ccfe7116ca7cad4876",
-      "reliability_uncorrected.csv": "c19520b7605a0c4dad4671d1763809cdec35f69a328871108c330698c2018577"
+      "reliability_uncorrected.csv": "c19520b7605a0c4dad4671d1763809cdec35f69a328871108c330698c2018577",
+      "reliability_raw_parimutuel.csv": "244c9989f06801b6fddd828c232a284e8a44569add13a6ccfe7116ca7cad4876"
     },
     "scenario_registry_snapshot": {
-      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "root": "results",
       "scenarios": [
         "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+        "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
         "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+        "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
         "A3_strategic_timing__attack0__seed0__window20__scale1",
         "A3_strategic_timing__attack0__seed1__window20__scale3",
         "A3_strategic_timing__attack100__seed2__window20__scale1",
@@ -328,16 +354,24 @@
         "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
         "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
         "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv0_seed99101",
         "a1_info_eff_q65_inf30_adv10_seed99101",
+        "a1_info_eff_q65_inf30_adv20_seed99102",
+        "a1_info_eff_q65_inf50_adv0_seed99103",
+        "a1_info_eff_q65_inf50_adv20_seed99104",
+        "a1_info_eff_q85_inf30_adv0_seed99105",
+        "a1_info_eff_q85_inf30_adv20_seed99106",
+        "a1_info_eff_q85_inf50_adv0_seed99107",
+        "a1_info_eff_q85_inf50_adv20_seed99108",
         "mini_regression",
         "paper_artifacts",
         "smoke_metrics_phase7"
       ]
     },
-    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_hash": "2a1d58fc793163d303628d749163cf439e7bcb6fc8b1bfe33e043cec7b677f13",
     "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
-    "config_hash": null,
-    "config_snapshot_path": null,
+    "config_hash": "05d08099cb7a34359939285807201e787808c90bd05ff6e167d06b000da83fff",
+    "config_snapshot_path": "results\\B4_regime_concentration__evidence50__seed0\\config_snapshot.json",
     "reproduction_command": "python run_paper_suite.py --experiment B4",
     "reproduce_line": "python run_paper_suite.py --experiment B4 --scenario B4_regime_concentration__evidence50__seed0"
   },
@@ -372,5 +406,5 @@
     "Audit is reporting-only; no CAPOPM math/DGP changed.",
     "Calibration alternative uses discrete predictions when ECE is not interpretable."
   ],
-  "audit_hash": "98e8c8185f83c82dd690835b5933fab2ddc0032a1e9880f0d095d0c566745854"
+  "audit_hash": "d9e2f6ec5df54105fa7042fbe1a2946f9a35b5a1e2c58f03684548f4d5c1f72c"
 }

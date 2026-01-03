@@ -12,7 +12,8 @@
     "longshot_bias": 0,
     "herding": 0,
     "timing_attack_strength": 1.0,
-    "liquidity_level": "high"
+    "liquidity_level": "high",
+    "config_hash": "ba63a4a6a850ca09cf69f5a3d165ec0095c88b5ef91653960c346bbc7e628160"
   },
   "calibration": {
     "capopm": {
@@ -257,43 +258,8 @@
     }
   },
   "criteria_evaluation": {
-    "overall_pass": false,
-    "criteria": [
-      {
-        "id": "regret_brier_non_positive",
-        "description": "Mean Brier regret vs uncorrected should be \u2264 0.",
-        "theorem": "Theorem 14",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "regret_brier"
-        ],
-        "comparator_path": null,
-        "direction": "<=",
-        "threshold": 0.0,
-        "metric_value": -0.00047527307637137295,
-        "evaluated": true,
-        "pass": true,
-        "reason": null
-      },
-      {
-        "id": "regret_log_bad_non_positive",
-        "description": "Mean log-score regret (bad if positive) should be \u2264 0.",
-        "theorem": "Theorem 14",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "regret_log_bad"
-        ],
-        "comparator_path": null,
-        "direction": "<=",
-        "threshold": 0.0,
-        "metric_value": 0.007127078319609459,
-        "evaluated": true,
-        "pass": false,
-        "reason": null
-      }
-    ],
+    "overall_pass": null,
+    "criteria": [],
     "recorded_status": {
       "pass": false,
       "criteria": {
@@ -309,17 +275,53 @@
     },
     "status_mismatch": false,
     "criteria_semantics_mismatch": false,
-    "source_of_truth": "criteria_evaluation"
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "herding",
+        "liquidity_level",
+        "longshot_bias",
+        "timing_attack_strength"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0,
+          "low",
+          0,
+          1.0
+        ],
+        [
+          0,
+          "low",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          1.0
+        ]
+      ],
+      "observed_count": 4,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "theorem_checklist": [
     {
       "theorem": "Theorem 14",
       "claim": "Corrections do not increase regret",
-      "status": "failed",
-      "criteria_ids": [
-        "regret_brier_non_positive",
-        "regret_log_bad_non_positive"
-      ]
+      "status": "not_covered",
+      "criteria_ids": []
     }
   ],
   "seed_grid_coverage": {
@@ -330,13 +332,51 @@
       "longshot_bias",
       "timing_attack_strength"
     ],
-    "grid_points_observed": 1,
+    "grid_points_observed": 4,
     "coverage_class": "smoke_only",
     "paper_ready": false,
     "flags": [
-      "seed_count_below_paper_ready",
-      "grid_points_below_paper_ready"
-    ]
+      "seed_count_below_paper_ready"
+    ],
+    "grid_snapshot": {
+      "expected_axes": [
+        "herding",
+        "liquidity_level",
+        "longshot_bias",
+        "timing_attack_strength"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0,
+          "low",
+          0,
+          1.0
+        ],
+        [
+          0,
+          "low",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          1.0
+        ]
+      ],
+      "observed_count": 4,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "effect_sizes": {
     "brier_vs_uncorrected": {
@@ -386,21 +426,29 @@
   },
   "reproducibility": {
     "artifact_hashes": {
-      "summary.json": "f69a252ffbca7fa564ad3e735d652230fcb39ff64d19ba8e9c0cebe1c9dd2423",
-      "metrics_aggregated.csv": "ad09ecfb683d463eb9fd6d27eb5b6a3f6710616cfe5bacf059bbb6a9dee4bfec",
+      "summary.json": "0436776cc91ec0f14536155778cde3ce392dff1346b74f965a36e6cfc0a7b44c",
+      "metrics_aggregated.csv": "4c24b087a926c2a95c996a99950032c6f7e9472cb5fe745a1b486df905543df6",
       "tests.csv": "a9fb134f7dd032ae89008724ff2fc1058620fd79f6042ce4a6697811806e0b8f",
       "reliability_capopm.csv": "da742abd41c707af7927fa8fbe19b491b8b5b55ef25d9797f0f37e80040fe356",
       "reliability_capopm_stage1_only.csv": "7401f064156df727df9098969159bc40c227ebed41c93e7e80278cba71812c88",
-      "reliability_ml_only.csv": "c8dce1e83cbdc0704c2c48e091876b240ccc21f529853934dc092bedc3323966",
+      "reliability_uncorrected.csv": "0f9955e1fdb3338c75bdffdef4a1fd614a34da1b2f50b2910f85b24ee483723b",
       "reliability_raw_parimutuel.csv": "2a455abe5a97f92942e229c283d6c48e4c13eb6792acbf062a82d66b2001a295",
       "reliability_structural_only.csv": "337e39142a8ef7c0f772f0e5aaf03026d314d1ccf9628297c8a2810716e755a8",
-      "reliability_uncorrected.csv": "0f9955e1fdb3338c75bdffdef4a1fd614a34da1b2f50b2910f85b24ee483723b"
+      "reliability_ml_only.csv": "c8dce1e83cbdc0704c2c48e091876b240ccc21f529853934dc092bedc3323966"
     },
     "scenario_registry_snapshot": {
-      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "root": "results",
       "scenarios": [
         "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+        "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
         "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+        "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
         "A3_strategic_timing__attack0__seed0__window20__scale1",
         "A3_strategic_timing__attack0__seed1__window20__scale3",
         "A3_strategic_timing__attack100__seed2__window20__scale1",
@@ -419,16 +467,24 @@
         "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
         "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
         "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv0_seed99101",
         "a1_info_eff_q65_inf30_adv10_seed99101",
+        "a1_info_eff_q65_inf30_adv20_seed99102",
+        "a1_info_eff_q65_inf50_adv0_seed99103",
+        "a1_info_eff_q65_inf50_adv20_seed99104",
+        "a1_info_eff_q85_inf30_adv0_seed99105",
+        "a1_info_eff_q85_inf30_adv20_seed99106",
+        "a1_info_eff_q85_inf50_adv0_seed99107",
+        "a1_info_eff_q85_inf50_adv20_seed99108",
         "mini_regression",
         "paper_artifacts",
         "smoke_metrics_phase7"
       ]
     },
-    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_hash": "2a1d58fc793163d303628d749163cf439e7bcb6fc8b1bfe33e043cec7b677f13",
     "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
-    "config_hash": null,
-    "config_snapshot_path": null,
+    "config_hash": "e115103ccf94846b311068545220aa88369c1b478e7a26e2f5cb487762618e42",
+    "config_snapshot_path": "results\\B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3\\config_snapshot.json",
     "reproduction_command": "python run_paper_suite.py --experiment B1",
     "reproduce_line": "python run_paper_suite.py --experiment B1 --scenario B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3"
   },
@@ -463,5 +519,5 @@
     "Audit is reporting-only; no CAPOPM math/DGP changed.",
     "Calibration alternative uses discrete predictions when ECE is not interpretable."
   ],
-  "audit_hash": "b90f62ee9fa29a2ca7fb5034eb63dae5aa44e6053a84ee753c575996fedac883"
+  "audit_hash": "7d6fb60361b14d6de52d832bd13057521e2fffdedcdeca1fb4c78bbf4c3f9493"
 }

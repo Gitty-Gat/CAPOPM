@@ -12,7 +12,8 @@
     "longshot_bias": 0,
     "herding": 0,
     "timing_attack_strength": 0.0,
-    "liquidity_level": "high"
+    "liquidity_level": "high",
+    "config_hash": "e74ccc949d06d54f748786d63e55318970f96a8f8be88a0a588b7f1222dbacac"
   },
   "calibration": {
     "capopm": {
@@ -284,43 +285,8 @@
     }
   },
   "criteria_evaluation": {
-    "overall_pass": false,
-    "criteria": [
-      {
-        "id": "regret_brier_non_positive",
-        "description": "Mean Brier regret vs uncorrected should be \u2264 0.",
-        "theorem": "Theorem 14",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "regret_brier"
-        ],
-        "comparator_path": null,
-        "direction": "<=",
-        "threshold": 0.0,
-        "metric_value": 0.0029039496968689474,
-        "evaluated": true,
-        "pass": false,
-        "reason": null
-      },
-      {
-        "id": "regret_log_bad_non_positive",
-        "description": "Mean log-score regret (bad if positive) should be \u2264 0.",
-        "theorem": "Theorem 14",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "regret_log_bad"
-        ],
-        "comparator_path": null,
-        "direction": "<=",
-        "threshold": 0.0,
-        "metric_value": 0.0272023516384929,
-        "evaluated": true,
-        "pass": false,
-        "reason": null
-      }
-    ],
+    "overall_pass": null,
+    "criteria": [],
     "recorded_status": {
       "pass": false,
       "criteria": {
@@ -336,17 +302,53 @@
     },
     "status_mismatch": false,
     "criteria_semantics_mismatch": false,
-    "source_of_truth": "criteria_evaluation"
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "herding",
+        "liquidity_level",
+        "longshot_bias",
+        "timing_attack_strength"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0,
+          "low",
+          0,
+          1.0
+        ],
+        [
+          0,
+          "low",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          1.0
+        ]
+      ],
+      "observed_count": 4,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "theorem_checklist": [
     {
       "theorem": "Theorem 14",
       "claim": "Corrections do not increase regret",
-      "status": "failed",
-      "criteria_ids": [
-        "regret_brier_non_positive",
-        "regret_log_bad_non_positive"
-      ]
+      "status": "not_covered",
+      "criteria_ids": []
     }
   ],
   "seed_grid_coverage": {
@@ -357,13 +359,51 @@
       "longshot_bias",
       "timing_attack_strength"
     ],
-    "grid_points_observed": 1,
+    "grid_points_observed": 4,
     "coverage_class": "smoke_only",
     "paper_ready": false,
     "flags": [
-      "seed_count_below_paper_ready",
-      "grid_points_below_paper_ready"
-    ]
+      "seed_count_below_paper_ready"
+    ],
+    "grid_snapshot": {
+      "expected_axes": [
+        "herding",
+        "liquidity_level",
+        "longshot_bias",
+        "timing_attack_strength"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0,
+          "low",
+          0,
+          1.0
+        ],
+        [
+          0,
+          "low",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          0.0
+        ],
+        [
+          0,
+          "high",
+          0,
+          1.0
+        ]
+      ],
+      "observed_count": 4,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2
+    }
   },
   "effect_sizes": {
     "brier_vs_uncorrected": {
@@ -413,21 +453,29 @@
   },
   "reproducibility": {
     "artifact_hashes": {
-      "summary.json": "38669fd908c7b4c3094b5d03f56bb89fe7227ee7b0cf96738a081e481d3e18a1",
-      "metrics_aggregated.csv": "26013af29b9f0b825f6c8120c454b804b81f580a1770c07e1acba952e5653270",
+      "summary.json": "c5a87a9eabd8c0fb8904d10c97acc2c0a84dc8f83a8fef947174289e7872b81e",
+      "metrics_aggregated.csv": "d96f8e48d00fe8b5496479d62e265214311a44912a1d8b6adc7effa39d263367",
       "tests.csv": "0b1a6a0335d6e2ede36fe37f50d78e61b87ab3f85562efe886d8908e348df77b",
       "reliability_capopm.csv": "6abc19775bf22b94fb9a9ee06736fcbcc6ccd23d64db7dae2c7f3cd44e008fe6",
       "reliability_capopm_stage1_only.csv": "26bbd9e29031f20772da3fcc971b049fb3b4b630dbe016665b8cb8ff9c658824",
-      "reliability_ml_only.csv": "b12867df8e0e3db5291b2aa08fcf2b79c5565d02155884e901646a22be60f5fb",
+      "reliability_uncorrected.csv": "17e2e6bf8475fa410e9fe87be478d75ad000a9d25a5fe7f224a28a4f5eb30b1e",
       "reliability_raw_parimutuel.csv": "f8e4c4373b103b9992a984669890a59bd2c509dbbde9d3f402d7c08fadc01efd",
       "reliability_structural_only.csv": "de3f23aadd0408720d708f843fff00a95ea265613418fdc41731ad7fd175a3b4",
-      "reliability_uncorrected.csv": "17e2e6bf8475fa410e9fe87be478d75ad000a9d25a5fe7f224a28a4f5eb30b1e"
+      "reliability_ml_only.csv": "b12867df8e0e3db5291b2aa08fcf2b79c5565d02155884e901646a22be60f5fb"
     },
     "scenario_registry_snapshot": {
-      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "root": "results",
       "scenarios": [
         "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+        "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
         "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+        "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
         "A3_strategic_timing__attack0__seed0__window20__scale1",
         "A3_strategic_timing__attack0__seed1__window20__scale3",
         "A3_strategic_timing__attack100__seed2__window20__scale1",
@@ -446,16 +494,24 @@
         "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
         "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
         "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv0_seed99101",
         "a1_info_eff_q65_inf30_adv10_seed99101",
+        "a1_info_eff_q65_inf30_adv20_seed99102",
+        "a1_info_eff_q65_inf50_adv0_seed99103",
+        "a1_info_eff_q65_inf50_adv20_seed99104",
+        "a1_info_eff_q85_inf30_adv0_seed99105",
+        "a1_info_eff_q85_inf30_adv20_seed99106",
+        "a1_info_eff_q85_inf50_adv0_seed99107",
+        "a1_info_eff_q85_inf50_adv20_seed99108",
         "mini_regression",
         "paper_artifacts",
         "smoke_metrics_phase7"
       ]
     },
-    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_hash": "2a1d58fc793163d303628d749163cf439e7bcb6fc8b1bfe33e043cec7b677f13",
     "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
-    "config_hash": null,
-    "config_snapshot_path": null,
+    "config_hash": "57dbb3301c6ba5219360801ec9c90a1626966a1b7b8da10ea280fd53120dd678",
+    "config_snapshot_path": "results\\B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1\\config_snapshot.json",
     "reproduction_command": "python run_paper_suite.py --experiment B1",
     "reproduce_line": "python run_paper_suite.py --experiment B1 --scenario B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1"
   },
@@ -510,5 +566,5 @@
     "Audit is reporting-only; no CAPOPM math/DGP changed.",
     "Calibration alternative uses discrete predictions when ECE is not interpretable."
   ],
-  "audit_hash": "53c1db1809998bba264fed46b14f70c3ddd22505d014483dda2707c364dd6609"
+  "audit_hash": "b7c1332307437c36bfbcec90fb0ba4d886c0b65a877388e3295c0bd709c9b076"
 }
