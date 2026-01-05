@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.0,0.43396543618987016,3,0.425462536694057,0.6666666666666666,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.43396543618987016,0.4434700205207667,3,0.4389213766353919,0.0,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.4434700205207667,0.45433723212951627,3,0.4448423561278498,0.6666666666666666,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.45433723212951627,0.4750688039855802,3,0.46358128558438616,0.3333333333333333,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.4750688039855802,0.49296957320024437,3,0.48574339765692914,0.3333333333333333,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.49296957320024437,0.505188576439508,3,0.49862047106378693,1.0,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.505188576439508,0.519238045392492,3,0.5125675559684714,0.3333333333333333,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.519238045392492,0.5272010333447521,3,0.5239488655790671,0.0,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.5272010333447521,0.5434809004180339,3,0.5387185351169249,0.6666666666666666,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,capopm,0.5434809004180339,1.0,3,0.5673081758357176,0.6666666666666666,1,low,1,0.0

@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.0,0.43059891987727844,3,0.40342148667456534,1.0,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.43059891987727844,0.4501154270089472,3,0.43883854833648256,0.3333333333333333,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.4501154270089472,0.46296506003492327,3,0.45287623206764716,0.3333333333333333,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.46296506003492327,0.47553696133821727,3,0.4700251867023851,0.3333333333333333,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.47553696133821727,0.48612354299944927,3,0.4815022986526975,0.0,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.48612354299944927,0.5056478228401529,3,0.4944837982774965,0.3333333333333333,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.5056478228401529,0.5271181686950244,3,0.5152081682658836,0.6666666666666666,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.5271181686950244,0.5423574110242457,3,0.5345716497753618,0.3333333333333333,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.5423574110242457,0.5876508671244774,3,0.5717975987765188,0.6666666666666666,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,capopm,0.5876508671244774,1.0,3,0.5984194631202877,0.3333333333333333,1,low,0,0.0

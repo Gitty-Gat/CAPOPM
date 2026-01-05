@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.0,0.47059643660447514,3,0.445064946233884,0.3333333333333333,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.47059643660447514,0.4759624556086148,3,0.4735826000654491,0.0,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.4759624556086148,0.4844670383800338,3,0.47823827366578103,0.3333333333333333,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.4844670383800338,0.4898771229174309,3,0.48848544775829206,0.6666666666666666,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.4898771229174309,0.492345280997657,3,0.4907559946406997,1.0,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.492345280997657,0.49606918416891466,3,0.4945350119652671,0.6666666666666666,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.49606918416891466,0.5143345427525214,3,0.506145674782641,0.3333333333333333,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.5143345427525214,0.5187766076808851,3,0.5171899131483265,0.6666666666666666,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.5187766076808851,0.5283953154569372,3,0.5240230080239393,0.0,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,capopm,0.5283953154569372,1.0,3,0.5484837305896326,0.3333333333333333,0,low,0,1.0

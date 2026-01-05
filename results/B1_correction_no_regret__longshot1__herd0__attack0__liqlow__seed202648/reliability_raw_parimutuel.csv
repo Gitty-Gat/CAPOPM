@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.0,0.41683653846153845,3,0.3838377192982456,0.6666666666666666,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.41683653846153845,0.44859375,2,0.4205260180995475,1.0,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.44859375,0.4530220588235294,4,0.44995863970588235,0.25,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.4530220588235294,0.4676316602316602,3,0.4618214285714286,0.3333333333333333,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.4676316602316602,0.48262499999999997,2,0.4747466216216216,0.0,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.48262499999999997,0.495,2,0.48262499999999997,0.5,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.495,0.5124350789096126,5,0.5005170278637772,0.8,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.5124350789096126,0.56546875,3,0.5405242706838833,0.6666666666666666,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.56546875,0.5918161764705882,3,0.5828645833333334,0.3333333333333333,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,raw_parimutuel,0.5918161764705882,1.0,3,0.6037252112793908,0.6666666666666666,0,low,1,0.0

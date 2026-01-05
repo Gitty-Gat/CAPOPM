@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.0,0.4666252012851962,3,0.45294539994161526,0.3333333333333333,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.4666252012851962,0.4811903114831594,3,0.473918220778695,0.3333333333333333,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.4811903114831594,0.48861341787434887,3,0.48457471566659366,0.3333333333333333,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.48861341787434887,0.49199022094093103,3,0.49067029249487176,0.0,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.49199022094093103,0.49658029949204413,3,0.4934845067343257,0.0,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.49658029949204413,0.5028598467334495,3,0.4998189702248818,1.0,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.5028598467334495,0.5202069320517203,3,0.5111033462114116,0.6666666666666666,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.5202069320517203,0.5313138468973632,3,0.528733154964551,0.6666666666666666,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.5313138468973632,0.5503956311350544,3,0.5438354651824195,1.0,0,high,1,1.0
+B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651,B1.CORRECTION_NO_REGRET,B,202651,capopm,0.5503956311350544,1.0,3,0.5592871470888724,0.6666666666666666,0,high,1,1.0

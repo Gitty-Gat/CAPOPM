@@ -204,7 +204,14 @@ Failures ⇒ **implementation error**, not paper falsification.
 | M-2 | No-arbitrage projection preserves bounds      | Stage 2        |
 | M-3 | Corrections do not worsen loss in expectation | Synthetic only |
 
-M-3 is **E-class only**, never P.
+**Classification note (binding):**
+
+- **M-3 is E-class only.**
+- M-3 is **never** a runtime abort gate.
+- M-3 must **not** be enforced via `require_invariant` or any fail-closed mechanism.
+- M-3 may be computed and logged **only as an exploratory diagnostic**, reflecting expectation-level behavior over synthetic data.
+- Finite-sample violations of M-3 **do not indicate incorrectness**, implementation failure, or contradiction of CAPOPM.pdf.
+
 
 ---
 

@@ -251,11 +251,212 @@ criteria_semantics_mismatch == False
 
 ---
 
-## **Stage B.3 — Tier C/D Experiments (EXPANSION ONLY AFTER CORRECTNESS)**
+## **Stage B.3 — Tier C Stress & Falsification Experiments (EXPANSION ONLY AFTER CORRECTNESS)**
 
-* Only after Stage B.2
-* Must follow the same audit discipline
-* Cannot introduce new claims without paper backing
+### Preconditions (Hard Gate)
+
+Stage B.3 MUST NOT begin unless **Stage B.2 is complete** and all of the following hold:
+
+- `PAPER_RUN_MANIFEST.json` exists and is populated for A1–A3, B1–B5  
+- AST forbidden-policy gate passes  
+- No invariant semantics were weakened in B.1 or B.2  
+- No interpretation, dominance, or validation claims were introduced  
+
+Stage B.3 exists to **expand stress coverage**, *not* to validate theorems or establish superiority.
+
+---
+
+### Objective
+
+Stage B.3 introduces **Tier C stress and falsification scenarios** designed to:
+
+- Probe known **failure boundaries**, **misspecification regimes**, and **observability limits**
+- Exercise paper mechanisms **outside idealized conditions**
+- Surface *where* and *how* CAPOPM degrades **without implying correctness, robustness, or dominance**
+
+Stage B.3 **cannot** introduce:
+
+- New claims  
+- New invariants  
+- New gates  
+- New metrics resembling dominance, regret, convergence, or validation  
+
+All outputs remain **descriptive artifacts only**.
+
+---
+
+### Classification Rule (Non-Negotiable)
+
+All Stage B.3 experiments are classified as:
+
+> **Exploratory (X-class), paper-consistent but non-validating**
+
+No Stage B.3 result may be used to:
+
+- support a theorem  
+- contradict a theorem  
+- “verify” robustness  
+- claim empirical success  
+
+---
+
+## **Tier C Experiments (Executable in Stage B.3)**
+
+Only the following Tier C experiments are permitted.
+
+---
+
+### **C1. ZERO_INFORMATION_MARKET**
+
+**Purpose**  
+Test non-hallucination: absence of informative trades should yield posterior ≈ prior.
+
+**What is stressed**
+- Likelihood informativeness
+- Evidence-to-posterior discipline
+
+**Theory Appendix Mapping**
+- Assumption 1 (structural prior meaning)
+- Proposition 2 (martingale property under idealized updates)
+- Phase 4 posterior update semantics
+
+**Allowed observables**
+- Posterior mean / variance
+- Deviation from prior mean (descriptive only)
+
+**Explicit prohibitions**
+- “Correct behavior”
+- “Verification of Bayesian optimality”
+
+---
+
+### **C2. ADVERSARY_MAJORITARIAN**
+
+**Purpose**  
+Map the **failure boundary** when adversarial volume dominates order flow.
+
+**What is stressed**
+- Behavioral correction limits
+- Breakdown of information aggregation
+
+**Theory Appendix Mapping**
+- Theorem 21 (adversarial robustness — boundary only)
+- Remarks 26–27 (failure modes under strong distortions)
+
+**Classification**
+- Explicitly adversarial
+- Failure-boundary exploration only
+
+**Mandatory metadata**
+```json
+"adversarial": true
+```
+### **C3. NONSTATIONARY_PTRUE_DRIFT**
+
+**Purpose**  
+Stress posterior behavior under **time-varying true probability** (model misspecification).
+
+**What is stressed**
+- Stationarity assumptions  
+- Dynamic update fragility  
+
+**Theory Appendix Mapping**
+- Remarks 31–32 (dynamic CAPOPM interpretation)  
+- Theorems 35–36 (ergodic vs fast-switching limits)  
+
+**Explicit prohibitions**
+- “Tracking”  
+- “Learning the drift”  
+- “Adaptivity”  
+
+---
+
+### **C4. REGIME_SWITCH_MIDWINDOW**
+
+**Purpose**  
+Test lag and recovery behavior of regime mixtures under abrupt regime switches.
+
+**What is stressed**
+- Regime posterior inertia  
+- Mixture update stability  
+
+**Theory Appendix Mapping**
+- Definition 4 (regime mixture)  
+- Assumption 4 (regime switching)  
+- Theorem 35 (ergodic switching — descriptive only)  
+
+---
+
+### **C5. LIQUIDITY_DROPOUT**
+
+**Purpose**  
+Stress thin-market behavior and uncertainty reliability under low effective sample size.
+
+**What is stressed**
+- CI width behavior  
+- Finite-sample observability degradation  
+
+**Theory Appendix Mapping**
+- Assumption 5 (effective sample size)  
+- Remarks 23–24 (low-n behavior)  
+
+**Allowed observables**
+- CI width  
+- Variance inflation  
+- Missingness diagnostics  
+
+---
+
+### **C6. EXTREME_PRIOR_MISLEAD**
+
+**Purpose**  
+Explore behavior under **severely wrong priors** without implying recovery or correction.
+
+**What is stressed**
+- Stability of posterior updates  
+- Boundedness of belief adjustments  
+
+**Theory Appendix Mapping**
+- Theorem 3 (bounded misspecification propagation)  
+- Proposition 10 (robustness to pseudo-count perturbations)  
+
+**Explicit prohibitions**
+- “Recovery”  
+- “Eventual correctness”  
+- “Self-correction”  
+
+---
+
+## **Explicit Exclusions from Stage B.3**
+
+The following are **not experiments** and MUST NOT appear in Stage B.3:
+
+- FIGURE_FACTORY  
+- TABLE_FACTORY  
+- FAILURE_ATLAS_REPORT  
+- REPRO_CHECKPOINTS  
+
+These belong to **post-B.3 paper assembly / tooling**, not validation or stress testing.
+
+`PAPER_RUN_MANIFEST.json` already satisfies registry and reproducibility requirements.
+
+---
+
+## **Acceptance Criteria (Stage B.3)**
+
+Stage B.3 is complete **if and only if**:
+
+- All Tier C scenarios execute under AST and invariant governance  
+- Results are recorded in `results/<scenario>/summary.json`  
+- `PAPER_RUN_MANIFEST.json` includes Tier C entries with `tier: "C"`  
+- No interpretation or validation language exists anywhere  
+- No new claims or gates are introduced  
+
+---
+
+**Stage B.3 strengthens epistemic humility, not empirical claims.**
+
+
 
 ---
 

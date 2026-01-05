@@ -1,0 +1,499 @@
+{
+  "audit_version": "audit_v1",
+  "scenario_name": "B3_misspec_regret__struct0__ml500__seed270001",
+  "experiment_id": "B3.MISSPECIFICATION_REGRET_GRID",
+  "tier": "B",
+  "seed": 270001,
+  "metadata": {
+    "scenario_name": "B3_misspec_regret__struct0__ml500__seed270001",
+    "experiment_id": "B3.MISSPECIFICATION_REGRET_GRID",
+    "tier": "B",
+    "seed": 270001,
+    "structural_shift": 0.0,
+    "ml_bias": 5.0,
+    "config_hash": "e3db573026a8c8140399d327555e134155be95c683c21feffae58067b6b62057"
+  },
+  "calibration": {
+    "capopm": {
+      "n_samples": 30,
+      "n_unique_predictions": 30,
+      "n_nonempty_bins": 10,
+      "ece_value": 0.2919669221728365,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.4959242607222106,
+        "n_unique_support": 30,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "structural_only": {
+      "n_samples": 30,
+      "n_unique_predictions": 16,
+      "n_nonempty_bins": 10,
+      "ece_value": 0.2774000000098766,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.33294074077037034,
+        "n_unique_support": 16,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "ml_only": {
+      "n_samples": 30,
+      "n_unique_predictions": 16,
+      "n_nonempty_bins": 10,
+      "ece_value": 0.2806891025641,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.33277243589743843,
+        "n_unique_support": 16,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "uncorrected": {
+      "n_samples": 30,
+      "n_unique_predictions": 16,
+      "n_nonempty_bins": 10,
+      "ece_value": 0.2756151645112042,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.3292489270481664,
+        "n_unique_support": 16,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    },
+    "raw_parimutuel": {
+      "n_samples": 30,
+      "n_unique_predictions": 16,
+      "n_nonempty_bins": 10,
+      "ece_value": 0.2815569105691057,
+      "ece_interpretable": true,
+      "ece_reasons": [],
+      "ece_status": "OK",
+      "discrete_calibration": {
+        "value": 0.3368170731707316,
+        "n_unique_support": 16,
+        "metric": "mean_abs_bin_error_by_prediction"
+      },
+      "metric_used": "ece"
+    }
+  },
+  "coverage": {
+    "capopm": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.4666666666666667,
+        "coverage_95": 0.6333333333333333,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "structural_only": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.5333333333333333,
+        "coverage_95": 0.6,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "ml_only": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.43333333333333335,
+        "coverage_95": 0.6,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "uncorrected": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 30,
+        "coverage_90": 0.43333333333333335,
+        "coverage_95": 0.6333333333333333,
+        "warning_low_n": false
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": [
+        "overall_90_off_nominal",
+        "overall_95_off_nominal"
+      ]
+    },
+    "raw_parimutuel": {
+      "method": "beta_central_interval",
+      "provenance": "interval_coverage_ptrue",
+      "overall": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "warning_low_n": true
+      },
+      "extreme_p": {
+        "n": 0,
+        "coverage_90": null,
+        "coverage_95": null,
+        "p_true_support": [],
+        "warning_low_support": true
+      },
+      "flags": []
+    }
+  },
+  "criteria_evaluation": {
+    "overall_pass": null,
+    "criteria": [
+      {
+        "id": "grid_requirement",
+        "description": "Full misspecification grid is required to validate robustness surface.",
+        "theorem": "Proposition 8",
+        "metric_path": null,
+        "comparator_path": null,
+        "direction": null,
+        "threshold": null,
+        "metric_value": null,
+        "evaluated": false,
+        "pass": null,
+        "reason": "metric_missing"
+      }
+    ],
+    "recorded_status": {
+      "pass": true,
+      "criteria": {
+        "mean_regret_brier_leq_0": true,
+        "mean_regret_log_bad_leq_0": true
+      },
+      "metrics": {
+        "mean_regret_brier": -0.0005787575236662738,
+        "mean_regret_log_bad": -0.003538049555880468
+      }
+    },
+    "status_mismatch": false,
+    "criteria_semantics_mismatch": true,
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "ml_bias",
+        "structural_shift"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0.0,
+          10.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.1
+        ],
+        [
+          0.05,
+          0.0
+        ],
+        [
+          5.0,
+          10.0
+        ],
+        [
+          5.0,
+          0.0
+        ],
+        [
+          0.05,
+          0.1
+        ]
+      ],
+      "observed_count": 7,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2,
+      "grid_status": "observed_grid"
+    }
+  },
+  "theorem_checklist": [
+    {
+      "theorem": "Proposition 8",
+      "claim": "Regret robustness under misspecification",
+      "status": "indeterminate",
+      "criteria_ids": [
+        "grid_requirement"
+      ]
+    }
+  ],
+  "seed_grid_coverage": {
+    "n_runs": 30,
+    "grid_axes": [
+      "ml_bias",
+      "structural_shift"
+    ],
+    "grid_points_observed": 7,
+    "coverage_class": "multi_grid",
+    "paper_ready": true,
+    "flags": [],
+    "grid_snapshot": {
+      "expected_axes": [
+        "ml_bias",
+        "structural_shift"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0.0,
+          10.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.1
+        ],
+        [
+          0.05,
+          0.0
+        ],
+        [
+          5.0,
+          10.0
+        ],
+        [
+          5.0,
+          0.0
+        ],
+        [
+          0.05,
+          0.1
+        ]
+      ],
+      "observed_count": 7,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2,
+      "grid_status": "observed_grid"
+    }
+  },
+  "effect_sizes": {
+    "brier_vs_uncorrected": {
+      "key": "brier_vs_uncorrected",
+      "metric": "brier",
+      "baseline": "uncorrected",
+      "diff_mean": -0.0005787575236662738,
+      "ci_low": -0.0010260850652232113,
+      "ci_high": -0.00018505715338938903,
+      "n": 30,
+      "better_if_negative": true,
+      "paired_t_p_holm": 0.03269914628856885
+    },
+    "log_score_vs_uncorrected": {
+      "key": "log_score_vs_uncorrected",
+      "metric": "log_score",
+      "baseline": "uncorrected",
+      "diff_mean": 0.003538049555880468,
+      "ci_low": -0.0003702744780495064,
+      "ci_high": 0.00761841580951119,
+      "n": 30,
+      "better_if_negative": false,
+      "paired_t_p_holm": 0.1679981051015833
+    },
+    "brier_vs_raw_parimutuel": {
+      "key": "brier_vs_raw_parimutuel",
+      "metric": "brier",
+      "baseline": "raw_parimutuel",
+      "diff_mean": -0.00589865059381,
+      "ci_low": -0.008426806588076974,
+      "ci_high": -0.003682877604593108,
+      "n": 30,
+      "better_if_negative": true,
+      "paired_t_p_holm": 2.9065329066213508e-05
+    },
+    "log_score_vs_raw_parimutuel": {
+      "key": "log_score_vs_raw_parimutuel",
+      "metric": "log_score",
+      "baseline": "raw_parimutuel",
+      "diff_mean": 0.011949342300947014,
+      "ci_low": -0.009473572020644536,
+      "ci_high": 0.033261561608498795,
+      "n": 30,
+      "better_if_negative": false,
+      "paired_t_p_holm": 0.28855509310181726
+    }
+  },
+  "reproducibility": {
+    "artifact_hashes": {
+      "summary.json": "b0359407787646ffa0595a97c85fdb6f7d6941d65c4fd9ef27a63368b7edc680",
+      "metrics_aggregated.csv": "4f7b20cd10dd113259207105083abbd69df537249c4ffc3372d8c3430a9f3792",
+      "tests.csv": "19c9350bec42f3ed93ef715336f108adf1d021f7ec42490acb0f09fac8c60cc9",
+      "reliability_capopm.csv": "60f73b1006c5b02b3146984768dfb12cbc99d212925bec96a309d624d231594e",
+      "reliability_structural_only.csv": "cf4f92234660f8b9789b3d9125de835b16b995209e752b207b3f3522655c62b1",
+      "reliability_ml_only.csv": "923c925404bc50826d599cc3955c4b5dd8e79c0da6963340bf7a7052fc7ded4b",
+      "reliability_uncorrected.csv": "428f70cf913ad76620788ac080f69dd68676ff41518ebe89255305e78323cf88",
+      "reliability_raw_parimutuel.csv": "ac3559391c0ecc321cfaeede1dcbc719195ffdc79a0b39b5bd866dea3261d042"
+    },
+    "scenario_registry_snapshot": {
+      "root": "results",
+      "scenarios": [
+        "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+        "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
+        "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+        "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
+        "A3_strategic_timing__attack0__seed0__window20__scale1",
+        "A3_strategic_timing__attack0__seed1__window20__scale3",
+        "A3_strategic_timing__attack0__seed250000__window100__scale1",
+        "A3_strategic_timing__attack0__seed250001__window100__scale3",
+        "A3_strategic_timing__attack100__seed250002__window100__scale1",
+        "A3_strategic_timing__attack100__seed250003__window100__scale3",
+        "A3_strategic_timing__attack100__seed2__window20__scale1",
+        "A3_strategic_timing__attack100__seed3__window20__scale3",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed202640",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed202643",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed2",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642",
+        "B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645",
+        "B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644",
+        "B1_correction_no_regret__longshot0__herd1__attack100__liqhigh__seed202647",
+        "B1_correction_no_regret__longshot0__herd1__attack100__liqlow__seed202646",
+        "B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649",
+        "B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648",
+        "B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651",
+        "B1_correction_no_regret__longshot1__herd0__attack100__liqlow__seed202650",
+        "B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653",
+        "B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652",
+        "B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655",
+        "B1_correction_no_regret__longshot1__herd1__attack100__liqlow__seed202654",
+        "B2_asymptotic_rate__seed0",
+        "B2_asymptotic_rate__seed260000",
+        "B3_misspec_regret__struct0__ml0__seed0",
+        "B3_misspec_regret__struct0__ml0__seed270000",
+        "B3_misspec_regret__struct0__ml500__seed270001",
+        "B3_misspec_regret__struct0__ml5__seed1",
+        "B3_misspec_regret__struct1000__ml0__seed270100",
+        "B3_misspec_regret__struct1000__ml500__seed270101",
+        "B3_misspec_regret__struct10__ml0__seed100",
+        "B3_misspec_regret__struct10__ml5__seed101",
+        "B4_regime_concentration__evidence150__seed1",
+        "B4_regime_concentration__evidence50__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
+        "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
+        "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv0_seed99101",
+        "a1_info_eff_q65_inf30_adv10_seed99101",
+        "a1_info_eff_q65_inf30_adv20_seed99102",
+        "a1_info_eff_q65_inf50_adv0_seed99103",
+        "a1_info_eff_q65_inf50_adv20_seed99104",
+        "a1_info_eff_q85_inf30_adv0_seed99105",
+        "a1_info_eff_q85_inf30_adv20_seed99106",
+        "a1_info_eff_q85_inf50_adv0_seed99107",
+        "a1_info_eff_q85_inf50_adv20_seed99108",
+        "mini_regression",
+        "paper_artifacts",
+        "smoke_metrics_phase7"
+      ]
+    },
+    "registry_hash": "2f1cf46d985cdf47c71269b97f782fb386d2d39eb47c52e57a5e51bcc59f2397",
+    "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
+    "config_hash": "f68effbee7c6449db71d1815365eb31dfb537b21d9215009ce7defaa33b25cc6",
+    "config_snapshot_path": "results\\B3_misspec_regret__struct0__ml500__seed270001\\config_snapshot.json",
+    "reproduction_command": "python run_paper_suite.py --experiment B3",
+    "reproduce_line": "python run_paper_suite.py --experiment B3 --scenario B3_misspec_regret__struct0__ml500__seed270001"
+  },
+  "borderline_flags": {
+    "degenerate_calibration_models": [],
+    "low_n_runs": false,
+    "coverage_flags": [
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal",
+      "overall_90_off_nominal",
+      "overall_95_off_nominal"
+    ],
+    "marginal_coverage_failures": [
+      "capopm_coverage90",
+      "capopm_coverage95",
+      "structural_only_coverage90",
+      "structural_only_coverage95",
+      "ml_only_coverage90",
+      "ml_only_coverage95",
+      "uncorrected_coverage90",
+      "uncorrected_coverage95"
+    ],
+    "status_mismatch_detected": false,
+    "criteria_semantics_mismatch": true
+  },
+  "notes": [
+    "Audit is reporting-only; no CAPOPM math/DGP changed.",
+    "Calibration alternative uses discrete predictions when ECE is not interpretable."
+  ],
+  "audit_hash": "b5f2db09471ee1d5dd17733cc338729902fde8b3834a1fdab9c2b1dd931ff04a"
+}

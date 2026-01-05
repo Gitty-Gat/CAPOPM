@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.0,0.43618194416481526,3,0.4106375095511281,0.6666666666666666,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.43618194416481526,0.4636585362601631,2,0.4399006780006465,1.0,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.4636585362601631,0.46642687308458275,4,0.4645036865796942,0.25,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.46642687308458275,0.47808695622661446,3,0.4736058198002249,0.3333333333333333,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.47808695622661446,0.4899999997278916,2,0.4837946856972629,0.0,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.4899999997278916,0.5002256725769502,4,0.49510434755090255,0.5,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.5002256725769502,0.5143623252843416,3,0.5076498744243124,1.0,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.5143623252843416,0.5568661243591694,3,0.5370313519915021,0.6666666666666666,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.5568661243591694,0.5783627904000005,3,0.5702953926409434,0.3333333333333333,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,structural_only,0.5783627904000005,1.0,3,0.5882530886483713,0.6666666666666666,0,low,1,0.0

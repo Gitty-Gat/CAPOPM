@@ -1,0 +1,89 @@
+# forbidden_policy.txt
+# Machine policy for Stage B static enforcement (AST-based).
+# Scope scanned by checker: src/**, scripts/**, src/capopm/experiments/**, smoke_test_*.py (repo root).
+# Any file under ALLOW_PATHS is excluded from scanning.
+
+[ALLOW_PATHS]
+docs/**
+audit_investigation/**
+results/**
+README.md
+claim_table.md
+borderline_atlas.md
+STAGE_B0_GOVERNANCE_SPEC.md
+STAGE_B1_OBSERVABILITY_CONTRACT_AND_INVARIANT_CHECKLIST.md
+THEORY_APPENDIX.md
+STRUCTURAL_PRIOR_FIDELITY_DECISION.md
+
+# -------------------------
+# AST RULES (STRICT GRAMMAR)
+# -------------------------
+# Each rule is one line: RULE_TYPE|RULE_ID|<payload>
+# RULE_TYPE options:
+# - CALL_KW_LITERAL: function call where a specific keyword arg equals a literal string
+# - CALL_KW_CONTAINS_ANY: function call where keyword arg (literal string only) contains any token
+# - CALL_KW_MUST_BE_LITERAL: function call where keyword arg must be a literal string (else violation)
+# - DICT_LITERAL_KEY_FORBID: dict literal contains a forbidden literal key
+# - SUBSCRIPT_LITERAL_KEY_FORBID: x["key"] access/assignment contains forbidden literal key
+# - DICT_LITERAL_KEYS_COEXIST: dict literal contains ALL of the specified keys (literal strings)
+# - OUTPUT_DICT_VALUE_FORBID_PHRASE: dict literal where key is an output-field, and value literal contains phrase
+
+# ---- Forbidden invariant gating ----
+[CALL_RULES]
+CALL_KW_LITERAL|M3_GATE|func=require_invariant;kw=invariant_id;value=M-3
+CALL_KW_CONTAINS_ANY|FORBIDDEN_GATES|func=require_invariant;kw=invariant_id;tokens=dominance,regret_dominance,no_regret,oracle,truth_recovery
+CALL_KW_MUST_BE_LITERAL|INVARIANT_ID_MUST_BE_LITERAL|func=require_invariant;kw=invariant_id
+
+# ---- A2 descriptive-only (no threshold-style criteria dicts) ----
+[DICT_COEXIST_RULES]
+DICT_LITERAL_KEYS_COEXIST|A2_SLOPE_THRESHOLD_FORBIDDEN|keys=var_decay_slope,threshold
+DICT_LITERAL_KEYS_COEXIST|A2_SLOPE_DIRECTION_FORBIDDEN|keys=var_decay_slope,direction
+
+# ---- Forbidden metric keys in executable outputs ----
+[FORBIDDEN_METRIC_KEYS]
+efficiency_gap
+true_trader_belief
+private_signal
+oracle_regret
+regret_oracle
+regret_dominance
+dominance_over_baseline
+dominance
+entropy_to_zero
+truth_recovery
+uniform_consistency
+asymptotic_limit_at_finite_n
+validated
+proven
+guaranteed
+dominates
+
+[DICT_KEY_RULES]
+# Dict literals: {"dominance": ...}
+DICT_LITERAL_KEY_FORBID|FORBIDDEN_METRIC_KEY_DICT|keys_from=FORBIDDEN_METRIC_KEYS
+
+[SUBSCRIPT_KEY_RULES]
+# Subscript: metrics["dominance"] = ...
+SUBSCRIPT_LITERAL_KEY_FORBID|FORBIDDEN_METRIC_KEY_SUBSCRIPT|keys_from=FORBIDDEN_METRIC_KEYS
+
+# ---- Forbidden claim phrases in executable output fields ----
+# Output fields are keys that encode conclusions/status in artifacts.
+[OUTPUT_FIELDS]
+status
+verdict
+conclusion
+claim
+result
+audit_verdict
+
+[FORBIDDEN_PHRASES]
+entropy goes to zero
+entropy → 0
+empirically validated
+truth recovered
+dominates
+proves
+guarantees
+
+[OUTPUT_TEXT_RULES]
+OUTPUT_DICT_VALUE_FORBID_PHRASE|FORBIDDEN_OUTPUT_PHRASE|output_fields_from=OUTPUT_FIELDS;phrases_from=FORBIDDEN_PHRASES

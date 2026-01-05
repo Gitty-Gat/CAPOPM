@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.0,0.4425403276702195,3,0.42484318834474716,1.0,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.4425403276702195,0.45816496353740116,3,0.45136629265998013,0.6666666666666666,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.45816496353740116,0.4702160711001158,3,0.4628760650298595,0.3333333333333333,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.4702160711001158,0.48560285030040534,3,0.477567129515184,0.3333333333333333,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.48560285030040534,0.49050446264516573,3,0.4888025384303106,1.0,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.49050446264516573,0.503308855469931,3,0.4963163307076825,0.6666666666666666,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.503308855469931,0.5170949448251082,3,0.509047710879689,0.0,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.5170949448251082,0.5263932290060676,3,0.5230871883929905,1.0,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.5263932290060676,0.5598114686599384,3,0.5407451995370437,0.3333333333333333,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,capopm,0.5598114686599384,1.0,3,0.5655219037370941,0.0,1,high,1,0.0

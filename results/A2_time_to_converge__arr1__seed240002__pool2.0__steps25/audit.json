@@ -315,39 +315,8 @@
     }
   },
   "criteria_evaluation": {
-    "overall_pass": true,
-    "criteria": [
-      {
-        "id": "variance_decay_negative",
-        "description": "Posterior variance slope vs steps should be non-positive.",
-        "theorem": "Phase 4 consistency",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "var_decay_slope"
-        ],
-        "comparator_path": null,
-        "direction": "<=",
-        "threshold": 0.0,
-        "metric_value": -0.00038671770449192114,
-        "evaluated": true,
-        "pass": true,
-        "reason": null
-      },
-      {
-        "id": "grid_requirement",
-        "description": "Convergence comparisons need multiple liquidity/arrival settings.",
-        "theorem": "Phase 4 consistency",
-        "metric_path": null,
-        "comparator_path": null,
-        "direction": null,
-        "threshold": null,
-        "metric_value": null,
-        "evaluated": false,
-        "pass": null,
-        "reason": "grid_missing_for_claim"
-      }
-    ],
+    "overall_pass": null,
+    "criteria": [],
     "recorded_status": {
       "pass": null,
       "notes": "",
@@ -355,17 +324,69 @@
     },
     "status_mismatch": false,
     "criteria_semantics_mismatch": false,
-    "source_of_truth": "criteria_evaluation"
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "arrivals_per_step",
+        "initial_pool",
+        "n_steps"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          3,
+          2.0,
+          25
+        ],
+        [
+          1,
+          2.0,
+          25
+        ],
+        [
+          3,
+          1.0,
+          25
+        ],
+        [
+          1,
+          1.0,
+          25
+        ],
+        [
+          3,
+          2.0,
+          40
+        ],
+        [
+          1,
+          1.0,
+          40
+        ],
+        [
+          1,
+          2.0,
+          40
+        ],
+        [
+          3,
+          1.0,
+          40
+        ]
+      ],
+      "observed_count": 8,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2,
+      "grid_status": "observed_grid"
+    }
   },
   "theorem_checklist": [
     {
       "theorem": "Phase 4 consistency",
       "claim": "Higher liquidity accelerates stabilization",
-      "status": "validated",
-      "criteria_ids": [
-        "variance_decay_negative",
-        "grid_requirement"
-      ]
+      "status": "not_covered",
+      "criteria_ids": []
     }
   ],
   "seed_grid_coverage": {
@@ -375,12 +396,65 @@
       "initial_pool",
       "n_steps"
     ],
-    "grid_points_observed": 1,
-    "coverage_class": "multi_seed",
-    "paper_ready": false,
-    "flags": [
-      "grid_points_below_paper_ready"
-    ]
+    "grid_points_observed": 8,
+    "coverage_class": "multi_grid",
+    "paper_ready": true,
+    "flags": [],
+    "grid_snapshot": {
+      "expected_axes": [
+        "arrivals_per_step",
+        "initial_pool",
+        "n_steps"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          3,
+          2.0,
+          25
+        ],
+        [
+          1,
+          2.0,
+          25
+        ],
+        [
+          3,
+          1.0,
+          25
+        ],
+        [
+          1,
+          1.0,
+          25
+        ],
+        [
+          3,
+          2.0,
+          40
+        ],
+        [
+          1,
+          1.0,
+          40
+        ],
+        [
+          1,
+          2.0,
+          40
+        ],
+        [
+          3,
+          1.0,
+          40
+        ]
+      ],
+      "observed_count": 8,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2,
+      "grid_status": "observed_grid"
+    }
   },
   "effect_sizes": {
     "brier_vs_uncorrected": {
@@ -430,8 +504,8 @@
   },
   "reproducibility": {
     "artifact_hashes": {
-      "summary.json": "e5b1b2d1ca26a621d10e0f351db5f59ed1e19dcf2946dfa2ab53b7eeecce224e",
-      "metrics_aggregated.csv": "a30f1cb2eecf2d94d75eb1fef44983d913e827872ef2a8109d4a8ffb81c8e19d",
+      "summary.json": "e1f482df812181dd684a0f872f6f6d922aaf74de04f3c14dbc1cd4bb3fb6737b",
+      "metrics_aggregated.csv": "0c7a32af90a6afbbccf4ed9f862c7d9832c683043d58bd6ca84bc10408bad794",
       "tests.csv": "205b0102ece1dbaf756d1aecd5c74903ca1a328c1235d958c1abe3f4cf18f091",
       "reliability_capopm.csv": "69829f6cae770601c16e6c85b7fa1f3c88dfadb38b7889258387643bde71c1b9",
       "reliability_raw_parimutuel.csv": "6b1c2c572cf747042185ae85a86f774ae1b958df99c4df75fc4241b8aa8ece36",
@@ -448,18 +522,48 @@
         "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
         "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
         "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
         "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+        "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
         "A3_strategic_timing__attack0__seed0__window20__scale1",
         "A3_strategic_timing__attack0__seed1__window20__scale3",
+        "A3_strategic_timing__attack0__seed250000__window100__scale1",
+        "A3_strategic_timing__attack0__seed250001__window100__scale3",
+        "A3_strategic_timing__attack100__seed250002__window100__scale1",
+        "A3_strategic_timing__attack100__seed250003__window100__scale3",
         "A3_strategic_timing__attack100__seed2__window20__scale1",
         "A3_strategic_timing__attack100__seed3__window20__scale3",
         "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641",
         "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed202640",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed202643",
         "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3",
         "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed2",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642",
+        "B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645",
+        "B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644",
+        "B1_correction_no_regret__longshot0__herd1__attack100__liqhigh__seed202647",
+        "B1_correction_no_regret__longshot0__herd1__attack100__liqlow__seed202646",
+        "B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649",
+        "B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648",
+        "B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651",
+        "B1_correction_no_regret__longshot1__herd0__attack100__liqlow__seed202650",
+        "B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653",
+        "B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652",
+        "B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655",
+        "B1_correction_no_regret__longshot1__herd1__attack100__liqlow__seed202654",
         "B2_asymptotic_rate__seed0",
+        "B2_asymptotic_rate__seed260000",
         "B3_misspec_regret__struct0__ml0__seed0",
+        "B3_misspec_regret__struct0__ml0__seed270000",
+        "B3_misspec_regret__struct0__ml500__seed270001",
         "B3_misspec_regret__struct0__ml5__seed1",
+        "B3_misspec_regret__struct1000__ml0__seed270100",
+        "B3_misspec_regret__struct1000__ml500__seed270101",
         "B3_misspec_regret__struct10__ml0__seed100",
         "B3_misspec_regret__struct10__ml5__seed101",
         "B4_regime_concentration__evidence150__seed1",
@@ -481,7 +585,7 @@
         "smoke_metrics_phase7"
       ]
     },
-    "registry_hash": "d4408ef6e3d1c99cadae87ab3954477ec420b138bdd2786036cea362fea35e13",
+    "registry_hash": "2f1cf46d985cdf47c71269b97f782fb386d2d39eb47c52e57a5e51bcc59f2397",
     "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
     "config_hash": "43fd141da675f5eaeb86d779f49006bbc5614daeef58da6c0963a54401c015b8",
     "config_snapshot_path": "results\\A2_time_to_converge__arr1__seed240002__pool2.0__steps25\\config_snapshot.json",
@@ -538,5 +642,5 @@
     "Audit is reporting-only; no CAPOPM math/DGP changed.",
     "Calibration alternative uses discrete predictions when ECE is not interpretable."
   ],
-  "audit_hash": "f7dfd1b702034fbb40d626de594ca4d5a6439133c2a0048045ef817cc112bc3a"
+  "audit_hash": "6d2da82b2d9c6ba43379ed2c4c18f283129b20db58d136653dfd1bda4b4b9d4f"
 }

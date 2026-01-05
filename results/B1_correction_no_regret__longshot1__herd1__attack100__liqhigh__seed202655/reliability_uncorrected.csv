@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.0,0.4267307239243338,3,0.3912050068095945,0.3333333333333333,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.4267307239243338,0.46161722359048823,3,0.4365944896573682,0.6666666666666666,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.46161722359048823,0.48059049263212733,3,0.4712544906736508,0.0,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.48059049263212733,0.49120535003769183,3,0.4869922035558914,0.6666666666666666,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.49120535003769183,0.5007828785466704,3,0.49344511209950737,0.6666666666666666,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.5007828785466704,0.5140833915798009,3,0.5090943908080291,0.6666666666666666,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.5140833915798009,0.5275577826709802,3,0.5197946591268535,1.0,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.5275577826709802,0.5571263174403265,3,0.5417595278134258,0.3333333333333333,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.5571263174403265,0.5827163512462534,3,0.5682033479901849,1.0,1,high,1,1.0
+B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655,B1.CORRECTION_NO_REGRET,B,202655,uncorrected,0.5827163512462534,1.0,3,0.6227805040622548,0.6666666666666666,1,high,1,1.0

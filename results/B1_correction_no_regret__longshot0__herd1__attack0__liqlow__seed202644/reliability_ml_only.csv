@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.0,0.1,0,0.0,0.0,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.1,0.2,1,0.1129928591719791,1.0,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.2,0.30000000000000004,3,0.2617524802777564,0.6666666666666666,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.30000000000000004,0.4,2,0.3818479339505234,0.0,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.4,0.5,8,0.44290120209643663,0.375,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.5,0.6000000000000001,8,0.5438294942214668,0.375,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.6000000000000001,0.7000000000000001,4,0.653507293697364,0.5,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.7000000000000001,0.8,4,0.7438862070278006,0.5,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.8,0.9,0,0.0,0.0,1,low,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644,B1.CORRECTION_NO_REGRET,B,202644,ml_only,0.9,1.0,0,0.0,0.0,1,low,0,0.0

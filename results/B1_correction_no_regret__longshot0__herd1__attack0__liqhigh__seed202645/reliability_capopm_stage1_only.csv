@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.0,0.43507797324713654,3,0.4038370103120836,1.0,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.43507797324713654,0.46021802051906296,3,0.4462234179521199,0.3333333333333333,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.46021802051906296,0.46588422706150817,3,0.4607317263943707,0.3333333333333333,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.46588422706150817,0.4725131209730059,3,0.47021577462244674,0.6666666666666666,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.4725131209730059,0.4805318582102352,3,0.4773539760153543,0.6666666666666666,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.4805318582102352,0.49473333658355656,3,0.48562132990018997,0.0,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.49473333658355656,0.511416097306223,3,0.5061809257574367,0.6666666666666666,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.511416097306223,0.5324758523946372,3,0.5225769026108225,0.0,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.5324758523946372,0.543860491408252,3,0.5429070170620657,0.6666666666666666,1,high,0,0.0
+B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645,B1.CORRECTION_NO_REGRET,B,202645,capopm_stage1_only,0.543860491408252,1.0,3,0.5543063625057366,1.0,1,high,0,0.0

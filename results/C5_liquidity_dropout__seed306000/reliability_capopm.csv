@@ -1,0 +1,6 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,arrivals_per_step,initial_pool
+C5_liquidity_dropout__seed306000,C5.LIQUIDITY_DROPOUT,C,306000,capopm,0.0,0.2,0,0.0,0.0,1,0.5
+C5_liquidity_dropout__seed306000,C5.LIQUIDITY_DROPOUT,C,306000,capopm,0.2,0.4,4,0.37249762966146827,0.25,1,0.5
+C5_liquidity_dropout__seed306000,C5.LIQUIDITY_DROPOUT,C,306000,capopm,0.4,0.6000000000000001,18,0.47407724784876737,0.5555555555555556,1,0.5
+C5_liquidity_dropout__seed306000,C5.LIQUIDITY_DROPOUT,C,306000,capopm,0.6000000000000001,0.8,8,0.6292088562498612,0.25,1,0.5
+C5_liquidity_dropout__seed306000,C5.LIQUIDITY_DROPOUT,C,306000,capopm,0.8,1.0,0,0.0,0.0,1,0.5

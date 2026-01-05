@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.0,0.44237376208205265,3,0.4185129766314395,0.6666666666666666,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.44237376208205265,0.46868391149211647,3,0.45308257041840055,0.6666666666666666,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.46868391149211647,0.4713640021465772,3,0.46962907154325223,0.3333333333333333,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.4713640021465772,0.4820863970230469,3,0.47796520349277705,0.3333333333333333,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.4820863970230469,0.4930726786242984,3,0.4888971776046893,0.0,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.4930726786242984,0.5020609157666164,3,0.4990831730481731,1.0,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.5020609157666164,0.5149479635882568,3,0.5090347358139932,0.6666666666666666,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.5149479635882568,0.5546809855320228,3,0.5367488501292877,0.6666666666666666,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.5546809855320228,0.576035301908698,3,0.5673904829043608,0.3333333333333333,0,low,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648,B1.CORRECTION_NO_REGRET,B,202648,uncorrected,0.576035301908698,1.0,3,0.5842423561265707,0.6666666666666666,0,low,1,0.0

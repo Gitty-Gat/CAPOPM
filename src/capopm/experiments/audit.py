@@ -344,7 +344,7 @@ def _evaluate_criteria(
     """Programmatically evaluate pass/fail criteria with full trace."""
 
     criteria_results: List[Dict] = []
-    grid_points_observed = (grid_snapshot or {}).get("observed_count", 1)
+    grid_points_observed = (grid_snapshot or {}).get("observed_count", 0)
     recorded_status = summary.get("status", {})
     recorded_pass = recorded_status.get("pass")
     for crit in contract.get("criteria", []):
@@ -601,9 +601,17 @@ def _grid_snapshot(experiment_id: Optional[str], sweep_params: Dict, registry_ro
             if meta.get("experiment_id") != experiment_id:
                 continue
             sp = summ.get("sweep_params", {})
-            point = tuple(sp.get(ax) for ax in expected_axes) if expected_axes else ()
-            if expected_axes and all(p is not None for p in point):
-                observed_points.add(point)
+            if expected_axes:
+                raw_vals = [sp.get(ax) for ax in expected_axes]
+                if any(isinstance(v, list) for v in raw_vals):
+                    grids_local = [v if isinstance(v, list) else [v] for v in raw_vals]
+                    for combo in product(*grids_local):
+                        if all(p is not None for p in combo):
+                            observed_points.add(tuple(combo))
+                else:
+                    point = tuple(raw_vals)
+                    if all(p is not None for p in point):
+                        observed_points.add(point)
     expected_points: List[tuple] = []
     if expected_axes:
         grids = [expected_cfg.get(ax, []) for ax in expected_axes]
@@ -611,7 +619,13 @@ def _grid_snapshot(experiment_id: Optional[str], sweep_params: Dict, registry_ro
             for combo in product(*grids):
                 expected_points.append(tuple(combo))
     missing_points = [pt for pt in expected_points if pt not in observed_points]
-    observed_count = len(observed_points) if observed_points else 1
+    observed_count = len(observed_points) if observed_points else 0
+    if observed_count == 0:
+        grid_status = "empty_registry"
+    elif missing_points:
+        grid_status = "incomplete_grid"
+    else:
+        grid_status = "observed_grid"
     return {
         "expected_axes": expected_axes,
         "expected_points": expected_points,
@@ -620,6 +634,7 @@ def _grid_snapshot(experiment_id: Optional[str], sweep_params: Dict, registry_ro
         "missing_points": missing_points,
         "registry_root": registry_root,
         "threshold_min_grid": thresholds.paper_ready_min_grid,
+        "grid_status": grid_status,
     }
 
 
@@ -633,7 +648,7 @@ def _seed_and_grid_coverage(
 
     n_runs = len(per_run_metrics)
     grid_axes = sorted(list(sweep_params.keys()))
-    observed_count = (grid_snapshot or {}).get("observed_count", 1)
+    observed_count = (grid_snapshot or {}).get("observed_count", 0)
     flags: List[str] = []
     if n_runs < thresholds.paper_ready_min_runs:
         flags.append("seed_count_below_paper_ready")

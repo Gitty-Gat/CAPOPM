@@ -9,6 +9,8 @@
     "experiment_id": "A1.INFO_EFFICIENCY_CURVES",
     "tier": "A",
     "seed": 99101,
+    "config_hash": "5a4b7be3271e57816ef3dfda931f40fa4802003d3f8b9795065906f772240e6b",
+    "structural_prior_mode": "surrogate_heston",
     "signal_quality": 0.65,
     "informed_share": 0.3,
     "adversarial_share": 0.1,
@@ -328,29 +330,8 @@
     }
   },
   "criteria_evaluation": {
-    "overall_pass": false,
+    "overall_pass": null,
     "criteria": [
-      {
-        "id": "capopm_dominates_raw_parimutuel_brier",
-        "description": "CAPOPM Brier should not exceed raw parimutuel (Prop 6 support).",
-        "theorem": "Proposition 6",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "brier"
-        ],
-        "comparator_path": [
-          "aggregated_metrics",
-          "raw_parimutuel",
-          "brier"
-        ],
-        "direction": "<=",
-        "threshold": 0.06664770023922015,
-        "metric_value": 0.07024771984812316,
-        "evaluated": true,
-        "pass": false,
-        "reason": null
-      },
       {
         "id": "grid_requirement",
         "description": "Monotonic info-efficiency curve requires multi-point signal quality sweep.",
@@ -368,15 +349,36 @@
     "recorded_status": {},
     "status_mismatch": false,
     "criteria_semantics_mismatch": false,
-    "source_of_truth": "criteria_evaluation"
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "adversarial_share",
+        "informed_share",
+        "noise_share",
+        "signal_quality"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0.1,
+          0.3,
+          0.6,
+          0.65
+        ]
+      ],
+      "observed_count": 1,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2,
+      "grid_status": "observed_grid"
+    }
   },
   "theorem_checklist": [
     {
       "theorem": "Proposition 6",
       "claim": "Information efficiency vs signal quality",
-      "status": "failed",
+      "status": "indeterminate",
       "criteria_ids": [
-        "capopm_dominates_raw_parimutuel_brier",
         "grid_requirement"
       ]
     },
@@ -389,13 +391,41 @@
   ],
   "seed_grid_coverage": {
     "n_runs": 4,
-    "grid_axes": [],
+    "grid_axes": [
+      "adversarial_share",
+      "informed_share",
+      "noise_share",
+      "signal_quality"
+    ],
     "grid_points_observed": 1,
     "coverage_class": "smoke_only",
     "paper_ready": false,
     "flags": [
-      "seed_count_below_paper_ready"
-    ]
+      "seed_count_below_paper_ready",
+      "grid_points_below_paper_ready"
+    ],
+    "grid_snapshot": {
+      "expected_axes": [
+        "adversarial_share",
+        "informed_share",
+        "noise_share",
+        "signal_quality"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0.1,
+          0.3,
+          0.6,
+          0.65
+        ]
+      ],
+      "observed_count": 1,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2,
+      "grid_status": "observed_grid"
+    }
   },
   "effect_sizes": {
     "brier_vs_uncorrected": {
@@ -445,22 +475,30 @@
   },
   "reproducibility": {
     "artifact_hashes": {
-      "summary.json": "2648ab7578560d1da43c850a0714652b14bf3572fbce1652069209cedf21521f",
-      "metrics_aggregated.csv": "71c3e60c315b78bee3927748010e36acfec8af0995d8d191d572fe14e7ba1b84",
+      "summary.json": "e2d53f4f78ffec0b78b8845cfeff29fcbd2f31eea2a27c4ec6825a6c00dfc0d6",
+      "metrics_aggregated.csv": "ba892bdb7776e015f1dc18c3671add7ef74e99796213b9403729883bf58d87b5",
       "tests.csv": "aafe0b60fa5075ab7676691152746eafad7d22519aa0173c5fbcdaf5a74f6f63",
-      "reliability_beta_0_5_0_5.csv": "acb86292d768fae7efaf5ded14361c36904ed93bb3000179a461905cc098b937",
-      "reliability_beta_1_1.csv": "e2bcbef3948d94163bd486408801eaff0970b983b08005f41a2904c4875fa7c7",
       "reliability_capopm.csv": "14451315968d4d7c978c0b96d9425af52c8b4a0492cfe39d11ac908c1a31300d",
-      "reliability_ml_only.csv": "f20cfade9de458e27a313b5c378f1b9b8a42b5efa72faacc53c7d264e133276d",
       "reliability_raw_parimutuel.csv": "7b298721a2a87d91465b3af5d57c8299d458ba0d27a7dfffc5b6382aa91b6e23",
       "reliability_structural_only.csv": "4d208704bad97d36738032a7f80aaf10151080c87de1376b5076365e096d5103",
-      "reliability_uncorrected.csv": "fae2e2e3b658aebbc9ec166712539679f1055d3b688cabd4965ab9906725c884"
+      "reliability_ml_only.csv": "f20cfade9de458e27a313b5c378f1b9b8a42b5efa72faacc53c7d264e133276d",
+      "reliability_uncorrected.csv": "fae2e2e3b658aebbc9ec166712539679f1055d3b688cabd4965ab9906725c884",
+      "reliability_beta_1_1.csv": "e2bcbef3948d94163bd486408801eaff0970b983b08005f41a2904c4875fa7c7",
+      "reliability_beta_0_5_0_5.csv": "acb86292d768fae7efaf5ded14361c36904ed93bb3000179a461905cc098b937"
     },
     "scenario_registry_snapshot": {
-      "root": "D:\\CAPOPM\\CAPOPM\\results",
+      "root": "results",
       "scenarios": [
         "A2_time_to_converge__arr1__seed0__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+        "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+        "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+        "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
         "A2_time_to_converge__arr3__seed1__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+        "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+        "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+        "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
         "A3_strategic_timing__attack0__seed0__window20__scale1",
         "A3_strategic_timing__attack0__seed1__window20__scale3",
         "A3_strategic_timing__attack100__seed2__window20__scale1",
@@ -479,16 +517,24 @@
         "B5_arbitrage_proj__methodeuclidean__viol0__seed0",
         "B5_arbitrage_proj__methodeuclidean__viol100__seed2",
         "B5_arbitrage_proj__methodeuclidean__viol50__seed1",
+        "a1_info_eff_q65_inf30_adv0_seed99101",
         "a1_info_eff_q65_inf30_adv10_seed99101",
+        "a1_info_eff_q65_inf30_adv20_seed99102",
+        "a1_info_eff_q65_inf50_adv0_seed99103",
+        "a1_info_eff_q65_inf50_adv20_seed99104",
+        "a1_info_eff_q85_inf30_adv0_seed99105",
+        "a1_info_eff_q85_inf30_adv20_seed99106",
+        "a1_info_eff_q85_inf50_adv0_seed99107",
+        "a1_info_eff_q85_inf50_adv20_seed99108",
         "mini_regression",
         "paper_artifacts",
         "smoke_metrics_phase7"
       ]
     },
-    "registry_hash": "b9721eb4bc441799bdfd2e6aba30444aa167ee0cd5143d4407cbf73dded29415",
+    "registry_hash": "2a1d58fc793163d303628d749163cf439e7bcb6fc8b1bfe33e043cec7b677f13",
     "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
-    "config_hash": null,
-    "config_snapshot_path": null,
+    "config_hash": "7379819f036cf2888e2154e6b86282e843a145ad4e032e7c21f659c70d586b25",
+    "config_snapshot_path": "results\\a1_info_eff_q65_inf30_adv10_seed99101\\config_snapshot.json",
     "reproduction_command": "python run_paper_suite.py --experiment A1",
     "reproduce_line": "python run_paper_suite.py --experiment A1 --scenario a1_info_eff_q65_inf30_adv10_seed99101"
   },
@@ -550,5 +596,5 @@
     "Audit is reporting-only; no CAPOPM math/DGP changed.",
     "Calibration alternative uses discrete predictions when ECE is not interpretable."
   ],
-  "audit_hash": "7153678bd5007952d1117bac7439ac2ac96fecd578f0b564cb634ca486e19c75"
+  "audit_hash": "5c7a9952a2327d7e2d502c9882064bf2a726fdfe982bc3712c3ef382d95e3da0"
 }

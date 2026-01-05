@@ -95,6 +95,7 @@ def run_experiment(config: Dict) -> Dict:
     # Collect per-model p_hat/outcome for calibration
     p_hat_lists = {m: [] for m in model_names}
     outcome_lists = {m: [] for m in model_names}
+    run_seeds: List[int] = []
 
     for run_idx in range(n_runs):
         run_seed = int(rng_master.integers(0, 2**32 - 1))
@@ -111,6 +112,7 @@ def run_experiment(config: Dict) -> Dict:
         try:
             p_true = draw_p_true(rng, config.get("p_true_dist", {"type": "fixed", "value": 0.5}))
             outcome = 1 if float(rng.random()) < p_true else 0
+            run_seeds.append(run_seed)
 
             traders = build_traders(
                 n_traders=int(config["traders"]["n_traders"]),
@@ -299,35 +301,13 @@ def run_experiment(config: Dict) -> Dict:
         finally:
             reset_invariant_context(ctx_token)
 
-    # B1-CHG-03: variance/CI surfacing; M-3 runtime gating.
+    # B1-CHG-03: variance/CI surfacing across all runs.
     aggregated = aggregate_metrics(per_run_metrics, model_names)
     scenario_ctx = InvariantContext(
         experiment_id=experiment_id, scenario_name=scenario_name, run_seed=seed, config_hash=config_hash
     )
     scenario_token = set_invariant_context(scenario_ctx)
     try:
-        if "capopm" in aggregated and "uncorrected" in aggregated:
-            cap_brier = aggregated["capopm"].get("brier")
-            base_brier = aggregated["uncorrected"].get("brier")
-            if cap_brier is not None and base_brier is not None:
-                require_invariant(
-                    cap_brier <= base_brier + 1e-8,
-                    invariant_id="M-3",
-                    message="Expected-loss non-worsening (Brier, synthetic)",
-                    tolerance=1e-8,
-                    data={"capopm_brier": cap_brier, "uncorrected_brier": base_brier},
-                )
-            cap_log = aggregated["capopm"].get("log_score")
-            base_log = aggregated["uncorrected"].get("log_score")
-            if cap_log is not None and base_log is not None:
-                require_invariant(
-                    cap_log + 1e-8 >= base_log,
-                    invariant_id="M-3",
-                    message="Expected-loss non-worsening (log_score, synthetic)",
-                    tolerance=1e-8,
-                    data={"capopm_log": cap_log, "uncorrected_log": base_log},
-                )
-        # Full-sample calibration ECE computed across all runs per model.
         for m in model_names:
             if len(p_hat_lists[m]) != len(outcome_lists[m]) or len(p_hat_lists[m]) < 2:
                 raise ValueError("ECE requires at least 2 matched predictions/outcomes per model")
@@ -350,6 +330,7 @@ def run_experiment(config: Dict) -> Dict:
             aggregated[m]["calib_binning_mode_used"] = diag.get("binning_mode_used")
             aggregated[m]["calib_binning_mode_requested"] = diag.get("binning_mode_requested")
             aggregated[m]["calib_fallback_applied"] = diag.get("fallback_applied")
+
         tests = run_tests(per_run_metrics, model_names)
 
         warnings = []
@@ -359,6 +340,27 @@ def run_experiment(config: Dict) -> Dict:
                 warnings.append(
                     f"Calibration diagnostics: degenerate binning detected for model '{m}'."
                 )
+        diagnostics: List[Dict] = []
+        if "capopm" in aggregated and "uncorrected" in aggregated:
+            cap_brier = aggregated["capopm"].get("brier")
+            base_brier = aggregated["uncorrected"].get("brier")
+            cap_log = aggregated["capopm"].get("log_score")
+            base_log = aggregated["uncorrected"].get("log_score")
+            diagnostics.append(
+                {
+                    "id": "X-ME",
+                    "capopm_brier": cap_brier,
+                    "baseline_brier": base_brier,
+                    "delta_brier": (cap_brier - base_brier) if cap_brier is not None and base_brier is not None else None,
+                    "capopm_log": cap_log,
+                    "baseline_log": base_log,
+                    "delta_log": (cap_log - base_log) if cap_log is not None and base_log is not None else None,
+                    "n": len(per_run_metrics),
+                    "config_hash": config_hash,
+                    "seed": seed,
+                    "run_seeds": run_seeds,
+                }
+            )
         scenario_invariant_log = [vars(rec) for rec in scenario_ctx.invariant_log]
         scenario_fallback_log = [vars(rec) for rec in scenario_ctx.fallback_log]
     finally:
@@ -385,6 +387,7 @@ def run_experiment(config: Dict) -> Dict:
         "reporting_version": reporting_version,
         "scenario_invariants": scenario_invariant_log,
         "scenario_fallbacks": scenario_fallback_log,
+        "diagnostics": diagnostics,
         "sweep_params": config.get("sweep_params", {}),
         "grid_status": {
             "grid_axes": sorted(list(config.get("sweep_params", {}).keys())),

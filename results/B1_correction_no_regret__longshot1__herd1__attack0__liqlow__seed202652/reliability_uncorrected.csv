@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.0,0.4260434973501907,3,0.4108492087256865,0.3333333333333333,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.4260434973501907,0.44008208221736334,3,0.43141163801091525,0.6666666666666666,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.44008208221736334,0.47264162199897086,3,0.4518639980503015,0.3333333333333333,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.47264162199897086,0.4884192038476678,3,0.47967959342138794,0.6666666666666666,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.4884192038476678,0.4976166021856452,3,0.49219661405166354,0.6666666666666666,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.4976166021856452,0.5229297866242923,3,0.5124949128720606,0.0,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.5229297866242923,0.5307782289597601,3,0.5280939826068213,0.3333333333333333,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.5307782289597601,0.5426428544563887,3,0.5344422760522525,1.0,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.5426428544563887,0.5942355713393113,3,0.5793245876937797,0.3333333333333333,1,low,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652,B1.CORRECTION_NO_REGRET,B,202652,uncorrected,0.5942355713393113,1.0,3,0.63403143674893,0.3333333333333333,1,low,1,0.0

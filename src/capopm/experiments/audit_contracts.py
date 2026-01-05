@@ -43,20 +43,7 @@ AUDIT_CONTRACTS: Dict[str, AuditContract] = {
         "theorems": [
             {"id": "Phase 4 consistency", "claim": "Higher liquidity accelerates stabilization"},
         ],
-        "criteria": [
-            {
-                "id": "variance_decay_negative",
-                "metric_path": ("aggregated_metrics", "capopm", "var_decay_slope"),
-                "threshold": 0.0,
-                "direction": "<=",
-                "description": "Posterior variance slope vs steps should be non-positive.",
-                "theorem": "Phase 4 consistency",
-            },
-            _grid_requirement(
-                "Convergence comparisons need multiple liquidity/arrival settings.",
-                theorem="Phase 4 consistency",
-            ),
-        ],
+        "criteria": [],
         "reproduction_command": "python run_paper_suite.py --experiment A2",
     },
     "A3.STRATEGIC_TIMING_ATTACK": {

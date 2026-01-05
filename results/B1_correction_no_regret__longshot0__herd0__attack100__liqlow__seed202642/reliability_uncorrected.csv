@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.0,0.4531411025321484,3,0.387051816721189,0.3333333333333333,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.4531411025321484,0.4742540966048977,3,0.4556954267790241,0.0,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.4742540966048977,0.47959636082360035,3,0.47922942770790716,0.3333333333333333,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.47959636082360035,0.5028376806569045,3,0.4948053846354917,1.0,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.5028376806569045,0.5247033015123379,3,0.5172582205148567,0.3333333333333333,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.5247033015123379,0.5258138001954776,3,0.5254908080892179,0.6666666666666666,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.5258138001954776,0.5326823414372394,3,0.526014276093727,0.3333333333333333,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.5326823414372394,0.5498609461601836,3,0.5486426776111929,0.6666666666666666,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.5498609461601836,0.5741762410032016,3,0.5643914375972544,0.3333333333333333,0,low,0,1.0
+B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642,B1.CORRECTION_NO_REGRET,B,202642,uncorrected,0.5741762410032016,1.0,3,0.6100587318242581,0.3333333333333333,0,low,0,1.0

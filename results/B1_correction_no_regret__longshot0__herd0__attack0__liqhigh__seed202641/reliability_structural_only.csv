@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.0,0.4375624999166668,2,0.4250624999166668,0.5,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.4375624999166668,0.4500624999166668,3,0.4375624999166668,0.3333333333333333,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.4500624999166668,0.4500624999166668,0,0.0,0.0,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.4500624999166668,0.4563124999166668,5,0.4500624999166668,0.6,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.4563124999166668,0.4719374999166668,5,0.4600624999166668,0.4,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.4719374999166668,0.4875624999166668,1,0.47506249991666677,1.0,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.4875624999166668,0.5063124999166668,4,0.49068749991666677,0.25,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.5063124999166668,0.5188124999166668,3,0.5083958332500002,0.6666666666666666,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.5188124999166668,0.5381874999166668,4,0.5250624999166669,0.5,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,structural_only,0.5381874999166668,1.0,3,0.5729791665833335,0.3333333333333333,0,high,0,0.0

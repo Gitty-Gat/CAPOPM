@@ -1,0 +1,108 @@
+{
+  "p_true_dist": {
+    "type": "beta",
+    "a": 2.0,
+    "b": 2.0
+  },
+  "models": [
+    "capopm",
+    "raw_parimutuel",
+    "uncorrected",
+    "structural_only",
+    "ml_only"
+  ],
+  "traders": {
+    "n_traders": 60,
+    "proportions": {
+      "informed": 0.5,
+      "adversarial": 0.2,
+      "noise": 0.3
+    },
+    "params": {
+      "informed": {
+        "signal_quality": 0.7,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      },
+      "adversarial": {
+        "signal_quality": 0.7,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      },
+      "noise": {
+        "signal_quality": 0.5,
+        "noise_yes_prob": 0.5,
+        "herding_intensity": 0.0
+      }
+    }
+  },
+  "market": {
+    "n_steps": 30,
+    "arrivals_per_step": 2,
+    "fee_rate": 0.01,
+    "initial_yes_pool": 1.0,
+    "initial_no_pool": 1.0,
+    "signal_model": "conditional_on_state",
+    "use_realized_state_for_signals": true,
+    "herding_enabled": false,
+    "size_dist": "fixed",
+    "size_dist_params": {
+      "size": 1.0
+    }
+  },
+  "structural_cfg": {
+    "T": 1.0,
+    "K": 1.0,
+    "S0": 1.0,
+    "V0": 0.04,
+    "kappa": 1.0,
+    "theta": 0.04,
+    "xi": 0.2,
+    "rho": -0.3,
+    "alpha": 0.7,
+    "lambda": 0.1
+  },
+  "ml_cfg": {
+    "base_prob": 0.9,
+    "bias": 0.2,
+    "noise_std": 0.05,
+    "calibration": 1.5,
+    "r_ml": 0.9
+  },
+  "prior_cfg": {
+    "n_str": 200.0,
+    "n_ml_eff": 200.0,
+    "n_ml_scale": 5.0
+  },
+  "stage1_cfg": {
+    "enabled": true,
+    "w_min": 0.1,
+    "w_max": 1.25
+  },
+  "stage2_cfg": {
+    "enabled": true,
+    "mode": "offsets_mixture",
+    "delta_plus": 0.0,
+    "delta_minus": 0.0,
+    "regimes": [
+      {
+        "pi": 1.0,
+        "g_plus_scale": 0.1,
+        "g_minus_scale": -0.1
+      }
+    ]
+  },
+  "ece_bins": 10,
+  "calibration_binning": "equal_width",
+  "ece_min_nonempty_bins": 5,
+  "coverage_include_outcome": false,
+  "seed": 307000,
+  "n_runs": 30,
+  "scenario_name": "C6_extreme_prior_mislead__seed307000",
+  "experiment_id": "C6.EXTREME_PRIOR_MISLEAD",
+  "tier": "C",
+  "sweep_params": {
+    "prior_n_str": 200.0,
+    "prior_n_ml_eff": 200.0
+  }
+}

@@ -9,11 +9,12 @@
     "experiment_id": "A1.INFO_EFFICIENCY_CURVES",
     "tier": "A",
     "seed": 99106,
+    "config_hash": "54d4f173967b45346d3c778cf972e606b5ba677edc48c8cf82e1af746f7d354f",
+    "structural_prior_mode": "surrogate_heston",
     "signal_quality": 0.85,
     "informed_share": 0.3,
     "adversarial_share": 0.2,
-    "noise_share": 0.49999999999999994,
-    "config_hash": "54d4f173967b45346d3c778cf972e606b5ba677edc48c8cf82e1af746f7d354f"
+    "noise_share": 0.49999999999999994
   },
   "calibration": {
     "capopm": {
@@ -309,29 +310,8 @@
     }
   },
   "criteria_evaluation": {
-    "overall_pass": true,
+    "overall_pass": null,
     "criteria": [
-      {
-        "id": "capopm_dominates_raw_parimutuel_brier",
-        "description": "CAPOPM Brier should not exceed raw parimutuel (Prop 6 support).",
-        "theorem": "Proposition 6",
-        "metric_path": [
-          "aggregated_metrics",
-          "capopm",
-          "brier"
-        ],
-        "comparator_path": [
-          "aggregated_metrics",
-          "raw_parimutuel",
-          "brier"
-        ],
-        "direction": "<=",
-        "threshold": 0.05564981974608806,
-        "metric_value": 0.05507289163135568,
-        "evaluated": true,
-        "pass": true,
-        "reason": null
-      },
       {
         "id": "grid_requirement",
         "description": "Monotonic info-efficiency curve requires multi-point signal quality sweep.",
@@ -343,21 +323,90 @@
         "metric_value": null,
         "evaluated": false,
         "pass": null,
-        "reason": "grid_missing_for_claim"
+        "reason": "metric_missing"
       }
     ],
     "recorded_status": {},
     "status_mismatch": false,
     "criteria_semantics_mismatch": false,
-    "source_of_truth": "criteria_evaluation"
+    "source_of_truth": "criteria_evaluation",
+    "grid_snapshot": {
+      "expected_axes": [
+        "adversarial_share",
+        "informed_share",
+        "noise_share",
+        "signal_quality"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0.2,
+          0.5,
+          0.3,
+          0.65
+        ],
+        [
+          0.0,
+          0.5,
+          0.5,
+          0.65
+        ],
+        [
+          0.2,
+          0.5,
+          0.3,
+          0.85
+        ],
+        [
+          0.2,
+          0.3,
+          0.49999999999999994,
+          0.65
+        ],
+        [
+          0.1,
+          0.3,
+          0.6,
+          0.65
+        ],
+        [
+          0.0,
+          0.3,
+          0.7,
+          0.65
+        ],
+        [
+          0.2,
+          0.3,
+          0.49999999999999994,
+          0.85
+        ],
+        [
+          0.0,
+          0.5,
+          0.5,
+          0.85
+        ],
+        [
+          0.0,
+          0.3,
+          0.7,
+          0.85
+        ]
+      ],
+      "observed_count": 9,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2,
+      "grid_status": "observed_grid"
+    }
   },
   "theorem_checklist": [
     {
       "theorem": "Proposition 6",
       "claim": "Information efficiency vs signal quality",
-      "status": "validated",
+      "status": "indeterminate",
       "criteria_ids": [
-        "capopm_dominates_raw_parimutuel_brier",
         "grid_requirement"
       ]
     },
@@ -370,11 +419,86 @@
   ],
   "seed_grid_coverage": {
     "n_runs": 30,
-    "grid_axes": [],
-    "grid_points_observed": 1,
-    "coverage_class": "multi_seed",
+    "grid_axes": [
+      "adversarial_share",
+      "informed_share",
+      "noise_share",
+      "signal_quality"
+    ],
+    "grid_points_observed": 9,
+    "coverage_class": "multi_grid",
     "paper_ready": true,
-    "flags": []
+    "flags": [],
+    "grid_snapshot": {
+      "expected_axes": [
+        "adversarial_share",
+        "informed_share",
+        "noise_share",
+        "signal_quality"
+      ],
+      "expected_points": [],
+      "observed_points": [
+        [
+          0.2,
+          0.5,
+          0.3,
+          0.65
+        ],
+        [
+          0.0,
+          0.5,
+          0.5,
+          0.65
+        ],
+        [
+          0.2,
+          0.5,
+          0.3,
+          0.85
+        ],
+        [
+          0.2,
+          0.3,
+          0.49999999999999994,
+          0.65
+        ],
+        [
+          0.1,
+          0.3,
+          0.6,
+          0.65
+        ],
+        [
+          0.0,
+          0.3,
+          0.7,
+          0.65
+        ],
+        [
+          0.2,
+          0.3,
+          0.49999999999999994,
+          0.85
+        ],
+        [
+          0.0,
+          0.5,
+          0.5,
+          0.85
+        ],
+        [
+          0.0,
+          0.3,
+          0.7,
+          0.85
+        ]
+      ],
+      "observed_count": 9,
+      "missing_points": [],
+      "registry_root": "results",
+      "threshold_min_grid": 2,
+      "grid_status": "observed_grid"
+    }
   },
   "effect_sizes": {
     "brier_vs_uncorrected": {
@@ -424,8 +548,8 @@
   },
   "reproducibility": {
     "artifact_hashes": {
-      "summary.json": "b4b380a57e62c92218cf9f5330b65a448117b590ea9c41f10a7c78b01393c362",
-      "metrics_aggregated.csv": "92d62b892c790fa0530c4b95875717d96018ed0d7e355854ffc47a20993d68fe",
+      "summary.json": "8468b313a5aa42978224186affd3e7678cbdfb20146cb58a6ba52fb2fa5ebdba",
+      "metrics_aggregated.csv": "7a26184560910f40b8d585f4c67c5a851d0d8095dd9c641de664d47e64ef2acc",
       "tests.csv": "04f4f4fcf507ed0f651c264997a703c031e0b052dbe38249237da6301cb9c496",
       "reliability_capopm.csv": "75c2780df227e1cfa1e9e7c889b3fee52f2c5f1ad839dbf94aa156e513d27b5b",
       "reliability_raw_parimutuel.csv": "86e2eb657c43998f74f246743854891bff03bc755bdb9d9ba5e998411840037d",
@@ -450,15 +574,40 @@
         "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
         "A3_strategic_timing__attack0__seed0__window20__scale1",
         "A3_strategic_timing__attack0__seed1__window20__scale3",
+        "A3_strategic_timing__attack0__seed250000__window100__scale1",
+        "A3_strategic_timing__attack0__seed250001__window100__scale3",
+        "A3_strategic_timing__attack100__seed250002__window100__scale1",
+        "A3_strategic_timing__attack100__seed250003__window100__scale3",
         "A3_strategic_timing__attack100__seed2__window20__scale1",
         "A3_strategic_timing__attack100__seed3__window20__scale3",
         "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed1",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641",
         "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed0",
+        "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed202640",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed202643",
         "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed3",
         "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed2",
+        "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642",
+        "B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645",
+        "B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644",
+        "B1_correction_no_regret__longshot0__herd1__attack100__liqhigh__seed202647",
+        "B1_correction_no_regret__longshot0__herd1__attack100__liqlow__seed202646",
+        "B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649",
+        "B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648",
+        "B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651",
+        "B1_correction_no_regret__longshot1__herd0__attack100__liqlow__seed202650",
+        "B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653",
+        "B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652",
+        "B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655",
+        "B1_correction_no_regret__longshot1__herd1__attack100__liqlow__seed202654",
         "B2_asymptotic_rate__seed0",
+        "B2_asymptotic_rate__seed260000",
         "B3_misspec_regret__struct0__ml0__seed0",
+        "B3_misspec_regret__struct0__ml0__seed270000",
+        "B3_misspec_regret__struct0__ml500__seed270001",
         "B3_misspec_regret__struct0__ml5__seed1",
+        "B3_misspec_regret__struct1000__ml0__seed270100",
+        "B3_misspec_regret__struct1000__ml500__seed270101",
         "B3_misspec_regret__struct10__ml0__seed100",
         "B3_misspec_regret__struct10__ml5__seed101",
         "B4_regime_concentration__evidence150__seed1",
@@ -480,7 +629,7 @@
         "smoke_metrics_phase7"
       ]
     },
-    "registry_hash": "2a1d58fc793163d303628d749163cf439e7bcb6fc8b1bfe33e043cec7b677f13",
+    "registry_hash": "2f1cf46d985cdf47c71269b97f782fb386d2d39eb47c52e57a5e51bcc59f2397",
     "registry_code_hash": "fa8854440df2fab840840e9b293bd3804b4eb620aeb312f6b979edc41f7bec3c",
     "config_hash": "45a29362c0ad53243ad5970067e5a3a49747999c2f36c3ce3c2c61e789d6632a",
     "config_snapshot_path": "results\\a1_info_eff_q85_inf30_adv20_seed99106\\config_snapshot.json",
@@ -537,5 +686,5 @@
     "Audit is reporting-only; no CAPOPM math/DGP changed.",
     "Calibration alternative uses discrete predictions when ECE is not interpretable."
   ],
-  "audit_hash": "7b19f85a3ae0c3558837786505d56ddeeec3ec97f7579e73df5ea5fc5f1df6ec"
+  "audit_hash": "8d024f6d530e8ed94bae133cb212003226eae782ab43489a7f4df2db8a229bf3"
 }

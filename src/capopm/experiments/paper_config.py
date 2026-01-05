@@ -43,7 +43,7 @@ PAPER_GRIDS = {
     },
     "A3": {
         "attack_strength_grid": [0.0, 1.0],
-        "window_grid": [20],
+        "window_grid": [1.0],
         "scale_grid": [1, 3],
         "base_seed": 250000,
     },

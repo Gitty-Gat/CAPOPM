@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.0,0.46567822231470585,3,0.4641509665191042,0.6666666666666666,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.46567822231470585,0.467260621427686,3,0.4661854452743455,0.6666666666666666,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.467260621427686,0.4714480084237277,3,0.4684678066839076,0.3333333333333333,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.4714480084237277,0.4732232388671089,3,0.4721441404139135,0.3333333333333333,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.4732232388671089,0.4781932790820055,3,0.4757498107424138,0.6666666666666666,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.4781932790820055,0.4905310718698646,3,0.4860783550532677,0.3333333333333333,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.4905310718698646,0.5007150592226416,3,0.4975123390129037,0.3333333333333333,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.5007150592226416,0.5076809280704178,3,0.5046809129469078,0.6666666666666666,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.5076809280704178,0.5145166038120635,3,0.5108373978027887,0.3333333333333333,0,high,0,0.0
+B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641,B1.CORRECTION_NO_REGRET,B,202641,capopm,0.5145166038120635,1.0,3,0.5370964370087761,0.3333333333333333,0,high,0,0.0

@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.0,0.4350909729468971,3,0.40955333888519174,0.3333333333333333,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.4350909729468971,0.44734317872504076,3,0.4386799166184985,0.3333333333333333,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.44734317872504076,0.4614913307904925,3,0.45449219813984904,1.0,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.4614913307904925,0.47586908616910917,3,0.464167411043124,0.0,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.47586908616910917,0.5201138063386541,3,0.5005900052903055,0.3333333333333333,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.5201138063386541,0.5463048372987269,3,0.5331663429206782,0.6666666666666666,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.5463048372987269,0.5568116521891069,3,0.5507521716560272,0.6666666666666666,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.5568116521891069,0.5791155226835747,3,0.5725172294634284,0.6666666666666666,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.5791155226835747,0.5856584373122274,3,0.580893073141282,0.3333333333333333,0,high,1,0.0
+B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649,B1.CORRECTION_NO_REGRET,B,202649,ml_only,0.5856584373122274,1.0,3,0.601675263882168,0.6666666666666666,0,high,1,0.0

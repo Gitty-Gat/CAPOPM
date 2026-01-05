@@ -1,0 +1,11 @@
+scenario_name,experiment_id,tier,seed,model,bin_low,bin_high,count,mean_pred,mean_outcome,herding,liquidity_level,longshot_bias,timing_attack_strength
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.0,0.4145625,2,0.396,1.0,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.4145625,0.440117739198538,4,0.4188379984662577,0.0,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.440117739198538,0.4672660872781065,3,0.45626604503758444,0.3333333333333333,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.4672660872781065,0.47709264705882354,3,0.4738380177514793,0.6666666666666666,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.47709264705882354,0.4842386257035647,3,0.47929263160113544,0.6666666666666666,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.4842386257035647,0.49692233009708736,3,0.4905228658536585,0.6666666666666666,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.49692233009708736,0.5060533980582524,3,0.5018683252427184,0.3333333333333333,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.5060533980582524,0.5130257530120482,3,0.5113493908093327,0.6666666666666666,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.5130257530120482,0.552677300613497,3,0.5391875,0.6666666666666666,1,high,1,0.0
+B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653,B1.CORRECTION_NO_REGRET,B,202653,raw_parimutuel,0.552677300613497,1.0,3,0.6166544941084818,0.6666666666666666,1,high,1,0.0

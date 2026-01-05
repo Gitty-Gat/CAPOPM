@@ -4,6 +4,8 @@
       "experiment": "A1",
       "scenario_name": "a1_info_eff_q65_inf30_adv0_seed99101",
       "seed": 99101,
+      "base_seed": 99101,
+      "run_index": null,
       "sweep_params": {
         "signal_quality": 0.65,
         "informed_share": 0.3,
@@ -11,10 +13,13 @@
         "noise_share": 0.7
       },
       "n_runs": 30,
-      "audit_hash": "c803beb6e215d8e67dfb1b16d1d292e62cf0d50f508c4b453af3433345eb29c5",
+      "results_dir": "results\\a1_info_eff_q65_inf30_adv0_seed99101",
+      "summary_path": "results\\a1_info_eff_q65_inf30_adv0_seed99101\\summary.json",
+      "audit_path": "results\\a1_info_eff_q65_inf30_adv0_seed99101\\audit.json",
+      "audit_hash": "a05707f53d93ba32edf793854b1a57e9ed5cc20e7b19d15b265aa4ab9176a629",
       "artifact_hashes": {
-        "summary.json": "1cc5922ea67ae8f093e25a5e77efb8cd6edf4bf84a96c64918880cb52cb28516",
-        "metrics_aggregated.csv": "e76ee74c9fa0d439f65c4d3ccd50b0ff57b4affe70d3eb2bf4649c05f9d110fd",
+        "summary.json": "325e2eaea010e9bd3fbe0ce6cbfb0ce3d80135b1d1a027506dae001276afc5ae",
+        "metrics_aggregated.csv": "5a935b20542e84f91fca3478802c31db49e138af08f0c809f0a38c512d5b4d92",
         "tests.csv": "57c1ecb0f9a2ad48ede00a8751e95a6805fa3ec981145b1f9bd8366438584d1c",
         "reliability_capopm.csv": "9307fddd2f6f66e97e38cef8164448625fe143ea209a7ac9cd15f5527aa755a0",
         "reliability_raw_parimutuel.csv": "71d6ca7950dec64dfba35701e62d35a65b979b9aa91bff2a22d9123f6efc9ff6",
@@ -29,6 +34,8 @@
       "experiment": "A1",
       "scenario_name": "a1_info_eff_q65_inf30_adv20_seed99102",
       "seed": 99102,
+      "base_seed": 99101,
+      "run_index": null,
       "sweep_params": {
         "signal_quality": 0.65,
         "informed_share": 0.3,
@@ -36,10 +43,13 @@
         "noise_share": 0.49999999999999994
       },
       "n_runs": 30,
-      "audit_hash": "8781793f0c48186af7218ee9f24a2efdca35eabfb032514619791567473ab550",
+      "results_dir": "results\\a1_info_eff_q65_inf30_adv20_seed99102",
+      "summary_path": "results\\a1_info_eff_q65_inf30_adv20_seed99102\\summary.json",
+      "audit_path": "results\\a1_info_eff_q65_inf30_adv20_seed99102\\audit.json",
+      "audit_hash": "823709d61ac385471037a9adaa2fa9be9ec84462c4e914dafddd631df6fb0058",
       "artifact_hashes": {
-        "summary.json": "d68f649482c2592a7dc87b679d4080589e2b815aebd805bb99fd379df8f4c06a",
-        "metrics_aggregated.csv": "c9d8e9f9b9dc2d5cac62b1a1fc656951ac1375f6a067a54bf42ce73a307a528e",
+        "summary.json": "00a07cb2e844608a0441829e01111b91bd1131bc2e87af384db4d40c12200e34",
+        "metrics_aggregated.csv": "4d9c3ce691553eeb75b57f3bc407a726050314dbe8b041f38307434ce9000de3",
         "tests.csv": "301b10156f2e5eb1060f4151c1069281a8dd305e07f9556ac583c9a4a964cfb3",
         "reliability_capopm.csv": "1f1b95ffe9084ae87b75faacd9381c35c248cfaefb67bb499cabed859226e8ed",
         "reliability_raw_parimutuel.csv": "11460a0b53a2ef600400cf09bf733a1c5b3d9a4001768cbc09e7355803039060",
@@ -54,6 +64,8 @@
       "experiment": "A1",
       "scenario_name": "a1_info_eff_q65_inf50_adv0_seed99103",
       "seed": 99103,
+      "base_seed": 99101,
+      "run_index": null,
       "sweep_params": {
         "signal_quality": 0.65,
         "informed_share": 0.5,
@@ -61,10 +73,13 @@
         "noise_share": 0.5
       },
       "n_runs": 30,
-      "audit_hash": "5aa9c083a45084aacb780237ff569a54f4e31c2a681bdc574ababa31f4e0f2e4",
+      "results_dir": "results\\a1_info_eff_q65_inf50_adv0_seed99103",
+      "summary_path": "results\\a1_info_eff_q65_inf50_adv0_seed99103\\summary.json",
+      "audit_path": "results\\a1_info_eff_q65_inf50_adv0_seed99103\\audit.json",
+      "audit_hash": "1cb982c28c806dcc82e41f2ba6828a0f985aa38beba0dd83a22a7373b0815974",
       "artifact_hashes": {
-        "summary.json": "d48a776b3ef59dcb887c0ee89534993f7941c3b2c8ca10fbf5f74a4c48aed1cc",
-        "metrics_aggregated.csv": "2fb056a118dff401071123b50cc0ab6069ecc9ce5c3b305c766170e242ee367c",
+        "summary.json": "af356187aee52eff14e5f9f231494129a65992966e2b2fad04c96a85001394cd",
+        "metrics_aggregated.csv": "80b5d711584bc27fe7c9ead8b0fcf19c0985d67b3835998ffc34ced31e1fa85f",
         "tests.csv": "19ce0b499d8e0b1421e65a7205c8a729d81020d1a1d41f8d032f6ca7ba591c28",
         "reliability_capopm.csv": "911382e88a9355a2b92171fbb0af7063b4572f6dcc3bacb1d209857771e98899",
         "reliability_raw_parimutuel.csv": "050bf3d0823fe131640aa36e8eda12997c89676d5f74e0200ffb5bda80de2c19",
@@ -79,6 +94,8 @@
       "experiment": "A1",
       "scenario_name": "a1_info_eff_q65_inf50_adv20_seed99104",
       "seed": 99104,
+      "base_seed": 99101,
+      "run_index": null,
       "sweep_params": {
         "signal_quality": 0.65,
         "informed_share": 0.5,
@@ -86,10 +103,13 @@
         "noise_share": 0.3
       },
       "n_runs": 30,
-      "audit_hash": "bf561509d1b007843fd630ae3ff8d11a9862701e37875992d7ece9f30b346818",
+      "results_dir": "results\\a1_info_eff_q65_inf50_adv20_seed99104",
+      "summary_path": "results\\a1_info_eff_q65_inf50_adv20_seed99104\\summary.json",
+      "audit_path": "results\\a1_info_eff_q65_inf50_adv20_seed99104\\audit.json",
+      "audit_hash": "be9ce712df95179fb7238bd2cb16ff95875441174923802c6fddaaced4bf19c8",
       "artifact_hashes": {
-        "summary.json": "f082fe8f79dcd302c6b0ee3eadfb2dfbadd6a7ff491de4da6a29b265b01d64f7",
-        "metrics_aggregated.csv": "a1387a28aac1461e2de37c71332a81168e74bb1195e2c1ec66825fcb2d239bc0",
+        "summary.json": "f8c755b3b4d4addf9511aaa95b6fedf76b6a58b107d8326a70d0902c0c85d0fb",
+        "metrics_aggregated.csv": "5bab8e0aeea2b6b7b5932834e33eb9a49827d66143d5878d2de4b0170eaef585",
         "tests.csv": "3012d9b45966e948c1908e30c3d176f6f69c706e4688d6a39fcc48b2ebd0cb5c",
         "reliability_capopm.csv": "e3b783f72bd8b1929399764b1ffecb3a623b698ab730760a307e4c649ff81529",
         "reliability_raw_parimutuel.csv": "60092d243a6b682dfba731725e689ed6c86e3c7e1765a251aef0d03044d99eb9",
@@ -104,6 +124,8 @@
       "experiment": "A1",
       "scenario_name": "a1_info_eff_q85_inf30_adv0_seed99105",
       "seed": 99105,
+      "base_seed": 99101,
+      "run_index": null,
       "sweep_params": {
         "signal_quality": 0.85,
         "informed_share": 0.3,
@@ -111,10 +133,13 @@
         "noise_share": 0.7
       },
       "n_runs": 30,
-      "audit_hash": "a787d7e735136bdd2657f3133ad03a1b4ee341139c3ac8e051b944f1375558e1",
+      "results_dir": "results\\a1_info_eff_q85_inf30_adv0_seed99105",
+      "summary_path": "results\\a1_info_eff_q85_inf30_adv0_seed99105\\summary.json",
+      "audit_path": "results\\a1_info_eff_q85_inf30_adv0_seed99105\\audit.json",
+      "audit_hash": "6794b98f812f5b7ce5bc79ce09f1f8a5d5dd73c626870814038867056f7f80b2",
       "artifact_hashes": {
-        "summary.json": "92b2aefe9761736b82c64483c1f9a24a40597d83e3b07d0926cb9df1db080aa3",
-        "metrics_aggregated.csv": "0980bfcb7ca254bac6b70ab86c78a04f434a97a56ed517dd8c4b979764330a82",
+        "summary.json": "ec86187177d6859cae276d313483f3a241933cc82e9d2d31434414c3fdbf49e0",
+        "metrics_aggregated.csv": "f9a89e7f3cc6b61ea9fb455b0ab1d138ef060067fa8630276830d55e45035394",
         "tests.csv": "a1cb24b908f36466733bf4bdf91b71b4bd14e9434ec8d79ccf6c5e536575d2a4",
         "reliability_capopm.csv": "e5036570e3739ec781abb7dfd65dbaba667b768d34b670b848d2a6800dbdb7b9",
         "reliability_raw_parimutuel.csv": "75b6e4e9f82a6ee1dc6e67b34838af6007a34beb0821cbd4ffb5fd09c0aa897b",
@@ -129,6 +154,8 @@
       "experiment": "A1",
       "scenario_name": "a1_info_eff_q85_inf30_adv20_seed99106",
       "seed": 99106,
+      "base_seed": 99101,
+      "run_index": null,
       "sweep_params": {
         "signal_quality": 0.85,
         "informed_share": 0.3,
@@ -136,10 +163,13 @@
         "noise_share": 0.49999999999999994
       },
       "n_runs": 30,
-      "audit_hash": "7b19f85a3ae0c3558837786505d56ddeeec3ec97f7579e73df5ea5fc5f1df6ec",
+      "results_dir": "results\\a1_info_eff_q85_inf30_adv20_seed99106",
+      "summary_path": "results\\a1_info_eff_q85_inf30_adv20_seed99106\\summary.json",
+      "audit_path": "results\\a1_info_eff_q85_inf30_adv20_seed99106\\audit.json",
+      "audit_hash": "8d024f6d530e8ed94bae133cb212003226eae782ab43489a7f4df2db8a229bf3",
       "artifact_hashes": {
-        "summary.json": "b4b380a57e62c92218cf9f5330b65a448117b590ea9c41f10a7c78b01393c362",
-        "metrics_aggregated.csv": "92d62b892c790fa0530c4b95875717d96018ed0d7e355854ffc47a20993d68fe",
+        "summary.json": "8468b313a5aa42978224186affd3e7678cbdfb20146cb58a6ba52fb2fa5ebdba",
+        "metrics_aggregated.csv": "7a26184560910f40b8d585f4c67c5a851d0d8095dd9c641de664d47e64ef2acc",
         "tests.csv": "04f4f4fcf507ed0f651c264997a703c031e0b052dbe38249237da6301cb9c496",
         "reliability_capopm.csv": "75c2780df227e1cfa1e9e7c889b3fee52f2c5f1ad839dbf94aa156e513d27b5b",
         "reliability_raw_parimutuel.csv": "86e2eb657c43998f74f246743854891bff03bc755bdb9d9ba5e998411840037d",
@@ -154,6 +184,8 @@
       "experiment": "A1",
       "scenario_name": "a1_info_eff_q85_inf50_adv0_seed99107",
       "seed": 99107,
+      "base_seed": 99101,
+      "run_index": null,
       "sweep_params": {
         "signal_quality": 0.85,
         "informed_share": 0.5,
@@ -161,10 +193,13 @@
         "noise_share": 0.5
       },
       "n_runs": 30,
-      "audit_hash": "9d2e1927058c6ac315beb7d2682d972ad3458298b48271b7116caf52c7f98d77",
+      "results_dir": "results\\a1_info_eff_q85_inf50_adv0_seed99107",
+      "summary_path": "results\\a1_info_eff_q85_inf50_adv0_seed99107\\summary.json",
+      "audit_path": "results\\a1_info_eff_q85_inf50_adv0_seed99107\\audit.json",
+      "audit_hash": "9ffa7f355797239a6334523383284109473df82af85b7aab246b190409384947",
       "artifact_hashes": {
-        "summary.json": "f7a30a99909291eb7b67a53d1857efbfc0197b5aa5e3c9f3a4fa65ee6793dc0a",
-        "metrics_aggregated.csv": "57320e6fbceca6c6359d859509de4f98f7a50db25066857e8311a5d1ce0a4ee0",
+        "summary.json": "2d135f990c3da25228605f53bab9353bef0d51d56daed23432883abf37c8544f",
+        "metrics_aggregated.csv": "6594f71f50c1c472887175ef5db5dbfb42d38df9ee41e591fca6691b566867fe",
         "tests.csv": "30f4e0d353837b33fa2baa632d28bced748fe28de5fe7f7ced01b4c38fd9db11",
         "reliability_capopm.csv": "4c2a69bd1660b91132a54439e9469c31b19638a74b2279764825773e48f3fee8",
         "reliability_raw_parimutuel.csv": "2d831551e61030e72ae2c98c19a6471e1dac45df8241899682f4a2734db9a4e3",
@@ -179,6 +214,8 @@
       "experiment": "A1",
       "scenario_name": "a1_info_eff_q85_inf50_adv20_seed99108",
       "seed": 99108,
+      "base_seed": 99101,
+      "run_index": null,
       "sweep_params": {
         "signal_quality": 0.85,
         "informed_share": 0.5,
@@ -186,10 +223,13 @@
         "noise_share": 0.3
       },
       "n_runs": 30,
-      "audit_hash": "0255827b912ed3d5c89d1fb36f87e7ce5b99b95c56a99bb36692e2929f4f598d",
+      "results_dir": "results\\a1_info_eff_q85_inf50_adv20_seed99108",
+      "summary_path": "results\\a1_info_eff_q85_inf50_adv20_seed99108\\summary.json",
+      "audit_path": "results\\a1_info_eff_q85_inf50_adv20_seed99108\\audit.json",
+      "audit_hash": "07d57e9cca104ba8cb43df9fa20c26c7a9fdaa55d87ebd667c254647172c5129",
       "artifact_hashes": {
-        "summary.json": "85644e4f9d045b997675dfad60d63e7297fdabe3b280824eff3b3b3687915a42",
-        "metrics_aggregated.csv": "96de80df7ab13f20d6172f6b5cbfc449e72d03e48006870da986c586d81768f3",
+        "summary.json": "d5cd2295072f5b1b26cdf374fdd2b6d8757e8be958bd6bf7bed199630bc1246f",
+        "metrics_aggregated.csv": "70f4c657a2d3e52098e6e4b969c667105bbc66ab18c37ecac9b9e35b113f8d36",
         "tests.csv": "e056038ad31a2ef59e5e56b49f3fef69094ea72ae3c5e5dd99223eb72eb10d22",
         "reliability_capopm.csv": "318d4003acd78ac7f426e4c8bc638bcf51d276a00fa91b33c1693684d45a8ec6",
         "reliability_raw_parimutuel.csv": "d28c33f9952b6e05bf011972c77365a11c86fef03b367b1a62c988d57a533b1c",
@@ -199,8 +239,1240 @@
         "reliability_beta_1_1.csv": "d316d2cc15430e9481860c5dfe475eaf35790591211985a6e690cd71f3ef6145",
         "reliability_beta_0_5_0_5.csv": "3a671026fcbdacc3246563f3bc97e14645135c633338105e8ab90ae6b054b8f7"
       }
+    },
+    {
+      "experiment": "A2",
+      "scenario_name": "A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+      "seed": 240000,
+      "base_seed": 240000,
+      "run_index": null,
+      "sweep_params": {
+        "arrivals_per_step": 1,
+        "initial_pool": 1.0,
+        "n_steps": 25
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A2_time_to_converge__arr1__seed240000__pool1.0__steps25",
+      "summary_path": "results\\A2_time_to_converge__arr1__seed240000__pool1.0__steps25\\summary.json",
+      "audit_path": "results\\A2_time_to_converge__arr1__seed240000__pool1.0__steps25\\audit.json",
+      "audit_hash": "b74e1298d8c160a1e2ee11c232eae94ab7bf003f54aa32045b193506ca690683",
+      "artifact_hashes": {
+        "summary.json": "c392355e24a763f465a967201ed9b6754f378fc38a29f3235d15110cfac5165d",
+        "metrics_aggregated.csv": "0a7f96fc6c00fa2c993772089ae24248be524c8abd31d951b50221d45805d8b7",
+        "tests.csv": "5d670799bdeb8ea463e6a82e1d73b2cfcefffb79e9cff1c5aa803549c204e4fb",
+        "reliability_capopm.csv": "6eec6c52dabf62564217358edb0c3c385e159dbae7f0fde3bb36d10e11fb5003",
+        "reliability_raw_parimutuel.csv": "87efb3d70802458604cf15ee07ea2078310567711f2e7fb4f726738012f1d0c1",
+        "reliability_structural_only.csv": "4efac366c4c4d5fdaf69a40b59986ed2b4161ea8598c4f4c33de6ee572d0e80c",
+        "reliability_ml_only.csv": "a834a9222e1deaeaaa9489b3a17765de0ce2b23d5a0ba40f0026674d610e1e01",
+        "reliability_uncorrected.csv": "ef4d5ee0b512bc4eda62160ea95bafc555427c8ef3044d79d8eb7d2fbf445663",
+        "reliability_beta_1_1.csv": "3f36d8edeacd315d8af83a5f993a14c453ec34107ab8d1dc4d9dd9e37318e7bb",
+        "reliability_beta_0_5_0_5.csv": "6e2dcf351436fdf39d05a0c26de91a560c4390517f51639a03ecc40d52bb9bfa"
+      }
+    },
+    {
+      "experiment": "A2",
+      "scenario_name": "A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+      "seed": 240001,
+      "base_seed": 240000,
+      "run_index": null,
+      "sweep_params": {
+        "arrivals_per_step": 1,
+        "initial_pool": 1.0,
+        "n_steps": 40
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A2_time_to_converge__arr1__seed240001__pool1.0__steps40",
+      "summary_path": "results\\A2_time_to_converge__arr1__seed240001__pool1.0__steps40\\summary.json",
+      "audit_path": "results\\A2_time_to_converge__arr1__seed240001__pool1.0__steps40\\audit.json",
+      "audit_hash": "fd1ea3ed8260dcf13ae4d631c87e470182f4c4915b5cd187a8d53d4a7a3547f3",
+      "artifact_hashes": {
+        "summary.json": "73677df1c21726006c06a6312f5bf03be73af9f02669e1568a5db1c144bf711d",
+        "metrics_aggregated.csv": "c60442b0af5e1f79ce03a5d9d7859d134595c371bf067b90542d6ce13892afce",
+        "tests.csv": "c55c2fa983566ef01061874ee1cdad7889355092957f9fd665450cbec9ecc340",
+        "reliability_capopm.csv": "7ace147e92060ccae3e47d06d083dc81c3e8b054fb833703d3b12e6bd6f66a42",
+        "reliability_raw_parimutuel.csv": "013f3ee35154432e82525e1bc8de66b0222be650b8aab8e33b6e5739dc4fc11b",
+        "reliability_structural_only.csv": "1ec27ad718d148b17d6d2871f75e005bfef4bd6c0adc359e6cfd1fb67353d6d6",
+        "reliability_ml_only.csv": "d7aff89f45fa23389c29db29f178d84e9e82e0eaec3625003920e462c0a4e3f8",
+        "reliability_uncorrected.csv": "eb692401e2edc53e33fff6b0e8837f7ab5d190df07ebc840f384ebb33b4d0ac5",
+        "reliability_beta_1_1.csv": "1dcc98081c52a4232112c211e4a38bc84ff76e2d8dd5dca8a28b081a380034de",
+        "reliability_beta_0_5_0_5.csv": "943bd8334f1a9c80254be839261cbab960db0df4aae09ef73a32668e19e813b1"
+      }
+    },
+    {
+      "experiment": "A2",
+      "scenario_name": "A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+      "seed": 240002,
+      "base_seed": 240000,
+      "run_index": null,
+      "sweep_params": {
+        "arrivals_per_step": 1,
+        "initial_pool": 2.0,
+        "n_steps": 25
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A2_time_to_converge__arr1__seed240002__pool2.0__steps25",
+      "summary_path": "results\\A2_time_to_converge__arr1__seed240002__pool2.0__steps25\\summary.json",
+      "audit_path": "results\\A2_time_to_converge__arr1__seed240002__pool2.0__steps25\\audit.json",
+      "audit_hash": "6d2da82b2d9c6ba43379ed2c4c18f283129b20db58d136653dfd1bda4b4b9d4f",
+      "artifact_hashes": {
+        "summary.json": "e1f482df812181dd684a0f872f6f6d922aaf74de04f3c14dbc1cd4bb3fb6737b",
+        "metrics_aggregated.csv": "0c7a32af90a6afbbccf4ed9f862c7d9832c683043d58bd6ca84bc10408bad794",
+        "tests.csv": "205b0102ece1dbaf756d1aecd5c74903ca1a328c1235d958c1abe3f4cf18f091",
+        "reliability_capopm.csv": "69829f6cae770601c16e6c85b7fa1f3c88dfadb38b7889258387643bde71c1b9",
+        "reliability_raw_parimutuel.csv": "6b1c2c572cf747042185ae85a86f774ae1b958df99c4df75fc4241b8aa8ece36",
+        "reliability_structural_only.csv": "40490e696e4e9c135a034014c2f0f7b983e039ac26c57d8ce556fcb69a8700ec",
+        "reliability_ml_only.csv": "e09add00806e993673f72e553dde92e89dd26c6f011fde5b289b16bb629771d5",
+        "reliability_uncorrected.csv": "eba2f188ca136e311fd338b88fbbf0bdfd76ee5fbd07fe955119af8994fcf09e",
+        "reliability_beta_1_1.csv": "c58e36d826be5b8e51d13301c9ecfa54aeeed916c6dbfb256a988f570c5ff83e",
+        "reliability_beta_0_5_0_5.csv": "dc2860abf16cea48856bd5d65a2de0263613767f89e143c8779c29abd935d0f6"
+      }
+    },
+    {
+      "experiment": "A2",
+      "scenario_name": "A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
+      "seed": 240003,
+      "base_seed": 240000,
+      "run_index": null,
+      "sweep_params": {
+        "arrivals_per_step": 1,
+        "initial_pool": 2.0,
+        "n_steps": 40
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A2_time_to_converge__arr1__seed240003__pool2.0__steps40",
+      "summary_path": "results\\A2_time_to_converge__arr1__seed240003__pool2.0__steps40\\summary.json",
+      "audit_path": "results\\A2_time_to_converge__arr1__seed240003__pool2.0__steps40\\audit.json",
+      "audit_hash": "b2a25e8a370bd74b920a2b25bdc8f1fe8b9f690d6d71e5a6226db7f6de300829",
+      "artifact_hashes": {
+        "summary.json": "807f4f29ba3b26157ec12c7597962cc68ba7cc845b90fce7227ce14cd584acdc",
+        "metrics_aggregated.csv": "0b4248c06cb68ea60febdd89cd23e5665c20fe51e33cd7848a8c6af15cf028cc",
+        "tests.csv": "91d05cfbb21e1a64386c0969fb81dc662a6efb740738f5adfa9a032e5a59619d",
+        "reliability_capopm.csv": "a629a926d24db26fa8d75c71334424f65c5444cee94f0bf230f5cefc7281d89c",
+        "reliability_raw_parimutuel.csv": "a8e02700d3a7d268d239d7d4af2b355241e3ff108b640ba60436473f8bc97b16",
+        "reliability_structural_only.csv": "68e7ad9f28d1f4446b50597005719f5cdc2d0d05c1265f9f0a86bf0c5e97b4df",
+        "reliability_ml_only.csv": "eca877abc2a86d242d79b35ab21ec2ab1e6edd7867071a28299f002ff1015f52",
+        "reliability_uncorrected.csv": "5c35385573fb2fdf3ec4f980c4f14816579b0e851a023a76281bb8e18a748669",
+        "reliability_beta_1_1.csv": "b3d0a5fc596f10310b3df03ed46eddc91026dd3703c5ebceab338cea402dcbac",
+        "reliability_beta_0_5_0_5.csv": "d94bca8a07631a8d1be74ec939b204c5c03c174782ebf7a40ec86923507953c6"
+      }
+    },
+    {
+      "experiment": "A2",
+      "scenario_name": "A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+      "seed": 240004,
+      "base_seed": 240000,
+      "run_index": null,
+      "sweep_params": {
+        "arrivals_per_step": 3,
+        "initial_pool": 1.0,
+        "n_steps": 25
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A2_time_to_converge__arr3__seed240004__pool1.0__steps25",
+      "summary_path": "results\\A2_time_to_converge__arr3__seed240004__pool1.0__steps25\\summary.json",
+      "audit_path": "results\\A2_time_to_converge__arr3__seed240004__pool1.0__steps25\\audit.json",
+      "audit_hash": "d360748639338ea01f0972a1c9f28e44e2a553b01cd6e55796cc7e601315f96c",
+      "artifact_hashes": {
+        "summary.json": "11d0198c12ccc23500aec6c16c2cf79e4498b398768568f366431816cfe9387f",
+        "metrics_aggregated.csv": "25e19917bcb5216684964748229eaa659eedfb6a8c906d2f0c7a1e21a37bacb9",
+        "tests.csv": "24151f4fd184a2e416567d3786d0127097f56e15a7b8c9937c05441d3c164e52",
+        "reliability_capopm.csv": "3e98f6bcdac80c91480657406db1a5a75f40dbd70af650a57772452757124742",
+        "reliability_raw_parimutuel.csv": "47b5a3d302105fe8b297d9f01df6c6c3d92b6daa9614b1c336ecd16e38ff46d3",
+        "reliability_structural_only.csv": "baad47e19e797cb0544ba6ab28022965b9d8f61b149ddc84acfa2e316d526502",
+        "reliability_ml_only.csv": "7379a718def192bd670718a06c56dd5eaf708cecc2530cf53c3b45ba58998132",
+        "reliability_uncorrected.csv": "6c7dd3d474dbc680b151de7c80ce5d2d1409245b895130a36a3b07c289c62c22",
+        "reliability_beta_1_1.csv": "7d34121ee2883f870cd067f380564f79ef6f36d7165cb0649235530e06780cb1",
+        "reliability_beta_0_5_0_5.csv": "71e25c94c1fbdc38d03cebb7124f97a40e08a76aeb4fe46825ece419ae2b6f15"
+      }
+    },
+    {
+      "experiment": "A2",
+      "scenario_name": "A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+      "seed": 240005,
+      "base_seed": 240000,
+      "run_index": null,
+      "sweep_params": {
+        "arrivals_per_step": 3,
+        "initial_pool": 1.0,
+        "n_steps": 40
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A2_time_to_converge__arr3__seed240005__pool1.0__steps40",
+      "summary_path": "results\\A2_time_to_converge__arr3__seed240005__pool1.0__steps40\\summary.json",
+      "audit_path": "results\\A2_time_to_converge__arr3__seed240005__pool1.0__steps40\\audit.json",
+      "audit_hash": "afacea966ca2c1b5483f0a1a002ba89a38f61e88fd538d0146e3815a2f5dc128",
+      "artifact_hashes": {
+        "summary.json": "71a3bfaa8ed7b39ea619d855ce526faed5ad206c7de612e0f1ee93d0ac6d4844",
+        "metrics_aggregated.csv": "c97da34e358330922c09e3069e472763c485c4df6c80f5a87034371cf886ec96",
+        "tests.csv": "79c0151e767118d711f3df840c4f2542dab4ca95cf5d34dd81c77f1cde04fc6c",
+        "reliability_capopm.csv": "d405aaa0f27b2271a8b01c4c154e8a971b2a9708a9271563414cee760d590ceb",
+        "reliability_raw_parimutuel.csv": "76f8ec42b5444a5d14375485a03416a3021e4006a3ba2f432fe202c78439816d",
+        "reliability_structural_only.csv": "37cd79c00992354d19f667166fa1e54092849d554895f1eb1967aacd016c34fc",
+        "reliability_ml_only.csv": "9a087bb278b2b33e874cddf8852cb78c120f283afcdba7eb6af5b4d9023cddb0",
+        "reliability_uncorrected.csv": "3288dcaa9eb13ec8d20c343a7dcfbb7fec701be465b4d969f180fcca426f0742",
+        "reliability_beta_1_1.csv": "59f8063f388561034d530a0e4c61c308612e4aa83d35e71a9c0101c269e8d30c",
+        "reliability_beta_0_5_0_5.csv": "f4f3ab2930013d46561154a745d980b40981524aa86804c4a68d02702501fc6a"
+      }
+    },
+    {
+      "experiment": "A2",
+      "scenario_name": "A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+      "seed": 240006,
+      "base_seed": 240000,
+      "run_index": null,
+      "sweep_params": {
+        "arrivals_per_step": 3,
+        "initial_pool": 2.0,
+        "n_steps": 25
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A2_time_to_converge__arr3__seed240006__pool2.0__steps25",
+      "summary_path": "results\\A2_time_to_converge__arr3__seed240006__pool2.0__steps25\\summary.json",
+      "audit_path": "results\\A2_time_to_converge__arr3__seed240006__pool2.0__steps25\\audit.json",
+      "audit_hash": "3a51468b1c0a82270fa055aaa6a0f9ac8ae2d93e322a1533a0061fc3c645403c",
+      "artifact_hashes": {
+        "summary.json": "6edd57f2a889c761da94005a5a00d1f70b294ee67f3deb34429112de974cc0a5",
+        "metrics_aggregated.csv": "73edcd324fb316f0c56c3900453ac070e68821af6b75348311f0824777626928",
+        "tests.csv": "6d4213a4d690666e0402d08e4354e21a77eeecbeb9c65e736d20c01ac7564712",
+        "reliability_capopm.csv": "af5d228e5afa77f520916a22af4606f93987b056007a88c00e1d4803c92b6bea",
+        "reliability_raw_parimutuel.csv": "957a2ced21ac443f3e0fffd582276451db2310d8e3a0567068ab15274d0f4366",
+        "reliability_structural_only.csv": "d603e18a7a21dff68aa879e460e97bdd580199aedd200a5bdb33e559174e130d",
+        "reliability_ml_only.csv": "6bf180f5ce484ca74ebe40101ccc1b873017e019059c06282887b2cac17f9acb",
+        "reliability_uncorrected.csv": "4b988a7f686b6c9da7ed946e06d6266fc09aa652a3cf64c74586ab39c1e4d9ea",
+        "reliability_beta_1_1.csv": "79a4faebdb7ae9ff3fabd659d573c43b80ed8ede598009cdb45aec4a8072e90e",
+        "reliability_beta_0_5_0_5.csv": "d2e9d5c97fefb1195a342c3dd0fbb613f6bc63a85e3681e26b6c78886f6d6bea"
+      }
+    },
+    {
+      "experiment": "A2",
+      "scenario_name": "A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
+      "seed": 240007,
+      "base_seed": 240000,
+      "run_index": null,
+      "sweep_params": {
+        "arrivals_per_step": 3,
+        "initial_pool": 2.0,
+        "n_steps": 40
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A2_time_to_converge__arr3__seed240007__pool2.0__steps40",
+      "summary_path": "results\\A2_time_to_converge__arr3__seed240007__pool2.0__steps40\\summary.json",
+      "audit_path": "results\\A2_time_to_converge__arr3__seed240007__pool2.0__steps40\\audit.json",
+      "audit_hash": "507cdd10caf3b75cc45c54d8db47e503ffcf099224e7ab0edd1b041eebdb7ec2",
+      "artifact_hashes": {
+        "summary.json": "fc5b55410532558b7281280eafa3be6677a30bdd89bcbefa4b325fd87f46719c",
+        "metrics_aggregated.csv": "1c32e48198b04415e27621f4160380d5387a3672a86f9622305c5d643486ad93",
+        "tests.csv": "d7404e570d47152963776557bee0e6b31234af3a5c442323fd067ae848f99ce4",
+        "reliability_capopm.csv": "8a2c684848ade2ed20e7877d85b79ece0c964663e31b4a7d8e68b057bfc6a2cf",
+        "reliability_raw_parimutuel.csv": "e59886db11da2fec363f0499118b69863e47ca8cfb24aed86f1b1c0199e50de8",
+        "reliability_structural_only.csv": "8e57bb5174822865e1b09708e3636a1e200b198c92a6e717ff6bc225c9e9835c",
+        "reliability_ml_only.csv": "b1b84be7724113e8cc212aebfd5fa219d4d9972725ca380e7a62caa8c45c56a7",
+        "reliability_uncorrected.csv": "381e23505ed81ef1d34333c05a36794ed669f7c289986ea98784cf722c95ecf9",
+        "reliability_beta_1_1.csv": "0ce20a294b7372aaa5fcf2054a1c73d0b7feef06f3fd44765a3f4c818b730596",
+        "reliability_beta_0_5_0_5.csv": "2caa6906e08317bc410e3a31f63858dc0afb148896c188c16cd1a32ef54cccfe"
+      }
+    },
+    {
+      "experiment": "A3",
+      "scenario_name": "A3_strategic_timing__attack0__seed250000__window100__scale1",
+      "seed": 250000,
+      "base_seed": 250000,
+      "run_index": null,
+      "sweep_params": {
+        "attack_strength": 0.0,
+        "attack_window": 1.0,
+        "adversarial_size_scale": 1
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A3_strategic_timing__attack0__seed250000__window100__scale1",
+      "summary_path": "results\\A3_strategic_timing__attack0__seed250000__window100__scale1\\summary.json",
+      "audit_path": "results\\A3_strategic_timing__attack0__seed250000__window100__scale1\\audit.json",
+      "audit_hash": "9e5e9139e289acf17062b226b146fa850695fff123c82d8242e53be3cd723083",
+      "artifact_hashes": {
+        "summary.json": "52eeb926f2282d298bcf9d65957df4922e1542b33cf842465cf471629f8b2ec3",
+        "metrics_aggregated.csv": "46214249d5fd6680d50b4cff66ddba29aa150fea6c53a9a7610fc4e976c71d7a",
+        "tests.csv": "b92aafd85baeaed06fc641aa835b8ee11966174ad77b6cdbef33f34e773d83a1",
+        "reliability_capopm.csv": "30c84013cb5730b87c3caa8379968f1af3f399b4e59d9f7e5a308b1fa83001fd",
+        "reliability_capopm_stage1_only.csv": "a4dc0faeda1564d5708d1bbab7926e662faa831015bdb7d930487c6716453ed5",
+        "reliability_uncorrected.csv": "5a8cf7049d547052a275f7125651368b17ed4da66e067e1bc0ff9fe9ee65482c",
+        "reliability_raw_parimutuel.csv": "8f1aab10dacd812a3cccc7db7d059415d715d7cd78cff1133b1ed7b33d0f2b8f",
+        "reliability_structural_only.csv": "4defd57b37bc7f0a7dff0ea634b98883a9356f91ebd3b0c71a39071b782dc98a",
+        "reliability_ml_only.csv": "90626b7f4d56d06a05f306be6d2c1e9ea6a08cae149106308f57064cdc340f2f"
+      }
+    },
+    {
+      "experiment": "A3",
+      "scenario_name": "A3_strategic_timing__attack0__seed250001__window100__scale3",
+      "seed": 250001,
+      "base_seed": 250000,
+      "run_index": null,
+      "sweep_params": {
+        "attack_strength": 0.0,
+        "attack_window": 1.0,
+        "adversarial_size_scale": 3
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A3_strategic_timing__attack0__seed250001__window100__scale3",
+      "summary_path": "results\\A3_strategic_timing__attack0__seed250001__window100__scale3\\summary.json",
+      "audit_path": "results\\A3_strategic_timing__attack0__seed250001__window100__scale3\\audit.json",
+      "audit_hash": "172599ef75491a653b81b659dfdeef48b946378af5deb0b6c5609c6df6b5784a",
+      "artifact_hashes": {
+        "summary.json": "74262b8c1a7292c6169aa8ebb51d40dbf57d52ac9f3f261f9fd34f580eaf9e6e",
+        "metrics_aggregated.csv": "58ebd70de23345072cc82057eade9308a8b0f93c29b063bdf054c10432a67a34",
+        "tests.csv": "26f5ca3e662b3d8df51d9cb6a02259fd34aabc09c0c2cc0a29ae02e11e6e8be9",
+        "reliability_capopm.csv": "553f37760694a11651816537413d59df48cae031178cf4b164bf5ef98d39b62c",
+        "reliability_capopm_stage1_only.csv": "cc4ade3bd1b763a38bd28fc7e09d82e3ee990b5cb1570fc5b8c42956a2324a52",
+        "reliability_uncorrected.csv": "e87ff2b75e83d20f4aaf342e15f5670c95261e05c4a06beb235f4aff9dac6a05",
+        "reliability_raw_parimutuel.csv": "5c93ce5aa380e9c5b732af18f12effb9e27566c88543558750dd4371fe52efd0",
+        "reliability_structural_only.csv": "f76383f4eea4241176f5fb5f63864910fa7c72e40ccd9fa21aff2543a67a8ea9",
+        "reliability_ml_only.csv": "97c4526f840b99a33f22cbc2ac7bdf57df72ecedb142d67c6ed22b54b7ad06dc"
+      }
+    },
+    {
+      "experiment": "A3",
+      "scenario_name": "A3_strategic_timing__attack100__seed250002__window100__scale1",
+      "seed": 250002,
+      "base_seed": 250000,
+      "run_index": null,
+      "sweep_params": {
+        "attack_strength": 1.0,
+        "attack_window": 1.0,
+        "adversarial_size_scale": 1
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A3_strategic_timing__attack100__seed250002__window100__scale1",
+      "summary_path": "results\\A3_strategic_timing__attack100__seed250002__window100__scale1\\summary.json",
+      "audit_path": "results\\A3_strategic_timing__attack100__seed250002__window100__scale1\\audit.json",
+      "audit_hash": "d7af886f0b9aa2c35067f747393adfd53cc7f9bd2b847cb73ecd3f9790c308d0",
+      "artifact_hashes": {
+        "summary.json": "c092fbf49e820e80592f7b68b72887052551d02e24fddc089671d79752d95b7b",
+        "metrics_aggregated.csv": "25de3594b51766808b904a8c2e9b61fc5e1e52c5b14eb244a1481a88104b9fbd",
+        "tests.csv": "df3adffa02aac37fa8aca276016fbf9ee13d7b2f2eb5e0a7f0fcf7efb4b803a2",
+        "reliability_capopm.csv": "d9cfd76944f1d1e5240a35519fa2d331f8abe0b6046d743d63be48cfbfaa12ec",
+        "reliability_capopm_stage1_only.csv": "1665aee5f4aa775071a3d5e554043d9512bf8c210a9077a0e43736aa7b6e1810",
+        "reliability_uncorrected.csv": "86d66240e8a95bf814773843063c441ef6ec4babb286f33453db1e9169260b52",
+        "reliability_raw_parimutuel.csv": "9ecbb6a3db7a236cf8160095fad085f484630fba681b36b1bfa0358c028a5048",
+        "reliability_structural_only.csv": "961b14771c610e0577d857ed9d561cf8f2e630ffe9cdb3d33b4e0e620b71361a",
+        "reliability_ml_only.csv": "6f388e2162a97fa75f11c3575895674474394e6de604e72685118773281a7834"
+      }
+    },
+    {
+      "experiment": "A3",
+      "scenario_name": "A3_strategic_timing__attack100__seed250003__window100__scale3",
+      "seed": 250003,
+      "base_seed": 250000,
+      "run_index": null,
+      "sweep_params": {
+        "attack_strength": 1.0,
+        "attack_window": 1.0,
+        "adversarial_size_scale": 3
+      },
+      "n_runs": 30,
+      "results_dir": "results\\A3_strategic_timing__attack100__seed250003__window100__scale3",
+      "summary_path": "results\\A3_strategic_timing__attack100__seed250003__window100__scale3\\summary.json",
+      "audit_path": "results\\A3_strategic_timing__attack100__seed250003__window100__scale3\\audit.json",
+      "audit_hash": "98494429b66b163e9b819a9aa8dba12d8fac486d0e2061a296ec7ce1081c1d9e",
+      "artifact_hashes": {
+        "summary.json": "fedbed54cf4f19d39e1af145e043c79b08282811dceb770a456182647f548421",
+        "metrics_aggregated.csv": "b7e3b616dc39e4dbe1b82ba467be605170562a5fb480d1a34b181ba45ac7011a",
+        "tests.csv": "9f8396f1b1c3758e8fd24d254a1de950da190bd238f2c134b7b0f047b2735fca",
+        "reliability_capopm.csv": "d59c7a0c241f8a564ffe62af525c61665e1960ebacd9bde918d0dfcf9de99389",
+        "reliability_capopm_stage1_only.csv": "14df349f253494387ecd22ae73b28558ebd6ea42f8b81942148d241fb70ade09",
+        "reliability_uncorrected.csv": "ebe23f6f0aadeb1d6ad0d89f856dd0f631b75df5d021e6e7b765880443a71eb0",
+        "reliability_raw_parimutuel.csv": "557ed1bc46243e995e91e5ee3fcbcb16d865ac1262bfe89dd3527b95d3e64c8a",
+        "reliability_structural_only.csv": "9cf9d1e9c51f8804fa18323704ea726e06b2dbfda15bc1227ede4d602cc0e353",
+        "reliability_ml_only.csv": "d839e8bd6e7b0e3a5e0c8dfec2ccc409441c7ef9be595c40ca7fc24d174212ea"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed202640",
+      "seed": 202640,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 0,
+        "herding": 0,
+        "timing_attack_strength": 0.0,
+        "liquidity_level": "low"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed202640",
+      "summary_path": "results\\B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed202640\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot0__herd0__attack0__liqlow__seed202640\\audit.json",
+      "audit_hash": "db419e44d0a35ca92a511d4458c0b64d26ee5487d84bfce86b50334b91a64e53",
+      "artifact_hashes": {
+        "summary.json": "2e58933516a590880f47c893d7391097120c747cb64f80d3221341b27762ce17",
+        "metrics_aggregated.csv": "8b0e036d51699872e7f41fc0c0e071b47e8fd604e884d6ba1ade0e9acf11af4f",
+        "tests.csv": "f5fd8f411d48a9a7c659fb8aab89f5b544567c154dbd6534a527c8eb4c811a00",
+        "reliability_capopm.csv": "585cbc2c0522bb40d99819dcc5d8429980159722341803a1652e377187b53629",
+        "reliability_capopm_stage1_only.csv": "2a518be2035e675fa3b1dbdc6f94ddec4b2b5caa3e8836d712cfa116cee75fcb",
+        "reliability_uncorrected.csv": "c3d9cce2e81cfc9b6ccd021aa87138b1194d47d183c9053a2ead1dfdab91732d",
+        "reliability_raw_parimutuel.csv": "2209643886a9540a74a4f629abffb74dbe53c7fb38182a231aef8c1bd033d86f",
+        "reliability_structural_only.csv": "ecd5e8a7bcaba42e3e61c5f125df7c06262e5bed1824045d1c467bd1e5f41785",
+        "reliability_ml_only.csv": "05c2d176f94b89b33cb23d5c6f5d759d36480a905d6b86e301b935384a4f0dfb"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641",
+      "seed": 202641,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 0,
+        "herding": 0,
+        "timing_attack_strength": 0.0,
+        "liquidity_level": "high"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641",
+      "summary_path": "results\\B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot0__herd0__attack0__liqhigh__seed202641\\audit.json",
+      "audit_hash": "914c1253de7d26c89fcfe0da0127cec83843d781b29dfd19f485644e75d651c2",
+      "artifact_hashes": {
+        "summary.json": "ac078184ea7e1587682712138d41d5ac8e5319eb46fc1fc4a234244c9274d32b",
+        "metrics_aggregated.csv": "e0ac92d69804bccc17e725d11068f55b16d38c381e6fb8a794b4378cdf49b403",
+        "tests.csv": "e59575d85939ac534a3d3bf92f0d2dc167040a86d736ea571e18faec68047b11",
+        "reliability_capopm.csv": "e8311d8424857603e2fffbba958914bd0a0aca79b68428b118a031d1059961dc",
+        "reliability_capopm_stage1_only.csv": "e98cffc35289a744b04c597050dba855b18cd83af66e8ee667ba3b8bba188404",
+        "reliability_uncorrected.csv": "969660bdf0b2644c488f4a0ae0b21ba5bfdeb3c8d19070372cce9148d772b25f",
+        "reliability_raw_parimutuel.csv": "f24e4f66e470f0a5fb94681b65e57b39dfe7c57642cd2ea472b1474af0c86f4a",
+        "reliability_structural_only.csv": "214d741afa3868453073f459d5f220c7755f3b81cab6970bf53385b0f3aac1fd",
+        "reliability_ml_only.csv": "c3b9d9c13a4999c6a2fb5e3ea270e2643c515bd3f8ce1ae81fcddcf628497dc9"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642",
+      "seed": 202642,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 0,
+        "herding": 0,
+        "timing_attack_strength": 1.0,
+        "liquidity_level": "low"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642",
+      "summary_path": "results\\B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot0__herd0__attack100__liqlow__seed202642\\audit.json",
+      "audit_hash": "776dd118273a5c9fb45888269e18d6f9682e35bb9e397b5b8719cd54b423b08f",
+      "artifact_hashes": {
+        "summary.json": "212814c99596525b6189a018e9679ecf45575fedd54a14b6a6fd1a82e58173a4",
+        "metrics_aggregated.csv": "02e0fbe0bd497391910be9c11bb0e783f4e930c64febac5a61aba950809b95ff",
+        "tests.csv": "b9c242f5dfc977cf40d9754d3ffa60bd39b70f858e7438999d1aecb295f64955",
+        "reliability_capopm.csv": "b721c7d1499a95db48bbcc77a343a0019b3a904ee427ceecf28b9593e3768ba5",
+        "reliability_capopm_stage1_only.csv": "03d04077a771f1de7de1e21496b31b0d5b943d64375a6868a6672a4f69a7ca23",
+        "reliability_uncorrected.csv": "ea1b335d3ea4169e72f1443ebc96ad583249f34409e20b6d0e33bfb44a154380",
+        "reliability_raw_parimutuel.csv": "70917133f4631aa6a8bd58b2df4b5743209fadfb96721b8391b9dbdf21e8eece",
+        "reliability_structural_only.csv": "6eb4f5cb19635f6f4173e453c6be4a9b54847c29ff8a015c4b0d2f6617297577",
+        "reliability_ml_only.csv": "e709269b055d2c34dfd2600a4582e3fb5aaa46821bd910a0da14a85e35b9849b"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed202643",
+      "seed": 202643,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 0,
+        "herding": 0,
+        "timing_attack_strength": 1.0,
+        "liquidity_level": "high"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed202643",
+      "summary_path": "results\\B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed202643\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot0__herd0__attack100__liqhigh__seed202643\\audit.json",
+      "audit_hash": "1ccd2aae2abd9152f0b58b4cea810ccfd1549c681ee826d673fe9734e8b9b92c",
+      "artifact_hashes": {
+        "summary.json": "7f8e7549bdd99c1961535fe38274748d11fd46581616d53188dfb914dc252cb4",
+        "metrics_aggregated.csv": "0205c57ec1b8d5cb79bac8568d35082b9763a40e0280f6b30cbd297075b1542e",
+        "tests.csv": "53433ce0b98d55a7459183c5d9eb98d38be8852b179a5a4c07fcb0d71d16c3ca",
+        "reliability_capopm.csv": "74570f58c72b8d4884973050451599f78136aeb33922dd55f5982b470d8c972c",
+        "reliability_capopm_stage1_only.csv": "7df6c3955ad39986f92b4d21f92b251a285e7cc0b0b8cd6fe3d3cb8266b754a2",
+        "reliability_uncorrected.csv": "265bafa447495a5b96de1f05b8f227dc7701a9a587618ae34b5b48ca395602d0",
+        "reliability_raw_parimutuel.csv": "7ce1db8910667c2b9d44e1065d185f7092ee2840b0eb1166abfde26c2271fb15",
+        "reliability_structural_only.csv": "ed972bf5b2c834954579c77ae32518d58f7d61c98e8548cc6f7dbc290fc2c294",
+        "reliability_ml_only.csv": "1244e3109ff2d6ac1c3e281c86394590890e2522addc8baabdd1cf87d01662e2"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644",
+      "seed": 202644,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 0,
+        "herding": 1,
+        "timing_attack_strength": 0.0,
+        "liquidity_level": "low"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644",
+      "summary_path": "results\\B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot0__herd1__attack0__liqlow__seed202644\\audit.json",
+      "audit_hash": "a22b621bbeb126676569b6367d9d82fee67bc1cfdecf583743397e95cd8c86ff",
+      "artifact_hashes": {
+        "summary.json": "e8a5d961b4b72d6246a349c7886e5f75f1827de09ece8f9952403aa72bd72d73",
+        "metrics_aggregated.csv": "61fad5a96ecd6165fde298c3b76b8d54222982808fb17b17a659ccabb4a931e2",
+        "tests.csv": "5a50d420eec0bc9794a79d54e11c8a366d6d471899d36c52478572f8dfbab149",
+        "reliability_capopm.csv": "a8c4a2e08debb8a9e1662fb6ac6e573b0487551f0fb12003ba0c9b3a8212e115",
+        "reliability_capopm_stage1_only.csv": "fa52269fa68230989df53a6ea6870c396a767273aed10b6004988eed1655bd7c",
+        "reliability_uncorrected.csv": "26789166a439e29a10f9952f1afdf633ec2482be924a0b14a633a6bc3920f49f",
+        "reliability_raw_parimutuel.csv": "faf31573af4c72e9c51811515560ae4e7f5a06785ae18cac8145652b245ff6be",
+        "reliability_structural_only.csv": "4f1865b6d003d3bea9cad2d9e4971b44cfd304af7077572b9123e3476ef44d4f",
+        "reliability_ml_only.csv": "f5999e8698fa6cf1668a4fc5558a7e142f62c46d488f6c018c766bf0cadaa324"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645",
+      "seed": 202645,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 0,
+        "herding": 1,
+        "timing_attack_strength": 0.0,
+        "liquidity_level": "high"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645",
+      "summary_path": "results\\B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot0__herd1__attack0__liqhigh__seed202645\\audit.json",
+      "audit_hash": "7a8e5dcbdfb484b840d26d030600843e503104e5513f5ee0d4daeff5e76ff578",
+      "artifact_hashes": {
+        "summary.json": "15530d0f38aa4f3a6a6c59de660111272c4aa941b08c018b996dcbf275d331ad",
+        "metrics_aggregated.csv": "d418c9dd53bb1100ddaf6acb1189d94e0a578418dda8c844eeb464469e514178",
+        "tests.csv": "0f3efc4173d86b333cbd72bdeadc121c06c2ca124a6a6b363a7d0940eb588a2b",
+        "reliability_capopm.csv": "5269b802bc63d1ddc589747e81f0a3d1574cbd7dbf25c8d1fd534caeaaeb1ce7",
+        "reliability_capopm_stage1_only.csv": "4dd8d3b645c04999a595d37f170cf38625739fd3056bb917990e04d5367e4edc",
+        "reliability_uncorrected.csv": "bddff8c2ca3fa06de6a4daa5724f3e0edcc252f74e5e47f653ad9105012c44ed",
+        "reliability_raw_parimutuel.csv": "987e5fc24ac11cf70833322cb9099550428bf0a2ad1a542f08eb10875c32f7fc",
+        "reliability_structural_only.csv": "76f6de461abc3b5ab347797d49f1a1f088e71db0b01a84225b9bed51bf4a8f1a",
+        "reliability_ml_only.csv": "bc5f8abf703618ccca70839093d868f779d09b0600133edfa543e460453f2f70"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot0__herd1__attack100__liqlow__seed202646",
+      "seed": 202646,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 0,
+        "herding": 1,
+        "timing_attack_strength": 1.0,
+        "liquidity_level": "low"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot0__herd1__attack100__liqlow__seed202646",
+      "summary_path": "results\\B1_correction_no_regret__longshot0__herd1__attack100__liqlow__seed202646\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot0__herd1__attack100__liqlow__seed202646\\audit.json",
+      "audit_hash": "fd0f14a66aa82a65f1b2090558c36443d3f44ad3955cdaa4fbe554cc197f3572",
+      "artifact_hashes": {
+        "summary.json": "ff202ac00b3363c6d04d17a263d918c3cce8a202a0e7dd9fe204bb2c98329361",
+        "metrics_aggregated.csv": "8f00db9424060c2fc4d940042d79304c6d8830ceca025c8d201e59bc20eb3bb7",
+        "tests.csv": "87ceed26234d0196b48018bef56f704d332ddd846c6cd271675038ede44a25a7",
+        "reliability_capopm.csv": "e8f9fb7fe29254db32735515f8be3effba9b0f1cef1367b4d4425604850c9cd1",
+        "reliability_capopm_stage1_only.csv": "c6960551d30c62f9aa7c483f7603356312cf11ce9cc3bec852c013033d4b9b9f",
+        "reliability_uncorrected.csv": "aaa798969740760f294db1f551c58ac39b882a035c404c2f169e2aeb1a1adfaf",
+        "reliability_raw_parimutuel.csv": "8f84d9b788e3ab0fafd8e17af25461ae1e339ed876084723ea8dfb5684863bdc",
+        "reliability_structural_only.csv": "dc82c2c9ecd2a7a0897e75f82e877a0d57cee2a41ccec8c0d10f0c51adb66756",
+        "reliability_ml_only.csv": "84e2c9172aea09012cad1a1cbb1de4c1234a38e4ef8bb07a2ea889f0352d7244"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot0__herd1__attack100__liqhigh__seed202647",
+      "seed": 202647,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 0,
+        "herding": 1,
+        "timing_attack_strength": 1.0,
+        "liquidity_level": "high"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot0__herd1__attack100__liqhigh__seed202647",
+      "summary_path": "results\\B1_correction_no_regret__longshot0__herd1__attack100__liqhigh__seed202647\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot0__herd1__attack100__liqhigh__seed202647\\audit.json",
+      "audit_hash": "3a8bb545d7cd59ea95fc753b2459c23f7d69f8bf18a2bbd1994ccee93f5c3141",
+      "artifact_hashes": {
+        "summary.json": "d3afe6a8570b0bc654c295af9c24a863dbb6f1d0480824fe2d3f863ece52a98e",
+        "metrics_aggregated.csv": "c1405a78df43002b94cc4d25d6760be2ee48c80c8f5528e8f95096f332da1283",
+        "tests.csv": "54e534b8c4e4306f6f5038d0d1c8ef896e8c4b32c165a67cae712b44d85d684e",
+        "reliability_capopm.csv": "cd71b352cb1e7b2d9b9c7fb7c2af494427a4a0554e968d295cab1766a406bd33",
+        "reliability_capopm_stage1_only.csv": "69acd81daf15d2494609e286873bbd2a646d805fcf9aba03a32e968e166192c7",
+        "reliability_uncorrected.csv": "060b2e398b7ff2723911d6f06f05892a639e31d4435bdddb315aec000e2fc1ce",
+        "reliability_raw_parimutuel.csv": "d8264f0edb7fff66374b8cf101afb865bf9293aaa083f1ecbaf28ab522ee8917",
+        "reliability_structural_only.csv": "9a1ab1d2c4d136fcddc2c97d532a165376f033e451456d1211e4aeeb3313f6c7",
+        "reliability_ml_only.csv": "9194186bf167438affae6064145459ad0337f03c43c6d1d7282e79ed7be82476"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648",
+      "seed": 202648,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 1,
+        "herding": 0,
+        "timing_attack_strength": 0.0,
+        "liquidity_level": "low"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648",
+      "summary_path": "results\\B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot1__herd0__attack0__liqlow__seed202648\\audit.json",
+      "audit_hash": "c5102b278bd26ea8e6dc21d103f063645214fdadf3dbf4c89c02c0b0fede5594",
+      "artifact_hashes": {
+        "summary.json": "efbf9d280cab67d1c13d9abd8bd9019bbb6cb87f4b584f3b63998dac9b394bfb",
+        "metrics_aggregated.csv": "bf5d206c1ad52ff0ec6bbc05f6f66fa9ce56484260e6ac5b8837379cff96d231",
+        "tests.csv": "5731db428389d2d9a80e0205375f99fbe4b4a95ff3bd8d33df96b7c9a8833c07",
+        "reliability_capopm.csv": "141e5cf9371beb00ad669d40f4507122b02adb5803eb917ad7a5f37e95c4a44b",
+        "reliability_capopm_stage1_only.csv": "fc9346c61c927481c7c56952151885be8a8240ad8e074534f29b27f725a4d483",
+        "reliability_uncorrected.csv": "ecda688518f52bacfdf0f0381edb0a8c1562712b72dd4b7a675752cee21a494a",
+        "reliability_raw_parimutuel.csv": "d43a506d64ccc2acd12b3d3431913087180cf0e080f21ae034c1b2d45ba32ed5",
+        "reliability_structural_only.csv": "3903cb95ed0c19e13be3e15504c6e899953044b6d05e127170d62a583d00fa02",
+        "reliability_ml_only.csv": "18a8f4a80118ac56ce86875d1fb771c376763e1c803acddaacb3ab03a24f39d3"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649",
+      "seed": 202649,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 1,
+        "herding": 0,
+        "timing_attack_strength": 0.0,
+        "liquidity_level": "high"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649",
+      "summary_path": "results\\B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot1__herd0__attack0__liqhigh__seed202649\\audit.json",
+      "audit_hash": "b7a1019e0bab63a21941eb371ebeba2221b2c3bc7c0175ea0c735f14bbb537af",
+      "artifact_hashes": {
+        "summary.json": "3a7ee4dc7630fa4bdcd61b8fa56d9c9d0e96ac3626a017711fe1bf3340f24491",
+        "metrics_aggregated.csv": "3cdc7ffc62fe62f6ebef14bfd8c249a82c5aafa333b1556173958eeb39eccf19",
+        "tests.csv": "eeb31ea0a82d19e86939c5cefbed86e49e371a3318d86244161df46715227c9a",
+        "reliability_capopm.csv": "24f7f6d6b8f41917d617c14546dd82927b60ae45298dfcecb71f635aaf28a9bc",
+        "reliability_capopm_stage1_only.csv": "3eee9d7d1c32dc15000e45543e8fa66e2c538427290d11a8b4fa173c9ebc246e",
+        "reliability_uncorrected.csv": "231c12ee1a485ff80605d67d4bad7841623a3704ad51b04f3f04bb2f0cc1e57b",
+        "reliability_raw_parimutuel.csv": "f85ef055c5db5b53b8440e76bc9568bc6db477624601db764ad5d37524083f34",
+        "reliability_structural_only.csv": "8da5ee8c251aaef86ed99d88ea85721abb90343742ef59556b5b85115b52eba6",
+        "reliability_ml_only.csv": "c108770b0c8ed21f2d00d9c6be8f6494149da25d19e5b67581bfd15a04523de6"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot1__herd0__attack100__liqlow__seed202650",
+      "seed": 202650,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 1,
+        "herding": 0,
+        "timing_attack_strength": 1.0,
+        "liquidity_level": "low"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot1__herd0__attack100__liqlow__seed202650",
+      "summary_path": "results\\B1_correction_no_regret__longshot1__herd0__attack100__liqlow__seed202650\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot1__herd0__attack100__liqlow__seed202650\\audit.json",
+      "audit_hash": "b21c3efa1571a8c0fe3e7665e7c0f82d86f545ad09df370c07e6d8672c5bb793",
+      "artifact_hashes": {
+        "summary.json": "9e2b77885361893e519895b82bd4ce84f1022a6c966f52c6d2a2ccf12ea77099",
+        "metrics_aggregated.csv": "565d9c82bcd28e7e9c6825fcb4626244593fe4cf8767588b6803d2a2a2fc1d77",
+        "tests.csv": "48a7631304c885009b38dc2fb0657df5d6ef59910e64b74cce28bb0f5979bd0a",
+        "reliability_capopm.csv": "abb4639ce4651b979d330b2685b333ee98a0411541882742fa0430a7ab1db2f7",
+        "reliability_capopm_stage1_only.csv": "c548a16a6cd6f27861d7800e4ee3c2014e83e9d3ee4e5e76d02ffabee6ad9ec1",
+        "reliability_uncorrected.csv": "559e7552b25d51292e40036d02300786683f290c852eb9a08a537a3e0b46fce9",
+        "reliability_raw_parimutuel.csv": "35da8f9afc591b3627fbf879f9b676050c3290d44f4e3558088756486608521b",
+        "reliability_structural_only.csv": "07933607ec7c94d8f93e7a330212477171375444cb6ebb6dc3b7c99f5f273fb2",
+        "reliability_ml_only.csv": "46ca93f1801730d6db23658963ea085685bd6c6e3cf5db45eb9ae8bb39a0d0dc"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651",
+      "seed": 202651,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 1,
+        "herding": 0,
+        "timing_attack_strength": 1.0,
+        "liquidity_level": "high"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651",
+      "summary_path": "results\\B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot1__herd0__attack100__liqhigh__seed202651\\audit.json",
+      "audit_hash": "5d1c650051fa6b9873a2f304bced29cc99db7b8fc5a9d557a064da3ed6f0f1dd",
+      "artifact_hashes": {
+        "summary.json": "456c6d1fb16b1282fc9f0f6abb375b0d6458bbf25186aa2a6830f0e168ace6a0",
+        "metrics_aggregated.csv": "686ce64f348b6d82e8dedb13a1846c506ffe07cc31861cd7794845dd69599247",
+        "tests.csv": "48ffa9c417151c955b65c22b7bd80050086822a7f5704d2a3bd2087e01d7dadc",
+        "reliability_capopm.csv": "a3d2a63df5089c28bf6ec356609d7946a99a970aaa797ab4eb1cd3509a97191a",
+        "reliability_capopm_stage1_only.csv": "b4dae153c3930d8d6cdeb6b7d1faaaa15604a1069af68c81e0c22a5489aee91c",
+        "reliability_uncorrected.csv": "69c700a4b0a1cb5d6f0dc05a1ae13c69c3653342237c5da6c17e9b772eb70996",
+        "reliability_raw_parimutuel.csv": "5a42bf0d57d7775d5ef9eb4c7a291de31861c4d9d1a9ce56a53cf6f90d9db23b",
+        "reliability_structural_only.csv": "2271336857a4c0d20f1bcf44d52528643bf1589abd38bd9c33be6f47e62714fb",
+        "reliability_ml_only.csv": "a87417bbd076630bacf7bcfda9b22ce11176f3b67cab3cae761e53ae92962e20"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652",
+      "seed": 202652,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 1,
+        "herding": 1,
+        "timing_attack_strength": 0.0,
+        "liquidity_level": "low"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652",
+      "summary_path": "results\\B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot1__herd1__attack0__liqlow__seed202652\\audit.json",
+      "audit_hash": "6ee1544aeb2de6119b6e2343959606edb8b2709243612fff141504109a611372",
+      "artifact_hashes": {
+        "summary.json": "7b5a29dce1e24f0f34c80f1bc3e624350e81922aeddc08e4440b4b58649a513f",
+        "metrics_aggregated.csv": "6f878c6736eb46db7a7acdc3fffbe0d5e35ed726aaf283895119624f3d0d856b",
+        "tests.csv": "bf3c05237ad1fe005d6525072804e84e5a96f211ebfa226e9e29d4eaa6c1aa0d",
+        "reliability_capopm.csv": "8a7d1295f53bbd7b552fab8126ec3811fb77b0e2f03d3ef555a5cd41dfdd402a",
+        "reliability_capopm_stage1_only.csv": "821ba2dec220cc528b5a7f6acff5c90617a331c84e05221d65b25f814922fb96",
+        "reliability_uncorrected.csv": "679e83f1d6086f5e480019139b7ce56e805aff86ffd65644f0fdbfd1953dd7f0",
+        "reliability_raw_parimutuel.csv": "8240459e0cc93b646f340b59af34e0b201910f001a71841e9b4462f51c472db5",
+        "reliability_structural_only.csv": "f9d7eea296410f64f054eb658faf93afc2e704b73ba72844ae806466d89e3fdd",
+        "reliability_ml_only.csv": "83cd42dae92e6ae4141cb7499ee7c8f30cfa7317c06decd5a7d60b507d5517df"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653",
+      "seed": 202653,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 1,
+        "herding": 1,
+        "timing_attack_strength": 0.0,
+        "liquidity_level": "high"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653",
+      "summary_path": "results\\B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot1__herd1__attack0__liqhigh__seed202653\\audit.json",
+      "audit_hash": "b59b8160f650509804e32ffadc08e54e3e62e95fc39d34e6a6b32eedea13a1d7",
+      "artifact_hashes": {
+        "summary.json": "1a72b195b8ab6480fb4b0768dfba7a267cc3a2808b2c0217fe633b39525d4e75",
+        "metrics_aggregated.csv": "b44b0b9449accb632ba958bc1e8edb3ed6fe99013d22f37fd7aa226ac683d84e",
+        "tests.csv": "0150d66690faf8bf3133767eb65227e3b68e25f95103c919c41744654f045f6b",
+        "reliability_capopm.csv": "bfa15b54fcb7a65d77927dd3d3080fe5954df33df2d6b1491f17de8a00695f89",
+        "reliability_capopm_stage1_only.csv": "086f37d662861dcca78233c5a810e57884b920f53f6a9f9b6a12aa7414f2dede",
+        "reliability_uncorrected.csv": "bbe43a469c0a01fa378599be78b66a18b77a8b94bfaa2c67a960db8f4d875498",
+        "reliability_raw_parimutuel.csv": "f977a234b9eed50d28c1603daa4c2978797cc5147defd127587ad33bfa0b954e",
+        "reliability_structural_only.csv": "2bb44c00e89c4e48e675b7009d395ae10adc7beec46343a64b4bb95bccfe2576",
+        "reliability_ml_only.csv": "715cf9cd2b5f7691b6e8ccad0d02eaadf93dffb4f983155fb93d5009dd51e018"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot1__herd1__attack100__liqlow__seed202654",
+      "seed": 202654,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 1,
+        "herding": 1,
+        "timing_attack_strength": 1.0,
+        "liquidity_level": "low"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot1__herd1__attack100__liqlow__seed202654",
+      "summary_path": "results\\B1_correction_no_regret__longshot1__herd1__attack100__liqlow__seed202654\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot1__herd1__attack100__liqlow__seed202654\\audit.json",
+      "audit_hash": "75d7f9fb890eb3ecc730736d8a4be0b8666bd83bb98069626c5dc4060f1cbacf",
+      "artifact_hashes": {
+        "summary.json": "7cfff11d0d1cddd48bc7ff937481f2af42de2072ee87fa1f4d58922d78902b82",
+        "metrics_aggregated.csv": "33119b30a133c167c1f30bd22905edaebbda65ba63152919caf958e1757d808a",
+        "tests.csv": "214c98bd21baadfe2090b859dfcca85a7bf8eb99e4d71af74d826e6437dafdbb",
+        "reliability_capopm.csv": "1f320d0e7b17fd506f973bcffbc9d75c0dbd0988ad54302f64bd07f97e6e3872",
+        "reliability_capopm_stage1_only.csv": "4cde319c401ca51d6f033df597c30a6208734f38ac7c7d16c6c64666b0dc3f1a",
+        "reliability_uncorrected.csv": "5a3c07300161e1c25fea12c484b88cafa7a20077b1b24071df8b6be7d4f64bf5",
+        "reliability_raw_parimutuel.csv": "0a4b64b31c0916d961b6f9a3116c139fb67fb91c6aa63672ee161f69cced4af8",
+        "reliability_structural_only.csv": "4fbccf19bb5ef771172f95bc75944c11243cbd75975b9071e7b0fd39c083396f",
+        "reliability_ml_only.csv": "41f4a11d2ef64e2fdfcf2ffb748929277fad29b1db59c447e9d33020498bd444"
+      }
+    },
+    {
+      "experiment": "B1",
+      "scenario_name": "B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655",
+      "seed": 202655,
+      "base_seed": 202640,
+      "run_index": null,
+      "sweep_params": {
+        "longshot_bias": 1,
+        "herding": 1,
+        "timing_attack_strength": 1.0,
+        "liquidity_level": "high"
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655",
+      "summary_path": "results\\B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655\\summary.json",
+      "audit_path": "results\\B1_correction_no_regret__longshot1__herd1__attack100__liqhigh__seed202655\\audit.json",
+      "audit_hash": "f454d491949329dd35fbe5b8f4fb7b8618d408590a22f12a80b39fc1d92218d2",
+      "artifact_hashes": {
+        "summary.json": "216d2ea6be807e148dc77cc5aef9037a048691b888e2b9724a1de3ce5c3a489d",
+        "metrics_aggregated.csv": "f9b6d24fea448258f9c80826c01f141f1b6ade007e4751eda25f7a081db5dc47",
+        "tests.csv": "a56c1e10a20101d2dd6a709a099fc8108ce84ea51f050041500a159b97872a6a",
+        "reliability_capopm.csv": "3faa58ea8d94003f7f92b0f5be945586f2f33044ca675bba28016cdbcd27ac52",
+        "reliability_capopm_stage1_only.csv": "63f8c95961b23391d271dce6c7f50f1a9f7322301148ad44fb28e6af11412518",
+        "reliability_uncorrected.csv": "257c0b3abe161cba7d28e03decc8ca4dd364571c0f2e606d87d6ffba9d2e7c54",
+        "reliability_raw_parimutuel.csv": "78af4ba1edddd604073016c82688633d07901be5114e1a6cea6c8d255a8c290f",
+        "reliability_structural_only.csv": "9ee5cf691c0f81b0b870079f2c0721c4c0678bf1e10a4a5f82d19ee17d2f0a4c",
+        "reliability_ml_only.csv": "0fdfd92c20eeb93aea3ee9b512f17eba5ded8e6e0bcdc23bf2592cfdac1ea135"
+      }
+    },
+    {
+      "experiment": "B2",
+      "scenario_name": "B2_asymptotic_rate__seed260000",
+      "seed": 260000,
+      "base_seed": 260000,
+      "run_index": null,
+      "sweep_params": {},
+      "n_runs": 30,
+      "results_dir": "results\\B2_asymptotic_rate__seed260000",
+      "summary_path": "results\\B2_asymptotic_rate__seed260000\\summary.json",
+      "audit_path": "results\\B2_asymptotic_rate__seed260000\\audit.json",
+      "audit_hash": "a1ae44e3a6959c6fe37a4fb55a127fa83367e47f51613df1294fea9e241984d3",
+      "artifact_hashes": {
+        "summary.json": "8b4bf99bb5a136520c2a03fafcdab77625f3737b054edf64731f03de63e3f37d",
+        "metrics_aggregated.csv": "7a277d62f3e43fcdd31dbf1050adefe72184fbcc65aad9c27fac6364236cf1c6",
+        "tests.csv": "c1aa1fff1ef5e0813a843805cd99eddb1d416e8f8856fbce7fd975a2d49a4656",
+        "reliability_capopm.csv": "720869c2f8bf73f3421ac93815d1ec170781a832edd9f7f540d94e74be3d37f6",
+        "reliability_capopm_stage1_only.csv": "3576996f70128817b7a535d7fe36ed8637696b06669a5ee97f2ddde71e9175a3",
+        "reliability_uncorrected.csv": "c46ff89e583e069871f90442414f66134e64b9815ed7283e73b516a6eab921d0",
+        "reliability_raw_parimutuel.csv": "4df9f76478cb240873bd41d866837aa6ca2e60c68fbc70f6e4bbf9bbb7c09333"
+      }
+    },
+    {
+      "experiment": "B3",
+      "scenario_name": "B3_misspec_regret__struct0__ml0__seed270000",
+      "seed": 270000,
+      "base_seed": 270000,
+      "run_index": null,
+      "sweep_params": {
+        "structural_shift": 0.0,
+        "ml_bias": 0.0
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B3_misspec_regret__struct0__ml0__seed270000",
+      "summary_path": "results\\B3_misspec_regret__struct0__ml0__seed270000\\summary.json",
+      "audit_path": "results\\B3_misspec_regret__struct0__ml0__seed270000\\audit.json",
+      "audit_hash": "04a0383d6e310d1183cfb3f206b64a8623365c66414cf6a43d60c795fd3d2648",
+      "artifact_hashes": {
+        "summary.json": "b43ef6f2e37a4c51a9ab4715710d01369e805beb8d517ac42f7ed98cdd8455ce",
+        "metrics_aggregated.csv": "0768486abbcbc05abf9555f312667131c1b835b17f74e8e34e85c8062f022571",
+        "tests.csv": "55e08d65bc1f2002651147c5790187c24d25e510e5857e1b1c6480773e51819c",
+        "reliability_capopm.csv": "e2c305a49976f9f047775f83baf42a79ba878158c7d5e36a6b3c634312995a41",
+        "reliability_structural_only.csv": "e20244fc60f0a97097b749a94a84ee3be0b05fa226e537d0847500dc3ff49268",
+        "reliability_ml_only.csv": "7d5605f36288674820690696845b6b20df3b0c21ada7bedffbd5676246093ccc",
+        "reliability_uncorrected.csv": "a787a6a94f0d36198374f6b4f87394da04ab65ffe84dbae525b999bee4f69a71",
+        "reliability_raw_parimutuel.csv": "37e44edfa7ae1a8ea2053597184c22a12f7b96e0ba8056be155fe59e18e726ec"
+      }
+    },
+    {
+      "experiment": "B3",
+      "scenario_name": "B3_misspec_regret__struct0__ml500__seed270001",
+      "seed": 270001,
+      "base_seed": 270000,
+      "run_index": null,
+      "sweep_params": {
+        "structural_shift": 0.0,
+        "ml_bias": 5.0
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B3_misspec_regret__struct0__ml500__seed270001",
+      "summary_path": "results\\B3_misspec_regret__struct0__ml500__seed270001\\summary.json",
+      "audit_path": "results\\B3_misspec_regret__struct0__ml500__seed270001\\audit.json",
+      "audit_hash": "b5f2db09471ee1d5dd17733cc338729902fde8b3834a1fdab9c2b1dd931ff04a",
+      "artifact_hashes": {
+        "summary.json": "b0359407787646ffa0595a97c85fdb6f7d6941d65c4fd9ef27a63368b7edc680",
+        "metrics_aggregated.csv": "4f7b20cd10dd113259207105083abbd69df537249c4ffc3372d8c3430a9f3792",
+        "tests.csv": "19c9350bec42f3ed93ef715336f108adf1d021f7ec42490acb0f09fac8c60cc9",
+        "reliability_capopm.csv": "60f73b1006c5b02b3146984768dfb12cbc99d212925bec96a309d624d231594e",
+        "reliability_structural_only.csv": "cf4f92234660f8b9789b3d9125de835b16b995209e752b207b3f3522655c62b1",
+        "reliability_ml_only.csv": "923c925404bc50826d599cc3955c4b5dd8e79c0da6963340bf7a7052fc7ded4b",
+        "reliability_uncorrected.csv": "428f70cf913ad76620788ac080f69dd68676ff41518ebe89255305e78323cf88",
+        "reliability_raw_parimutuel.csv": "ac3559391c0ecc321cfaeede1dcbc719195ffdc79a0b39b5bd866dea3261d042"
+      }
+    },
+    {
+      "experiment": "B3",
+      "scenario_name": "B3_misspec_regret__struct1000__ml0__seed270100",
+      "seed": 270100,
+      "base_seed": 270000,
+      "run_index": null,
+      "sweep_params": {
+        "structural_shift": 10.0,
+        "ml_bias": 0.0
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B3_misspec_regret__struct1000__ml0__seed270100",
+      "summary_path": "results\\B3_misspec_regret__struct1000__ml0__seed270100\\summary.json",
+      "audit_path": "results\\B3_misspec_regret__struct1000__ml0__seed270100\\audit.json",
+      "audit_hash": "4d2ffc5eaae5dd3c8c46ee4ebe010d0d49098cd4ffc8ff10acc7d283846ea151",
+      "artifact_hashes": {
+        "summary.json": "6a2ff1ed4d3af7b61f11d7776a6816c055a6529e229944e7646c270305457db4",
+        "metrics_aggregated.csv": "ea7976bad002e85499c15d588b24d8c6e90bb86a195b75b238d264619f0c12ad",
+        "tests.csv": "0b0e4e4216329593bf06886d58a95a3b9616d44866fd476e00654fe94f82b24d",
+        "reliability_capopm.csv": "a4c598a3b1a3489a2b772edd8a8ba35ac1e4e04ece4e186ec49e2284ea946f7e",
+        "reliability_structural_only.csv": "e3d74b614210546f3ccb3f0f2ef34e6c0ee5ccfdbcadfbd92c69563f46f42dda",
+        "reliability_ml_only.csv": "f569a05e1a60e1563108639c4fb1b5455162d62ac5ba7309f6d054475c40d51a",
+        "reliability_uncorrected.csv": "4e691cd98b2bd6298ecadb98742a4944f3405efa3ff8d9d46a3ab73b94a2bf5e",
+        "reliability_raw_parimutuel.csv": "a525698a8cb03c23b970750c0d6ec22b2b88590acfc0f4d0f8855fde0d575eed"
+      }
+    },
+    {
+      "experiment": "B3",
+      "scenario_name": "B3_misspec_regret__struct1000__ml500__seed270101",
+      "seed": 270101,
+      "base_seed": 270000,
+      "run_index": null,
+      "sweep_params": {
+        "structural_shift": 10.0,
+        "ml_bias": 5.0
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B3_misspec_regret__struct1000__ml500__seed270101",
+      "summary_path": "results\\B3_misspec_regret__struct1000__ml500__seed270101\\summary.json",
+      "audit_path": "results\\B3_misspec_regret__struct1000__ml500__seed270101\\audit.json",
+      "audit_hash": "1a0ceb3ebaec1cf405b95ceab5b7db01ca76907b3f951d8bd406270bc66efb01",
+      "artifact_hashes": {
+        "summary.json": "528bf0a194ef140b939d8a159ba0e841e610188443021f11531055d815bc300e",
+        "metrics_aggregated.csv": "0565939393ff97f28063725c58ad619de4db258b1e4c82ec3df2bf1dd3f886a2",
+        "tests.csv": "b566a0e3642c216732a8e231d669396bbb67da3999adb269e1cb13276ff07f87",
+        "reliability_capopm.csv": "592688bbd9fc6330feeae2ec0b98b510ef0bf476b858306cd0270da59c934bf3",
+        "reliability_structural_only.csv": "32743f6bd6b7eeda8f316da9c18382086674780e557384dd85ae5a10a956450f",
+        "reliability_ml_only.csv": "a402c6ce661b34b3dd73224f92e2e1772182a21c59247d240e6a57907f617c92",
+        "reliability_uncorrected.csv": "2c3ad0f206d7c18bec1d8229fccfa372eff7000fffb003ff140a14f4df5309b1",
+        "reliability_raw_parimutuel.csv": "b49c60aa3d33eba81792dcf4eeeda3c417464bcc0397f2dc99d5c7e15f8c44a8"
+      }
+    },
+    {
+      "experiment": "B4",
+      "scenario_name": "B4_regime_concentration__evidence5000__seed280000",
+      "seed": 280000,
+      "base_seed": 280000,
+      "run_index": null,
+      "sweep_params": {
+        "evidence_strength": 50.0
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B4_regime_concentration__evidence5000__seed280000",
+      "summary_path": "results\\B4_regime_concentration__evidence5000__seed280000\\summary.json",
+      "audit_path": "results\\B4_regime_concentration__evidence5000__seed280000\\audit.json",
+      "audit_hash": "c401a55762dd71ade1a74fd01d88902a1ea9749f1a8bb0302bfd18a2e8965bea",
+      "artifact_hashes": {
+        "summary.json": "17a67a36a96d2121813b7775c03eb42a2205f48090dabfa650de704070fc199e",
+        "metrics_aggregated.csv": "22c0e9e44e83e820b4ae52a728a8dea59f5e9f3baf5da36713ff451403b39b31",
+        "tests.csv": "4b23eac02fe412052c961e2592131a123549770808c880ba55fb62bc35b94d2f",
+        "reliability_capopm.csv": "2e8397d876d95e3505ea3d603523599c7366a197d74fd56b57279640418ee056",
+        "reliability_capopm_stage1_only.csv": "9facf40c176e4cd156b63577c3f5647d65465a2862481f6c20c98d588692484f",
+        "reliability_uncorrected.csv": "b196b0e748446eaac4f9797294e7a6d6e37d65111f6ee358139b9bf35e6ada1e",
+        "reliability_raw_parimutuel.csv": "1e3c9202f14406a1e60ff784988b4bd11d43d72a106d8b3dd68929f3dd699023"
+      }
+    },
+    {
+      "experiment": "B4",
+      "scenario_name": "B4_regime_concentration__evidence15000__seed280001",
+      "seed": 280001,
+      "base_seed": 280000,
+      "run_index": null,
+      "sweep_params": {
+        "evidence_strength": 150.0
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B4_regime_concentration__evidence15000__seed280001",
+      "summary_path": "results\\B4_regime_concentration__evidence15000__seed280001\\summary.json",
+      "audit_path": "results\\B4_regime_concentration__evidence15000__seed280001\\audit.json",
+      "audit_hash": "bb12b008197556dfdf2d5dc4fe678f2b54eb66e4a693ca50be93a7a1486e210a",
+      "artifact_hashes": {
+        "summary.json": "4d1aa3e6ea908372f3a31e9379c5daefc8f624a704ece064d460bb262b76df8f",
+        "metrics_aggregated.csv": "6ddf3b15ab586f900bbe707a250b498f521b6036a0405e0e7d31d6fb821ab912",
+        "tests.csv": "6fccfee2e377140f89ece7b40ec916978efdc9a1f04abcef76b89ce85dde3fd7",
+        "reliability_capopm.csv": "c63ebb13337ba5d7f53169f46f6fd186a3b1253daf1a1fa3d87f06591ca3a35b",
+        "reliability_capopm_stage1_only.csv": "9ff3f03e894cc668184cd23e9c6ba5585e58bd454f34773c5e753bb1b4d36aa9",
+        "reliability_uncorrected.csv": "fd9525b90bdefc40754978b1d6cdb6bd559ed90ad736e0d980d58b1b6bb81e84",
+        "reliability_raw_parimutuel.csv": "d20ce14f48e9d58cba83a489dc715252d13d1c735f8d727c11ce75e90aadbaf4"
+      }
+    },
+    {
+      "experiment": "B5",
+      "scenario_name": "B5_arbitrage_proj__methodeuclidean__viol0__seed290000",
+      "seed": 290000,
+      "base_seed": 290000,
+      "run_index": null,
+      "sweep_params": {
+        "violation_strength": 0.0,
+        "projection_method": "euclidean",
+        "coherent_flag": true
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B5_arbitrage_proj__methodeuclidean__viol0__seed290000",
+      "summary_path": "results\\B5_arbitrage_proj__methodeuclidean__viol0__seed290000\\summary.json",
+      "audit_path": "results\\B5_arbitrage_proj__methodeuclidean__viol0__seed290000\\audit.json",
+      "audit_hash": "b28d71ad89f90dcda66e0751bff6bd826dda778f9f3c00101e8df836a0f473d3",
+      "artifact_hashes": {
+        "summary.json": "6f5fb40dcf60007fe3f43dd0d128f23daf8c7c91406710227fd1814de822ab0d",
+        "metrics_aggregated.csv": "260d091ea3959a892b08a99b8bd6dcca673ef8d718934ed0de647963e29a365d",
+        "tests.csv": "6cfb3f5eb4ee1a9d9a4a3e14376c9b4657fe91f43c11327423208740c4cb98c9",
+        "reliability_capopm.csv": "bb2e047415e694c3e8b3c66ffcd3bed1a40a20be4ffa44dbb1dc72df41f6b369",
+        "reliability_before_projection.csv": "780d2b35f43261c6760568f421acd9d8b6666d00c41cfe65f352a9a8ae93cfda",
+        "reliability_after_projection.csv": "a677a6995b8c53a8796500be7ac6ae9bd672930ae0385095beed1c84546d1c96"
+      }
+    },
+    {
+      "experiment": "B5",
+      "scenario_name": "B5_arbitrage_proj__methodeuclidean__viol50__seed290001",
+      "seed": 290001,
+      "base_seed": 290000,
+      "run_index": null,
+      "sweep_params": {
+        "violation_strength": 0.5,
+        "projection_method": "euclidean",
+        "coherent_flag": false
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B5_arbitrage_proj__methodeuclidean__viol50__seed290001",
+      "summary_path": "results\\B5_arbitrage_proj__methodeuclidean__viol50__seed290001\\summary.json",
+      "audit_path": "results\\B5_arbitrage_proj__methodeuclidean__viol50__seed290001\\audit.json",
+      "audit_hash": "2cc45e68cf6b59bf09045258721e1ecb77864ae31ddd6a3796c65c4526beb06a",
+      "artifact_hashes": {
+        "summary.json": "89820d6d8503955e75e845396d34f8cb5cc79234c9ff2f76ef6f37107d674b37",
+        "metrics_aggregated.csv": "f47988bdca422e9e6dd180b4fad3c0a42d5f54b84cb29cbdc82cdbb2b9e1ebcd",
+        "tests.csv": "2303861ca713e10e72103405ecf6ad58c617fd6b7cd387c42c03133513aa78f7",
+        "reliability_capopm.csv": "44311fc9076ceb83c087008194257fdcbfd2fb115d7223795f90ed6741fe3946",
+        "reliability_before_projection.csv": "af00157ba690c12e46f069145e01c5e695941f26635618a0ac73e47bddc613dd",
+        "reliability_after_projection.csv": "64a83a70beebf78bc5369cac946f736b1858eeb2ca06df655883f301aab3a161"
+      }
+    },
+    {
+      "experiment": "B5",
+      "scenario_name": "B5_arbitrage_proj__methodeuclidean__viol100__seed290002",
+      "seed": 290002,
+      "base_seed": 290000,
+      "run_index": null,
+      "sweep_params": {
+        "violation_strength": 1.0,
+        "projection_method": "euclidean",
+        "coherent_flag": false
+      },
+      "n_runs": 30,
+      "results_dir": "results\\B5_arbitrage_proj__methodeuclidean__viol100__seed290002",
+      "summary_path": "results\\B5_arbitrage_proj__methodeuclidean__viol100__seed290002\\summary.json",
+      "audit_path": "results\\B5_arbitrage_proj__methodeuclidean__viol100__seed290002\\audit.json",
+      "audit_hash": "a1e3d1a44ac6e2de53032a062e66787617bd3b993bf649926c4682aeea334378",
+      "artifact_hashes": {
+        "summary.json": "52147b2ce5e489b36d3aa383f0eae52851e5d80f0f6ec4c0259a5385afd2fd93",
+        "metrics_aggregated.csv": "6c5d1a1d25c0b5fb6ac0118f7958c83e0e216916bf3785097314d54aa2c6eecf",
+        "tests.csv": "d8f5427b80cc0a8694cd5cd78034f1d3f2b50257250aed68b2d2cb78910b7d6e",
+        "reliability_capopm.csv": "956051de11d6c50ff22da27c316221630b8345f1deefb586a8230524f591073a",
+        "reliability_before_projection.csv": "17c0a97656184e465775c77893a9639cf374f54d5fbb3047a80146bff7070def",
+        "reliability_after_projection.csv": "71f29fe0c083456b6ecf6bd5665be3bad560aa4d65d73232c079524fb1e80fe3"
+      }
+    },
+    {
+      "experiment": "C1",
+      "scenario_name": "C1_zero_info__seed302000",
+      "seed": 302000,
+      "base_seed": 302000,
+      "run_index": 0,
+      "sweep_params": {
+        "information_level": "zero"
+      },
+      "n_runs": 30,
+      "tier": "C",
+      "results_dir": "results\\C1_zero_info__seed302000",
+      "summary_path": "results\\C1_zero_info__seed302000\\summary.json",
+      "audit_path": "results\\C1_zero_info__seed302000\\audit.json",
+      "audit_hash": "c915b01139cf7316b3495ce5d454e9247c484a977946a42d6289f665ad1ab4d1",
+      "artifact_hashes": {
+        "summary.json": "255636543e1fbdc41c8fd39ee3f4d77140c378933671c0e314add881b5e063f9",
+        "metrics_aggregated.csv": "9def2287572757f68c02a0f28831bfc308fd013038fd41ab896d4dfdc4296434",
+        "tests.csv": "df6e7352e17aadc0cd594a937e2a4fe35f4e191a9889ad3ca0f1db23915369be",
+        "reliability_capopm.csv": "f300acffd9d50b5ac182ae7570ca874223ff5bd18491403ec8eafed9c53aa657",
+        "reliability_raw_parimutuel.csv": "c0b79af437746dea00492b623dae1bac724dac78168279a952e854dc829cc640",
+        "reliability_uncorrected.csv": "b42457ad367e10e7868e8074608c6349b49561abf0288797c3b9b023f3bd110b",
+        "reliability_structural_only.csv": "51dbfb347a0fa391caa9e26de4170e169af5576fb7579513a0c323ec8b9ebc83",
+        "reliability_ml_only.csv": "d195be57e6ac71289487548638c0d738716785d2f2cf03fb417338d9687631ee"
+      }
+    },
+    {
+      "experiment": "C2",
+      "scenario_name": "C2_adversary_majoritarian__seed303000",
+      "seed": 303000,
+      "base_seed": 303000,
+      "run_index": 0,
+      "sweep_params": {
+        "adversarial_dominance": 0.7
+      },
+      "n_runs": 30,
+      "tier": "C",
+      "results_dir": "results\\C2_adversary_majoritarian__seed303000",
+      "summary_path": "results\\C2_adversary_majoritarian__seed303000\\summary.json",
+      "audit_path": "results\\C2_adversary_majoritarian__seed303000\\audit.json",
+      "audit_hash": "75e0d6ef7080767212301bbead1201e747654d0c895393b5116c7abfee107674",
+      "artifact_hashes": {
+        "summary.json": "ef1bbb4082566f7801b7d9fa115b4f7b069993ea248312201da2081bbfa56cc1",
+        "metrics_aggregated.csv": "919253145207073ae07c316448d5ff0ac8ca95bdec638cfd5bf0207c2c1670f2",
+        "tests.csv": "855559c5c47694b577a19fb56cb0ffa2c59491f298c13bedb9bde57da9eee422",
+        "reliability_capopm.csv": "c6be45cba7bc79f529e33f7943c044258e7e786bbce3e07aee2da40e3152f592",
+        "reliability_uncorrected.csv": "78e204f5e21a0a9b75da11670566f3b0f3775115d16da2e3e6345ed811ac5e7a",
+        "reliability_raw_parimutuel.csv": "44d9d5717334c63ba0cb719f64a2ccbe79b0e899dba45516e29c99f039b5ffaf",
+        "reliability_structural_only.csv": "d1b1d224cc1e202362ee7d8b09cc4cea0164e51d6ad2db9a896e6d3670910b77",
+        "reliability_ml_only.csv": "93884b3a6c92c3d5618d5b8ce4cedfe807cbec4aeef2d43d3140e16030327c88"
+      }
+    },
+    {
+      "experiment": "C3",
+      "scenario_name": "C3_nonstationary_ptrue_drift__seed304000",
+      "seed": 304000,
+      "base_seed": 304000,
+      "run_index": 0,
+      "sweep_params": {
+        "p_true_start": 0.2,
+        "p_true_end": 0.8
+      },
+      "n_runs": 30,
+      "tier": "C",
+      "results_dir": "results\\C3_nonstationary_ptrue_drift__seed304000",
+      "summary_path": "results\\C3_nonstationary_ptrue_drift__seed304000\\summary.json",
+      "audit_path": "results\\C3_nonstationary_ptrue_drift__seed304000\\audit.json",
+      "audit_hash": "44349465a12cca51c5602e419c63bf8eab867bab3f2cabb505bdfb7ad1e2f932",
+      "artifact_hashes": {
+        "summary.json": "d12a61d4110b58ff56e472e4fda14a2b48022eeed8f6d369fe9d9f00e015fa25",
+        "metrics_aggregated.csv": "b15cdbdd3038135ffc460957d027d02ffe2fc217b61b9d58fc21a048e6f815e5",
+        "reliability_capopm.csv": "06e7232279c4f7aa3aae01e5cec3a3fd32e4dbf8cb2795ae62afea0267136a69",
+        "reliability_raw_parimutuel.csv": "b90ed91d6eb6cd4752847ab8b35af4be2079d961dc6417a149665b91d45bc46a",
+        "reliability_structural_only.csv": "51e0993446800cf150ef6c91ab39c0d8a36523cffe2b677452c5c7e99f030e12",
+        "reliability_ml_only.csv": "bf4af24060204465e45feb19a6c13638b9e9e2515a7d6c0c508df9da53a09197",
+        "reliability_uncorrected.csv": "f8bcb31c61703121ae146bc4c9e7f876c79a56efc15ca905e0fd407e02c5516a",
+        "reliability_beta_1_1.csv": "c9ebd2a36aade1ca4bed88f10816023c03796d875044f3009f4c1fac8d91f74f",
+        "reliability_beta_0_5_0_5.csv": "f13f7639b8739ffdb14b0392970023a009e683208441bbe6579827365bad5ee1"
+      }
+    },
+    {
+      "experiment": "C4",
+      "scenario_name": "C4_regime_switch_midwindow__seed305000",
+      "seed": 305000,
+      "base_seed": 305000,
+      "run_index": 0,
+      "sweep_params": {
+        "p_true_low": 0.2,
+        "p_true_high": 0.8
+      },
+      "n_runs": 30,
+      "tier": "C",
+      "results_dir": "results\\C4_regime_switch_midwindow__seed305000",
+      "summary_path": "results\\C4_regime_switch_midwindow__seed305000\\summary.json",
+      "audit_path": "results\\C4_regime_switch_midwindow__seed305000\\audit.json",
+      "audit_hash": "ead0f224140af2d49fa883000b83060cabbc41ed5a7fb2779ca4a69e471226b6",
+      "artifact_hashes": {
+        "summary.json": "3ad4c1340c4ab45bafa7ccc338274f9cc8a5193cf9855d51899db16c648784b6",
+        "metrics_aggregated.csv": "d661aecdc7b2102343e5a2874dbc6d4346176072c8ed971c4ac7288c55ced527",
+        "reliability_capopm.csv": "f12bb52842e8e39904b79165621deba61f6b9a86ea92072eac759a33c33b5831",
+        "reliability_raw_parimutuel.csv": "431e7ec65181ca1b9ac3ccef1b68fb54f5dcc90a38d615c13c7bb85c57872982",
+        "reliability_structural_only.csv": "1c6a2e39a1345755de25f21efb85376c66690ff8a00c4b2bf3d172e78f4fe821",
+        "reliability_ml_only.csv": "8ab11a779b5a84b955f242202855e9d13226544e1c5180c079e7beb3d19a2197",
+        "reliability_uncorrected.csv": "f779f3233a001f69885347e7a38bccf7df72a1bfe87e8514a4575275c3fd7068",
+        "reliability_beta_1_1.csv": "5838f71c7fe151af5015e03bbcb886b0a6b66e058374a38d20b64bcf93cdb941",
+        "reliability_beta_0_5_0_5.csv": "2da70f6b571bbe2daf70d796ffe1b8a71ba6439bcbea4e1fcaaec67b1d9b215b"
+      }
+    },
+    {
+      "experiment": "C5",
+      "scenario_name": "C5_liquidity_dropout__seed306000",
+      "seed": 306000,
+      "base_seed": 306000,
+      "run_index": 0,
+      "sweep_params": {
+        "arrivals_per_step": 1,
+        "initial_pool": 0.5
+      },
+      "n_runs": 30,
+      "tier": "C",
+      "results_dir": "results\\C5_liquidity_dropout__seed306000",
+      "summary_path": "results\\C5_liquidity_dropout__seed306000\\summary.json",
+      "audit_path": "results\\C5_liquidity_dropout__seed306000\\audit.json",
+      "audit_hash": "d828c85a7215afda0c5a89d8eb11e5cc0b78bc6e8d80a44862ee685b3ceed68a",
+      "artifact_hashes": {
+        "summary.json": "186995889735f8c1c3b2cfc545d81259168646ab5c3f7501a304081379ce2eb2",
+        "metrics_aggregated.csv": "ab2bdc2c5e3b6f33a1b2851d31e53cde66071b73d6edc9b25b17658f8c56fde0",
+        "tests.csv": "d67d7f709c696f0f695b381f713d9327d40f0ba54b882f4bba706e4687479273",
+        "reliability_capopm.csv": "0ad85aa219ee8ffa9e0da622532bcb72f07d67f708e0c4b2526c0c7845dda7fc",
+        "reliability_raw_parimutuel.csv": "07ffba79d39ed17c12aa6bdabfb719a8c2e5c09fce4c542782782432a16383f0",
+        "reliability_uncorrected.csv": "181d91f1518d6f9b20ea750133d432adb5e20cef687c7aea5c73ad4fde2a7cca",
+        "reliability_structural_only.csv": "644acee30de092cc858379339aafea7db961d20b60dd8ec7885d396cbe5012d0",
+        "reliability_ml_only.csv": "fb9be9ec62d5196e99adddfb0b5ef84f1eceb2e0992ae87dc932b25ab5583c85"
+      }
+    },
+    {
+      "experiment": "C6",
+      "scenario_name": "C6_extreme_prior_mislead__seed307000",
+      "seed": 307000,
+      "base_seed": 307000,
+      "run_index": 0,
+      "sweep_params": {
+        "prior_n_str": 200.0,
+        "prior_n_ml_eff": 200.0
+      },
+      "n_runs": 30,
+      "tier": "C",
+      "results_dir": "results\\C6_extreme_prior_mislead__seed307000",
+      "summary_path": "results\\C6_extreme_prior_mislead__seed307000\\summary.json",
+      "audit_path": "results\\C6_extreme_prior_mislead__seed307000\\audit.json",
+      "audit_hash": "5868180e815d5d8753794e9dac9e99a0821a9334e59b918b43f5b2e95994e339",
+      "artifact_hashes": {
+        "summary.json": "fe93960c14a0c82d45fb63d2cefe26b579b973f1cac5a6b0116b453dcb3a4d61",
+        "metrics_aggregated.csv": "3cf5557486c9985da23b0e43e37ce24996dc02ae119bc9c868a76877c3040122",
+        "tests.csv": "682173e242850ab7b2431e5f976c066d33ba1dd478c054f1eb68688f13873da6",
+        "reliability_capopm.csv": "a8f637ac2cb03b2a8e9f97ec8d49f3c59db2ba037e1afb8f32f1c61e2e2e33aa",
+        "reliability_raw_parimutuel.csv": "2269ab689fa502415f5876128a0d29a6ad9c2cba5a7b05502bd46d5df2dde804",
+        "reliability_uncorrected.csv": "96aef5e417e9938da7438716eb040862ca44489a16c0c95db906fc4c92a5dca6",
+        "reliability_structural_only.csv": "120a796968de89bb18275ca9d588d8cf56718fc75e814dbec1bb2adc2021ea8a",
+        "reliability_ml_only.csv": "8a81fbba2aa977dfa9b3a0d70d4c1ffb1cc44830817e072e0e7aa278f9509059"
+      }
     }
   ],
   "min_runs_per_cell": 30,
-  "min_grid_points": 2
+  "min_grid_points": 2,
+  "created_utc": "2026-01-04T23:27:38.101857Z",
+  "python_version": "3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)]",
+  "command": [
+    "run_paper_suite.py",
+    "--tier",
+    "C",
+    "--runs",
+    "30"
+  ],
+  "ast_gate": {
+    "checker_path": "scripts\\forbidden_ast_check.py",
+    "status": "passed"
+  }
 }
