@@ -1,3 +1,0 @@
------BEGIN PUBLIC KEY-----
-a3f0b77c-ce59-4dda-b1f8-51615fb8f971
------END PUBLIC KEY-----
