@@ -1,0 +1,49 @@
+{
+  "config": "flat_prior_tests/config/default_sim.yaml",
+  "regimes": "flat_prior_tests/config/regimes.yaml",
+  "synthetic": {
+    "instrument_id": 1,
+    "start_ts_event_ns": 0,
+    "avg_events_per_day": 500,
+    "initial_mid": 100.0,
+    "tick_size": 0.01,
+    "order_id_start": 1000
+  },
+  "symbol": "A",
+  "mode": "synthetic",
+  "mixture_weight": 0.6,
+  "ml_prior": {
+    "mu": 0.7184575311304474,
+    "variance": 0.16819481787232624,
+    "N_eff": 2.0,
+    "alpha_ml": 1.4369150622608948,
+    "beta_ml": 0.5630849377391052,
+    "model_type": "ensemble_logistic",
+    "n_models": 10,
+    "features_used": [
+      "best_bid",
+      "best_ask",
+      "mid",
+      "spread",
+      "bid_sz1",
+      "ask_sz1",
+      "imbalance",
+      "order_flow_imbalance",
+      "microprice",
+      "mid_return_vol",
+      "event_intensity"
+    ],
+    "best_bid": 99.02000000000001,
+    "best_ask": 99.03,
+    "mid": 99.025,
+    "spread": 0.009999999999990905,
+    "bid_sz1": 3.0,
+    "ask_sz1": 2.0,
+    "imbalance": 0.19999999999996,
+    "order_flow_imbalance": -19.0,
+    "microprice": 99.0259999999802,
+    "mid_return_vol": 2.025802878290733e-05,
+    "event_intensity": 0.32809142115941764,
+    "n_events_used": 500
+  }
+}

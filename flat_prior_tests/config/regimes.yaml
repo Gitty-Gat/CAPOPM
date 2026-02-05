@@ -1,0 +1,26 @@
+regimes:
+  - name: "low_activity"
+    lambda: 0.5
+    p_buy: 0.5
+    size_lognormal:
+      mean: 0.0
+      sigma: 0.5
+    price_impact:
+      mean: 0.0
+      sigma: 0.01
+
+  - name: "high_activity"
+    lambda: 2.0
+    p_buy: 0.55
+    size_lognormal:
+      mean: 0.2
+      sigma: 0.8
+    price_impact:
+      mean: 0.0
+      sigma: 0.03
+
+transitions:
+  matrix:
+    - [0.95, 0.05]
+    - [0.10, 0.90]
+

@@ -1,0 +1,58 @@
+simulation:
+  symbol: "A"
+  price_scale: 1e-9          # Databento fixed-point normalization
+  event_time: true
+
+data:
+  mbo:
+    source: "databento"
+    required_fields:
+      - ts_event
+      - ts_recv
+      - instrument_id
+      - action
+      - side
+      - price
+      - size
+      - order_id
+
+windows:
+  historical_years: 2
+  rolling_window_days: 7
+  rolling_sample_count: 50
+
+ml_prior:
+  model_type: "ensemble_logistic"   # or "mlp_mc_dropout"
+  n_models: 10
+  N_eff_min: 2
+  N_eff_max: 500
+  regularization:
+    l2: 1.0
+  features:
+    lookback_events: 500
+
+hybrid_prior:
+  mixture_weight_w: 0.6
+
+mcmc:
+  n_chains: 10
+  warmup: 500
+  draws: 1000
+  max_events_per_chain: 20000
+
+visualization:
+  live: true
+  save_animation: true
+  fps: 30
+
+logging:
+  level: "INFO"
+  save_intermediate: true
+
+synthetic:
+  instrument_id: 1
+  start_ts_event_ns: 0
+  avg_events_per_day: 500
+  initial_mid: 100.0
+  tick_size: 0.01
+  order_id_start: 1000
