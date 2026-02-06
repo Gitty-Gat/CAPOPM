@@ -44,6 +44,17 @@ visualization:
   live: true
   save_animation: true
   fps: 30
+  make_dual_panel_mp4: true
+  max_frames: 900
+  posterior_grid_points: 120
+  posterior_rolling_window: 80
+  camera_elev: 25
+  camera_azim: -60
+  kappa: 0.10
+  out_mp4_name: "capopm_dual_viz.mp4"
+
+training:
+  historical_fraction: 0.70
 
 logging:
   level: "INFO"
