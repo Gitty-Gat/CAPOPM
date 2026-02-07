@@ -1,375 +1,236 @@
-"""
-Live visualization for the flat prior simulator.
-"""
+"""Visualization utilities for the flat-prior synthetic reel."""
 
 from __future__ import annotations
 
 import logging
-from typing import List, Sequence
+import math
+import os
+from typing import Iterable, List, Sequence, Tuple
 
-import numpy as np  # noqa: E402
+import numpy as np
 
 
-def make_dual_panel_animation(
-    ts: Sequence[float],
-    mid_prices: Sequence[float],
-    alpha_seq: Sequence[float],
-    beta_seq: Sequence[float],
-    capopm_price: Sequence[float],
-    cutoff_index: int,
+def _contiguous_segments(mask: np.ndarray) -> List[Tuple[int, int]]:
+    idx = np.where(mask)[0]
+    if idx.size == 0:
+        return []
+    out: List[Tuple[int, int]] = []
+    start = int(idx[0])
+    prev = int(idx[0])
+    for v in idx[1:]:
+        i = int(v)
+        if i == prev + 1:
+            prev = i
+            continue
+        out.append((start, prev))
+        start = i
+        prev = i
+    out.append((start, prev))
+    return out
+
+
+def _beta_pdf_grid(alpha: float, beta: float, p_grid: np.ndarray) -> np.ndarray:
+    alpha = max(float(alpha), 1e-6)
+    beta = max(float(beta), 1e-6)
+    log_beta = math.lgamma(alpha) + math.lgamma(beta) - math.lgamma(alpha + beta)
+    log_pdf = (alpha - 1.0) * np.log(p_grid) + (beta - 1.0) * np.log(1.0 - p_grid) - log_beta
+    log_pdf = log_pdf - np.max(log_pdf)
+    pdf = np.exp(log_pdf)
+    norm = np.trapz(pdf, p_grid)
+    if norm <= 0.0:
+        return np.full_like(p_grid, 1.0 / len(p_grid))
+    return pdf / norm
+
+
+def _downsample_indices(n: int, max_frames: int) -> np.ndarray:
+    n = int(max(1, n))
+    max_frames = int(min(max(10, max_frames), 900))
+    stride = max(1, int(math.ceil(n / max_frames)))
+    idx = np.arange(0, n, stride, dtype=np.int32)
+    if idx[-1] != n - 1:
+        idx = np.append(idx, n - 1)
+    return idx
+
+
+def make_capopm_v2_animation(
+    full_days: Sequence[float],
+    full_prices: Sequence[float],
+    incoming_days: Sequence[float],
+    alpha_incoming: Sequence[float],
+    beta_incoming: Sequence[float],
+    training_cutoff_day: float,
+    correction_active: Sequence[bool],
+    correction_strength: Sequence[float],
+    stage1_strength: Sequence[float],
+    stage2_strength: Sequence[float],
     save_path: str,
     fps: int = 30,
     max_frames: int = 900,
-    grid_points: int = 120,
-    rolling_window: int = 80,
-    camera_elev: float = 25.0,
-    camera_azim: float = -60.0,
+    posterior_grid_points: int = 140,
+    posterior_rolling_window: int = 120,
+    camera_elev: float = 28.0,
+    camera_azim: float = -55.0,
     logger: logging.Logger | None = None,
-):
-    """
-    Dual-panel MP4: top=3D posterior surface (rolling window), bottom=price overlay.
-    Uses corrected posterior parameters for CAPOPM fair value overlay.
-    """
-
-    import math
-    import os
-    import time
+) -> None:
+    """Create the required v2 MP4 with evolving 3D posterior and regime shading."""
 
     import imageio_ffmpeg
     import matplotlib
-    from matplotlib import animation
     from matplotlib.animation import FFMpegWriter
-    from matplotlib import gridspec
+    from matplotlib import cm
     import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 
     log = logger or logging.getLogger(__name__)
+    matplotlib.use("Agg")
     matplotlib.rcParams["animation.ffmpeg_path"] = imageio_ffmpeg.get_ffmpeg_exe()
     matplotlib.rcParams["animation.writer"] = "ffmpeg"
+    matplotlib.rcParams["font.size"] = 10
 
-    n = min(len(mid_prices), len(alpha_seq), len(beta_seq), len(capopm_price), len(ts))
-    if n == 0:
-        log.warning("No data for dual-panel animation; skipping save to %s", save_path)
-        return
+    days_full = np.asarray(full_days, dtype=np.float64)
+    prices = np.asarray(full_prices, dtype=np.float64)
+    days_in = np.asarray(incoming_days, dtype=np.float64)
+    alpha_arr = np.asarray(alpha_incoming, dtype=np.float64)
+    beta_arr = np.asarray(beta_incoming, dtype=np.float64)
+    corr_active = np.asarray(correction_active, dtype=bool)
+    corr_strength = np.asarray(correction_strength, dtype=np.float64)
+    s1 = np.asarray(stage1_strength, dtype=np.float64)
+    s2 = np.asarray(stage2_strength, dtype=np.float64)
 
-    max_frames = max(10, min(max_frames, 900))
-    stride = max(1, int(math.ceil(n / max_frames)))
-    idx = list(range(0, n, stride))
-    if idx[-1] != n - 1:
-        idx.append(n - 1)
+    n_incoming = min(len(days_in), len(alpha_arr), len(beta_arr))
+    n_full = min(len(days_full), len(prices), len(corr_active), len(corr_strength), len(s1), len(s2))
+    if n_incoming <= 1 or n_full <= 1:
+        raise ValueError("Insufficient data to render capopm_v2 animation")
 
-    ts_ds = np.asarray(ts)[idx]
-    ts_ds = ts_ds - ts_ds[0]
-    mid_ds = np.asarray(mid_prices)[idx]
-    cap_ds = np.asarray(capopm_price)[idx]
-    alpha_ds = np.asarray(alpha_seq)[idx]
-    beta_ds = np.asarray(beta_seq)[idx]
+    days_in = days_in[:n_incoming]
+    alpha_arr = np.clip(alpha_arr[:n_incoming], 1e-3, 1e6)
+    beta_arr = np.clip(beta_arr[:n_incoming], 1e-3, 1e6)
 
-    cutoff_index = max(0, min(n, cutoff_index))
-    cutoff_ds_idx = np.searchsorted(idx, cutoff_index, side="left")
-    cutoff_time = ts_ds[min(cutoff_ds_idx, len(ts_ds) - 1)]
+    days_full = days_full[:n_full]
+    prices = prices[:n_full]
+    corr_active = corr_active[:n_full]
+    corr_strength = np.clip(corr_strength[:n_full], 0.0, 1.0)
+    s1 = np.clip(s1[:n_full], 0.0, 1.0)
+    s2 = np.clip(s2[:n_full], 0.0, 1.0)
 
-    p_grid = np.linspace(0.001, 0.999, grid_points)
-    log_pdf = (np.outer(alpha_ds - 1.0, np.log(p_grid)) + np.outer(beta_ds - 1.0, np.log(1.0 - p_grid)))
-    norm = np.log(np.exp(log_pdf).sum(axis=1, keepdims=True) + 1e-15)
-    pdf_matrix = np.exp(log_pdf - norm)
+    p_grid = np.linspace(0.01, 0.99, int(max(40, posterior_grid_points)))
+    pdf_matrix = np.vstack([_beta_pdf_grid(a, b, p_grid) for a, b in zip(alpha_arr, beta_arr)])
+    z_upper = float(np.percentile(pdf_matrix, 99.5))
 
-    fig = plt.figure(figsize=(12, 8))
-    gs = gridspec.GridSpec(2, 1, height_ratios=[2, 1])
+    frame_idx = _downsample_indices(n_incoming, max_frames=max_frames)
+    days_in_ds = days_in[frame_idx]
+    pdf_ds = pdf_matrix[frame_idx]
+    frame_to_full = np.clip(np.searchsorted(days_full, days_in_ds, side="left"), 0, n_full - 1)
+    frames = len(frame_idx)
+
+    fig = plt.figure(figsize=(13, 8), constrained_layout=True)
+    gs = fig.add_gridspec(2, 1, height_ratios=[2.2, 1.2], hspace=0.08)
     ax3d = fig.add_subplot(gs[0], projection="3d")
-    ax2d = fig.add_subplot(gs[1])
+    axp = fig.add_subplot(gs[1])
+    fig.patch.set_facecolor("#f7f7f5")
+    axp.set_facecolor("#fbfaf8")
 
-    mid_line, = ax2d.plot([], [], color="steelblue", lw=1.5, label="Simulated mid")
-    cap_line, = ax2d.plot([], [], color="darkorange", lw=1.5, label="CAPOPM fair value")
-    ax2d.axvline(cutoff_time, color="gray", ls="--", alpha=0.5, lw=1)
-    ax2d.set_ylabel("Price ($)")
-    ax2d.set_xlabel("Time (days, normalized)")
-    ax2d.legend(loc="upper left")
+    # Static background regime patches; alpha encodes correction strength.
+    stage1_mask = corr_active & (s1 >= s2)
+    stage2_mask = corr_active & (s2 > s1)
+    for start, end in _contiguous_segments(stage1_mask):
+        alpha_span = float(0.10 + 0.35 * np.nanmean(corr_strength[start : end + 1]))
+        axp.axvspan(days_full[start], days_full[end], color="#7aa67a", alpha=alpha_span, lw=0)
+    for start, end in _contiguous_segments(stage2_mask):
+        alpha_span = float(0.10 + 0.35 * np.nanmean(corr_strength[start : end + 1]))
+        axp.axvspan(days_full[start], days_full[end], color="#c69473", alpha=alpha_span, lw=0)
+
+    line_price, = axp.plot([], [], color="#1f4f5f", lw=1.9, label="Synthetic mid price")
+    line_cutoff = axp.axvline(training_cutoff_day, color="#444444", lw=1.2, ls="--", alpha=0.8)
+    axp.text(
+        training_cutoff_day + 3.0,
+        float(np.nanmax(prices)) * 0.985,
+        "Training ends -> incoming trades + corrections",
+        fontsize=9,
+        color="#333333",
+        va="top",
+        ha="left",
+        bbox={"boxstyle": "round,pad=0.18", "fc": "#f0efe9", "ec": "#d2d0c7", "alpha": 0.9},
+    )
+    stage1_proxy = axp.axvspan(days_full[0], days_full[0], color="#7aa67a", alpha=0.20, label="Stage1-dominant correction regime")
+    stage2_proxy = axp.axvspan(days_full[0], days_full[0], color="#c69473", alpha=0.20, label="Stage2-dominant correction regime")
+    axp.legend(handles=[line_price, stage1_proxy, stage2_proxy], loc="upper left", framealpha=0.95, fontsize=9)
+    axp.set_xlim(float(days_full.min()), float(days_full.max()))
+    price_pad = max(0.5, 0.08 * float(np.nanstd(prices)))
+    axp.set_ylim(float(np.nanmin(prices) - price_pad), float(np.nanmax(prices) + price_pad))
+    axp.set_xlabel("Day")
+    axp.set_ylabel("Price ($)")
+    axp.grid(True, alpha=0.18, lw=0.6)
+    cursor = axp.axvline(days_full[0], color="#304ffe", lw=0.9, alpha=0.55)
+    _ = line_cutoff  # keep explicit for readability
+
+    ax3d.set_facecolor("#f6f4ef")
+    ax3d.view_init(elev=float(camera_elev), azim=float(camera_azim))
+    ax3d.set_xlim(float(days_in_ds.min()), float(days_in_ds.max()))
+    ax3d.set_ylim(0.0, 1.0)
+    ax3d.set_zlim(0.0, max(0.1, z_upper * 1.05))
+    ax3d.set_xlabel("Incoming day")
+    ax3d.set_ylabel("p")
+    ax3d.set_zlabel("f_t(p)")
+    ax3d.xaxis.pane.set_alpha(0.08)
+    ax3d.yaxis.pane.set_alpha(0.08)
+    ax3d.zaxis.pane.set_alpha(0.08)
+    ax3d.set_title("CAPOPM posterior landscape (incoming window)")
 
     surface = None
 
-    def _update_surface(frame_idx: int):
+    def draw_frame(i: int) -> None:
         nonlocal surface
-        start = max(0, frame_idx - rolling_window + 1)
-        t_window = ts_ds[start : frame_idx + 1]
-        Z = pdf_matrix[start : frame_idx + 1].T
-        T, P = np.meshgrid(t_window, p_grid)
-        ax3d.cla()
-        surface = ax3d.plot_surface(T, P, Z, cmap="viridis", linewidth=0, antialiased=False, alpha=0.8)
-        ax3d.set_xlabel("Time (days)")
-        ax3d.set_ylabel("p")
-        ax3d.set_zlabel("Density")
-        ax3d.set_ylim(0.0, 1.0)
-        ax3d.view_init(elev=camera_elev, azim=camera_azim)
-        return surface
+        in_idx = int(i)
+        start = max(0, in_idx - int(max(4, posterior_rolling_window)) + 1)
+        t = days_in_ds[start : in_idx + 1]
+        z = pdf_ds[start : in_idx + 1]
+        tt, pp = np.meshgrid(t, p_grid)
+        zz = z.T
 
-    def init():
-        _update_surface(0)
-        mid_line.set_data([], [])
-        cap_line.set_data([], [])
-        return mid_line, cap_line
+        if surface is not None:
+            try:
+                surface.remove()
+            except Exception:
+                pass
+        surface = ax3d.plot_surface(
+            tt,
+            pp,
+            zz,
+            cmap=cm.cividis,
+            linewidth=0,
+            antialiased=True,
+            alpha=0.93,
+            rcount=min(zz.shape[0], 180),
+            ccount=min(zz.shape[1], 220),
+        )
 
-    def animate(frame_no: int):
-        _update_surface(frame_no)
-        t_slice = ts_ds[: frame_no + 1]
-        mid_slice = mid_ds[: frame_no + 1]
-        cap_slice = cap_ds[: frame_no + 1]
-        cap_masked = np.where(t_slice >= cutoff_time, cap_slice, np.nan)
-        mid_line.set_data(t_slice, mid_slice)
-        cap_line.set_data(t_slice, cap_masked)
-        ax2d.relim()
-        ax2d.autoscale_view()
-        return mid_line, cap_line
+        fidx = int(frame_to_full[in_idx])
+        line_price.set_data(days_full[: fidx + 1], prices[: fidx + 1])
+        cursor.set_xdata([days_full[fidx], days_full[fidx]])
 
-    frames = len(ts_ds)
-    save_start = time.time()
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    writer = FFMpegWriter(fps=int(fps), codec="libx264", bitrate=3200)
+    save_start = os.path.getmtime(save_path) if os.path.exists(save_path) else None
+    log.info("capopm_v2 animation save start: path=%s frames=%d fps=%d", save_path, frames, fps)
+    with writer.saving(fig, save_path, dpi=120):
+        for i in range(frames):
+            draw_frame(i)
+            writer.grab_frame()
+            if (i + 1) % 60 == 0:
+                log.info("capopm_v2 animation progress: %d/%d frames", i + 1, frames)
+    plt.close(fig)
+    size = os.path.getsize(save_path) if os.path.exists(save_path) else -1
     log.info(
-        "Dual animation: begin save to %s (frames=%d, stride=%d, cutoff_ds_idx=%d)",
+        "capopm_v2 animation save end: path=%s size_bytes=%d mtime_changed=%s",
         save_path,
-        frames,
-        stride,
-        cutoff_ds_idx,
+        size,
+        bool(save_start is None or (os.path.getmtime(save_path) != save_start)),
     )
-    try:
-        writer = FFMpegWriter(fps=fps, codec="libx264", bitrate=2000)
-        with writer.saving(fig, save_path, dpi=120):
-            for i in range(frames):
-                animate(i)
-                writer.grab_frame()
-                if (i + 1) % 50 == 0:
-                    log.info("Dual animation: saved %d/%d frames (elapsed=%.1fs)", i + 1, frames, time.time() - save_start)
-    except Exception as exc:  # pragma: no cover
-        log.exception("Dual animation save failed: %s", exc)
-    else:
-        size = None
-        try:
-            size = os.path.getsize(save_path)
-        except OSError:
-            size = None
-        log.info(
-            "Dual animation: end save to %s (seconds=%.2f, size_bytes=%s)",
-            save_path,
-            time.time() - save_start,
-            size,
-        )
-    finally:
-        plt.close(fig)
 
 
-def make_live_animation(
-    mid_prices: Sequence[float],
-    regimes: Sequence[int],
-    posterior_means: Sequence[float],
-    weights: Sequence[float],
-    save_path: str,
-    fps: int = 30,
-    live: bool = False,
-    logger: logging.Logger | None = None,
-    max_frames: int | None = 800,
-    shading_stride: int = 10,
-    shading_lookback: int = 2000,
-    save_timeout: float = 120.0,
-):
-    """
-    Create and save the live animation. The save loop is bounded in wall-clock
-    time to prevent hangs when ffmpeg is slow or unavailable.
-    """
-    import os
-    import time
-
-    import imageio_ffmpeg
-    import matplotlib
-
-    if live:
-        matplotlib.use("TkAgg")
-    else:
-        matplotlib.use("Agg")
-
-    # Always force ffmpeg discovery from imageio_ffmpeg.
-    matplotlib.rcParams["animation.ffmpeg_path"] = imageio_ffmpeg.get_ffmpeg_exe()
-    matplotlib.rcParams["animation.writer"] = "ffmpeg"
-
-    import matplotlib.pyplot as plt
-    from matplotlib import animation
-    from matplotlib.animation import FFMpegWriter
-
-    log = logger or logging.getLogger(__name__)
-    orig_n = len(mid_prices)
-    if orig_n == 0:
-        log.warning("No mid prices provided; skipping animation save to %s", save_path)
-        return
-
-    target_points = 20000
-    plot_stride = max(1, int(np.ceil(orig_n / target_points)))
-
-    def _downsample(seq: Sequence[float]) -> np.ndarray:
-        arr = np.asarray(seq)
-        if plot_stride <= 1 or arr.size <= 1:
-            return arr
-        arr_ds = arr[::plot_stride]
-        if arr_ds.size == 0:
-            return arr
-        if arr_ds[-1] != arr[-1]:
-            arr_ds = np.append(arr_ds, arr[-1])
-        return arr_ds
-
-    mid_arr = _downsample(mid_prices)
-    post_arr = _downsample(posterior_means)
-    weight_arr = _downsample(weights)
-    regime_arr_full = np.array(regimes[:orig_n], dtype=int) if regimes else np.zeros(orig_n, dtype=int)
-    regime_arr_full = regime_arr_full[::plot_stride] if regime_arr_full.size else np.zeros(len(mid_arr), dtype=int)
-
-    min_len = min(len(mid_arr), len(post_arr), len(weight_arr), len(regime_arr_full))
-    mid_arr = mid_arr[:min_len]
-    post_arr = post_arr[:min_len]
-    weight_arr = weight_arr[:min_len]
-    regime_arr_full = regime_arr_full[:min_len]
-
-    n = min_len
-    if n == 0:
-        log.warning("Animation inputs empty after downsample; skipping animation save to %s", save_path)
-        return
-    max_frames = min(max_frames or 800, 1500)
-    stride = max(1, int(np.ceil(n / max_frames)))
-    frame_idx = np.arange(0, n, stride, dtype=int)
-    if len(frame_idx) == 0 or frame_idx[-1] != n - 1:
-        frame_idx = np.append(frame_idx, n - 1)
-
-    frames = len(frame_idx)
-    x = np.arange(n)
-
-    log.info(
-        "Animation downsample: original_n=%d, plot_stride=%d, plotted_n=%d",
-        orig_n,
-        plot_stride,
-        n,
-    )
-    log.info(
-        "Animation setup: n_events=%d, frames=%d, stride=%d, fps=%d, max_frames=%d",
-        orig_n,
-        frames,
-        stride,
-        fps,
-        max_frames,
-    )
-    regime_segments: List[tuple[int, int, int]] = []
-    if regime_arr_full.size:
-        for r in np.unique(regime_arr_full):
-            mask = regime_arr_full == r
-            if mask.any():
-                for s, e in _contiguous_segments(np.where(mask)[0]):
-                    regime_segments.append((r, int(s), int(e)))
-    regime_segments.sort(key=lambda t: t[1])
-
-    fig, axes = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
-    ax_price, ax_post, ax_weight = axes
-
-    price_line, = ax_price.plot([], [], lw=1.5, color="steelblue")
-    ax_price.set_ylabel("Mid Price")
-
-    post_line, = ax_post.plot([], [], lw=1.5, color="darkorange")
-    ax_post.axhline(0.25, ls="--", color="gray", alpha=0.5)
-    ax_post.axhline(0.5, ls="-.", color="gray", alpha=0.5)
-    ax_post.axhline(0.75, ls="--", color="gray", alpha=0.5)
-    ax_post.set_ylabel("Posterior mean p_t")
-    ax_post.set_ylim(0, 1)
-
-    weight_line, = ax_weight.plot([], [], lw=1.5, color="seagreen")
-    ax_weight.set_ylabel("Mixture weight w_t")
-    ax_weight.set_ylim(0, 1)
-    ax_weight.set_xlabel("Event index")
-
-    shading_artists: list = []
-
-    def init():
-        price_line.set_data([], [])
-        post_line.set_data([], [])
-        weight_line.set_data([], [])
-        return price_line, post_line, weight_line
-
-    def animate(frame_no: int):
-        idx = int(frame_idx[min(frame_no, frames - 1)]) + 1
-        price_line.set_data(x[:idx], mid_arr[:idx])
-        post_line.set_data(x[:idx], post_arr[:idx])
-        weight_line.set_data(x[:idx], weight_arr[:idx])
-
-        if shading_stride and frame_no % shading_stride == 0:
-            for coll in list(shading_artists):
-                try:
-                    coll.remove()
-                except Exception:
-                    pass
-            shading_artists.clear()
-
-            cutoff = max(0, idx - shading_lookback)
-            for r, s, e in regime_segments:
-                if e < cutoff:
-                    continue
-                if s >= idx:
-                    break
-                span_end = min(e, idx - 1)
-                shading_artists.append(
-                    ax_price.axvspan(s, span_end, color="lightgray", alpha=0.15 + 0.1 * (r % 3))
-                )
-
-        return price_line, post_line, weight_line
-
-    # Keep FuncAnimation for live mode; saving is handled manually below.
-    anim = None
-    if live:
-        anim = animation.FuncAnimation(
-            fig, animate, init_func=init, frames=frames, interval=1000 / fps, blit=False, save_count=frames
-        )
-
-    save_start = time.time()
-    log.info("Animation: begin save to %s (frames=%d)", save_path, frames)
-    try:
-        writer = FFMpegWriter(fps=fps, codec="libx264", bitrate=1800)
-        init()
-        with writer.saving(fig, save_path, dpi=120):
-            for i in range(frames):
-                animate(i)
-                writer.grab_frame()
-                if (i + 1) % 50 == 0:
-                    log.info("Animation: saved %d/%d frames (elapsed=%.1fs)", i + 1, frames, time.time() - save_start)
-                if time.time() - save_start > save_timeout:
-                    raise TimeoutError(f"Animation save exceeded {save_timeout} seconds; aborting video save.")
-
-    except Exception as e:  # pragma: no cover - best-effort safeguard
-        log.exception("Animation save failed; continuing without video. Error: %s", e)
-    else:
-        size = None
-        try:
-            size = os.path.getsize(save_path)
-        except OSError:
-            size = None
-        log.info(
-            "Animation: end save to %s (seconds=%.2f, size_bytes=%s)",
-            save_path,
-            time.time() - save_start,
-            size,
-        )
-
-    if live and anim is not None:
-        plt.show()  # blocking, keeps window alive
-    else:
-        plt.close(fig)
+def make_dual_panel_animation(*args, **kwargs):  # pragma: no cover - legacy shim
+    raise NotImplementedError("Use make_capopm_v2_animation for v2 visualization.")
 
 
-def _contiguous_segments(indices: np.ndarray) -> List[tuple[int, int]]:
-    """Convert sorted indices into contiguous (start, end) segments."""
-    if len(indices) == 0:
-        return []
-    segments = []
-    start = indices[0]
-    prev = indices[0]
-    for idx in indices[1:]:
-        if idx == prev + 1:
-            prev = idx
-            continue
-        segments.append((start, prev))
-        start = idx
-        prev = idx
-    segments.append((start, prev))
-    return segments
-
+def make_live_animation(*args, **kwargs):  # pragma: no cover - legacy shim
+    raise NotImplementedError("Live animation is not used in the v2 pipeline.")

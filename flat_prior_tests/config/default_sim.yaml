@@ -1,7 +1,9 @@
 simulation:
   symbol: "A"
-  price_scale: 1e-9          # Databento fixed-point normalization
   event_time: true
+  seed: 12345
+  price_scale: 1e-6
+  total_days: 800
 
 data:
   mbo:
@@ -16,54 +18,139 @@ data:
       - size
       - order_id
 
+training:
+  training_days: 560
+  incoming_days: 240
+
 windows:
   historical_years: 2
   rolling_window_days: 7
   rolling_sample_count: 50
 
 ml_prior:
-  model_type: "ensemble_logistic"   # or "mlp_mc_dropout"
-  n_models: 10
+  model_type: "ensemble_logistic"
+  n_models: 16
   N_eff_min: 2
-  N_eff_max: 500
+  N_eff_max: 120
   regularization:
-    l2: 1.0
+    l2: 0.8
   features:
-    lookback_events: 500
+    lookback_events: 2000
 
 hybrid_prior:
-  mixture_weight_w: 0.6
-
-mcmc:
-  n_chains: 10
-  warmup: 500
-  draws: 1000
-  max_events_per_chain: 20000
-
-visualization:
-  live: true
-  save_animation: true
-  fps: 30
-  make_dual_panel_mp4: true
-  max_frames: 900
-  posterior_grid_points: 120
-  posterior_rolling_window: 80
-  camera_elev: 25
-  camera_azim: -60
-  kappa: 0.10
-  out_mp4_name: "capopm_dual_viz.mp4"
-
-training:
-  historical_fraction: 0.70
-
-logging:
-  level: "INFO"
-  save_intermediate: true
+  mixture_weight_w: 0.55
 
 synthetic:
   instrument_id: 1
   start_ts_event_ns: 0
-  avg_events_per_day: 500
+  avg_events_per_day: 180
+  max_events: 220000
   initial_mid: 100.0
   tick_size: 0.01
   order_id_start: 1000
+
+  price_process:
+    regimes:
+      - name: "low_vol"
+        mu: 0.0000
+        sigma: 0.007
+        jump_prob: 0.004
+        jump_sigma: 0.018
+        mean_revert: 0.08
+        event_mult: 0.8
+        buy_bias: 0.00
+      - name: "high_vol"
+        mu: 0.0000
+        sigma: 0.020
+        jump_prob: 0.018
+        jump_sigma: 0.050
+        mean_revert: 0.03
+        event_mult: 1.6
+        buy_bias: 0.00
+      - name: "trend_up"
+        mu: 0.0015
+        sigma: 0.012
+        jump_prob: 0.010
+        jump_sigma: 0.030
+        mean_revert: 0.01
+        event_mult: 1.2
+        buy_bias: 0.08
+      - name: "mean_revert"
+        mu: 0.0000
+        sigma: 0.010
+        jump_prob: 0.007
+        jump_sigma: 0.020
+        mean_revert: 0.22
+        event_mult: 1.0
+        buy_bias: -0.03
+    transition_matrix:
+      - [0.87, 0.06, 0.04, 0.03]
+      - [0.16, 0.70, 0.08, 0.06]
+      - [0.09, 0.08, 0.74, 0.09]
+      - [0.15, 0.06, 0.08, 0.71]
+
+  imbalance_synth:
+    base_events_per_day: 18
+    opening_multiplier: 2.5
+    closing_multiplier: 2.8
+    halt_prob: 0.005
+    regime_imbalance_scale:
+      0: 0.8
+      1: 2.1
+      2: 1.4
+      3: 1.0
+
+posterior_dynamics:
+  a0: -0.02
+  a_imbalance: 0.85
+  a_trend: 6.5
+  a_auction: 0.40
+  p_noise_sigma: 0.18
+  p_clip: [0.02, 0.98]
+  trend_window: 8
+  regime_effect: [0.0, 0.85, 0.40, -0.35]
+  n_base: 2.0
+  n_fill_scale: 0.35
+  n_pair_scale: 0.30
+  n_auction_scale: 1.20
+  n_vol_scale: 4.0
+  burst_prob: 0.28
+  burst_low: 4
+  burst_high: 11
+  correction_carry: 0.62
+
+corrections:
+  active_threshold: 0.12
+  stage1:
+    w_min: 0.18
+    w_max: 1.0
+    longshot_ref_p: 0.5
+    longshot_gamma: 0.9
+    herding_lambda: 0.20
+    herding_window: 30
+  stage2:
+    delta_plus: 0.8
+    delta_minus: 0.6
+    regimes:
+      - pi: 0.50
+        g_plus_scale: 0.08
+        g_minus_scale: 0.05
+      - pi: 0.30
+        g_plus_scale: 0.16
+        g_minus_scale: 0.11
+      - pi: 0.20
+        g_plus_scale: 0.04
+        g_minus_scale: 0.17
+
+visualization:
+  fps: 30
+  max_frames: 900
+  posterior_grid_points: 140
+  posterior_rolling_window: 120
+  camera_elev: 28
+  camera_azim: -55
+  out_mp4_name: "capopm_v2.mp4"
+
+logging:
+  level: "INFO"
+  save_intermediate: true

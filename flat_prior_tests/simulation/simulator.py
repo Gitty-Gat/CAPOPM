@@ -1,17 +1,4 @@
-"""
-End-to-end driver for the flat prior simulation path.
-
-Pipeline:
-1) Generate synthetic Databento-form L3 data (event-time).
-2) Build principled ML prior -> Beta(alpha_ml, beta_ml).
-3) Form hybrid mixture with flat structural Beta(1,1).
-4) For each window (historical horizon + random rolling):
-   - map L3 events to (y, n)
-   - update mixture posterior
-   - record posterior draws and diagnostics
-   - run event-time MCMC extrapolation seeded by current state
-5) Emit artifacts and a live animation.
-"""
+"""End-to-end driver for flat-prior synthetic simulation and v2 MP4 output."""
 
 from __future__ import annotations
 
@@ -26,13 +13,11 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from flat_prior_tests.data.imbalance_synth import generate_synth_imbalance
 from flat_prior_tests.data.mbo_synth import generate_synth_mbo
-from flat_prior_tests.diagnostics.mcmc_diagnostics import summarize_metric
-from flat_prior_tests.mcmc.event_time_mcmc import EventTimeMCMCSampler, load_regime_config
-from flat_prior_tests.priors.hybrid_mixture_prior import HybridMixturePrior
+from flat_prior_tests.priors.hybrid_mixture_prior import HybridMixturePrior, MixturePriorState
 from flat_prior_tests.priors.ml_prior_principled import MLPriorConfig, PrincipledMLPrior
-from flat_prior_tests.simulation.map_l3_to_counts import map_l3_to_counts
-from flat_prior_tests.simulation.visualization import make_dual_panel_animation, make_live_animation
+from flat_prior_tests.simulation.visualization import make_capopm_v2_animation
 from src.capopm.corrections.stage1_behavioral import apply_behavioral_weights
 from src.capopm.corrections.stage2_structural import (
     apply_linear_offsets,
@@ -72,131 +57,130 @@ class FlatPriorSimulationRunner:
 
         self.log = logging.getLogger("flat_prior_sim")
         self.log.setLevel(getattr(logging, self.cfg.get("logging", {}).get("level", "INFO")))
-        ch = logging.StreamHandler()
-        ch.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
         if not self.log.handlers:
+            ch = logging.StreamHandler()
+            ch.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
             self.log.addHandler(ch)
 
+        Path(sim_cfg.out_dir).mkdir(parents=True, exist_ok=True)
         Path(sim_cfg.out_dir, "plots").mkdir(parents=True, exist_ok=True)
+        Path(sim_cfg.out_dir, "data").mkdir(parents=True, exist_ok=True)
         Path(sim_cfg.out_dir, "mcmc_diagnostics").mkdir(parents=True, exist_ok=True)
 
     @staticmethod
-    def _moment_match_beta(mean: float, var: float, default_conc: float = 20.0) -> Tuple[float, float]:
-        """Moment-match a Beta distribution from mean/variance with a safe fallback."""
-
-        mean = float(mean)
+    def _moment_match_beta(mean: float, var: float, default_conc: float = 25.0) -> Tuple[float, float]:
+        mean = float(np.clip(mean, 1e-6, 1.0 - 1e-6))
         var = float(var)
-        if not np.isfinite(mean) or mean <= 0.0 or mean >= 1.0:
-            mean = 0.5
         if not np.isfinite(var) or var <= 0.0:
-            alpha = mean * default_conc
-            beta = (1.0 - mean) * default_conc
-            return max(alpha, 1e-3), max(beta, 1e-3)
+            return max(1e-3, mean * default_conc), max(1e-3, (1.0 - mean) * default_conc)
+        conc = mean * (1.0 - mean) / max(var, 1e-12) - 1.0
+        if conc <= 1e-6:
+            conc = default_conc
+        return max(1e-3, mean * conc), max(1e-3, (1.0 - mean) * conc)
 
-        conc = mean * (1.0 - mean) / var - 1.0
-        if conc <= 0.0:
-            alpha = mean * default_conc
-            beta = (1.0 - mean) * default_conc
-        else:
-            alpha = mean * conc
-            beta = (1.0 - mean) * conc
-        return max(alpha, 1e-3), max(beta, 1e-3)
+    @staticmethod
+    def _beta_mean_var(alpha: float, beta: float) -> Tuple[float, float]:
+        alpha = max(alpha, 1e-9)
+        beta = max(beta, 1e-9)
+        mean = alpha / (alpha + beta)
+        var = (alpha * beta) / (((alpha + beta) ** 2) * (alpha + beta + 1.0))
+        return float(mean), float(max(var, 0.0))
 
-    def _build_trade_tape(self, fills_diag: List[Dict]) -> List[SimpleTrade]:
-        """Convert fill diagnostics into the minimal trade tape required by corrections."""
-
-        tape: List[SimpleTrade] = []
-        for fill in fills_diag:
-            mid_before = fill.get("mid_before", np.nan)
-            mid_after = fill.get("mid_after", np.nan)
-            delta = 0.0
-            if np.isfinite(mid_before) and np.isfinite(mid_after) and mid_before != 0:
-                delta = (mid_after - mid_before) / abs(mid_before)
-            implied_yes = 0.5 + 0.1 * np.tanh(delta)
-            implied_yes = min(max(implied_yes, 1e-4), 1.0 - 1e-4)
-            side = "YES" if fill.get("yes") else "NO"
-            size = float(fill.get("size", 1.0))
-            if size <= 0.0:
-                size = 1.0
-            tape.append(SimpleTrade(implied_yes_before=implied_yes, side=side, size=size))
-        return tape
-
-    def _apply_stage_corrections(
-        self,
-        fills_diag: List[Dict],
-        alpha_base: float,
-        beta_base: float,
-        stage1_cfg: Dict,
-        stage2_cfg: Dict,
-    ) -> Tuple[float, float, float]:
-        """
-        Apply Stage1 + Stage2 corrections to derive corrected Beta parameters and mean.
-        Returns (alpha_corr, beta_corr, mean_corr).
-        """
-
-        tape = self._build_trade_tape(fills_diag)
-        if not tape:
-            mean = alpha_base / (alpha_base + beta_base)
-            return alpha_base, beta_base, mean
-
-        y1, n1, _ = apply_behavioral_weights(tape, stage1_cfg)
-        y2, n2 = apply_linear_offsets(y1, n1, stage2_cfg)
-
-        regimes = stage2_cfg.get("regimes") or [{"pi": 1.0, "g_plus_scale": 0.0, "g_minus_scale": 0.0}]
-        summary = summarize_stage1_stats(tape, y2, n2, stage1_cfg)
-        mix = mixture_posterior_params(alpha_base, beta_base, summary, regimes, y2, n2)
-        mean_corr = float(mix.get("mixture_mean", 0.5))
-        var_corr = float(mix.get("mixture_var", 0.0))
-        alpha_corr, beta_corr = self._moment_match_beta(mean_corr, var_corr)
-        return alpha_corr, beta_corr, mean_corr
+    @staticmethod
+    def _sigmoid(x: float) -> float:
+        return float(1.0 / (1.0 + np.exp(-x)))
 
     def _build_ml_prior(self) -> PrincipledMLPrior:
         ml_cfg = self.cfg.get("ml_prior", {})
         return PrincipledMLPrior(
             MLPriorConfig(
                 model_type=ml_cfg.get("model_type", "ensemble_logistic"),
-                n_models=int(ml_cfg.get("n_models", 10)),
-                N_eff_min=float(ml_cfg.get("N_eff_min", 2)),
-                N_eff_max=float(ml_cfg.get("N_eff_max", 500)),
+                n_models=int(ml_cfg.get("n_models", 16)),
+                N_eff_min=float(ml_cfg.get("N_eff_min", 2.0)),
+                N_eff_max=float(ml_cfg.get("N_eff_max", 120.0)),
                 l2=float(ml_cfg.get("regularization", {}).get("l2", 1.0)),
-                lookback_events=int(ml_cfg.get("features", {}).get("lookback_events", 500)),
+                lookback_events=int(ml_cfg.get("features", {}).get("lookback_events", 2000)),
             ),
             logger=self.log,
+            seed=int(self.cfg.get("simulation", {}).get("seed", 12345) + 99),
         )
 
-    def _init_mixture(self, alpha_ml: float, beta_ml: float) -> HybridMixturePrior:
-        w = float(self.cfg.get("hybrid_prior", {}).get("mixture_weight_w", 0.6))
-        return HybridMixturePrior(weight=w, logger=self.log).initialize(alpha_ml, beta_ml)
+    def _mixture_mean_var(self, state: MixturePriorState) -> Tuple[float, float]:
+        mean_ml = state.alpha_ml / (state.alpha_ml + state.beta_ml)
+        var_ml = (state.alpha_ml * state.beta_ml) / ((state.alpha_ml + state.beta_ml) ** 2 * (state.alpha_ml + state.beta_ml + 1.0))
+        mean_flat = state.alpha_flat / (state.alpha_flat + state.beta_flat)
+        var_flat = (state.alpha_flat * state.beta_flat) / ((state.alpha_flat + state.beta_flat) ** 2 * (state.alpha_flat + state.beta_flat + 1.0))
+        mean_mix = state.weight * mean_ml + (1.0 - state.weight) * mean_flat
+        second = state.weight * (var_ml + mean_ml**2) + (1.0 - state.weight) * (var_flat + mean_flat**2)
+        var_mix = max(second - mean_mix**2, 1e-12)
+        return float(mean_mix), float(var_mix)
 
-    def _window_slices(self, events: pd.DataFrame) -> List[Tuple[str, pd.DataFrame]]:
-        windows_cfg = self.cfg.get("windows", {})
-        hist_years = int(windows_cfg.get("historical_years", self.sim_cfg.historical_years))
-        rolling_days = int(windows_cfg.get("rolling_window_days", self.sim_cfg.rolling_days))
-        rolling_samples = int(windows_cfg.get("rolling_sample_count", self.sim_cfg.rolling_samples))
+    def _build_trade_tape(
+        self,
+        y: int,
+        n: int,
+        p_true: float,
+        total_imbalance_qty: float,
+        paired_qty: float,
+        rng: np.random.Generator,
+    ) -> List[SimpleTrade]:
+        if n <= 0:
+            return []
+        yes_count = int(max(0, min(y, n)))
+        no_count = int(max(0, n - yes_count))
+        ratio = float(total_imbalance_qty / (abs(paired_qty) + 1.0))
+        tape: List[SimpleTrade] = []
+        base_size = max(1.0, 0.5 * np.sqrt(abs(paired_qty)) / max(1, n))
+        for _ in range(yes_count):
+            implied = np.clip(p_true + 0.06 * np.tanh(ratio) + rng.normal(0.0, 0.035), 1e-4, 1.0 - 1e-4)
+            size = float(max(0.25, rng.lognormal(np.log(base_size + 1.0), 0.35)))
+            tape.append(SimpleTrade(implied_yes_before=float(implied), side="YES", size=size))
+        for _ in range(no_count):
+            implied = np.clip(p_true - 0.06 * np.tanh(ratio) + rng.normal(0.0, 0.035), 1e-4, 1.0 - 1e-4)
+            size = float(max(0.25, rng.lognormal(np.log(base_size + 1.0), 0.35)))
+            tape.append(SimpleTrade(implied_yes_before=float(implied), side="NO", size=size))
+        if tape:
+            rng.shuffle(tape)
+        return tape
 
-        ts_max = int(events["ts_event"].max())
-        ns_year = int(365 * 24 * 3600 * 1e9)
-        ns_day = int(24 * 3600 * 1e9)
+    def _apply_stage_corrections(
+        self,
+        alpha_base: float,
+        beta_base: float,
+        tape: List[SimpleTrade],
+        stage1_cfg: Dict,
+        stage2_cfg: Dict,
+    ) -> Tuple[float, float, float, float, float, float, Dict]:
+        if not tape:
+            mean, var = self._beta_mean_var(alpha_base, beta_base)
+            return alpha_base, beta_base, mean, var, 0.0, 0.0, {}
 
-        windows: List[Tuple[str, pd.DataFrame]] = []
+        y1, n1, summary1 = apply_behavioral_weights(tape, stage1_cfg)
+        y2, n2 = apply_linear_offsets(y1, n1, stage2_cfg)
+        summary_stats = summarize_stage1_stats(tape, y2, n2, stage1_cfg)
+        regimes = stage2_cfg.get("regimes")
+        if not regimes:
+            regimes = [
+                {"pi": 0.50, "g_plus_scale": 0.08, "g_minus_scale": 0.05},
+                {"pi": 0.30, "g_plus_scale": 0.16, "g_minus_scale": 0.11},
+                {"pi": 0.20, "g_plus_scale": 0.04, "g_minus_scale": 0.17},
+            ]
+        mix = mixture_posterior_params(alpha_base, beta_base, summary_stats, regimes, y2, n2)
+        mean_corr = float(np.clip(mix.get("mixture_mean", 0.5), 1e-4, 1.0 - 1e-4))
+        var_corr = float(max(mix.get("mixture_var", 0.0), 1e-9))
+        alpha_corr, beta_corr = self._moment_match_beta(mean_corr, var_corr, default_conc=18.0)
 
-        hist_start = ts_max - hist_years * ns_year
-        hist_df = events[events["ts_event"] >= hist_start]
-        windows.append(("historical", hist_df))
-
-        rng = np.random.default_rng(0)
-        for i in range(rolling_samples):
-            start_candidates = events["ts_event"].iloc[:-1].values
-            if len(start_candidates) == 0:
-                break
-            start_ts = int(rng.choice(start_candidates))
-            end_ts = start_ts + rolling_days * ns_day
-            roll_df = events[(events["ts_event"] >= start_ts) & (events["ts_event"] < end_ts)]
-            if roll_df.empty:
-                continue
-            windows.append((f"rolling_{i}", roll_df))
-
-        return windows
+        stage1_strength = float(np.clip(1.0 - summary1.get("mean_weight", 1.0), 0.0, 1.0))
+        stage2_shift = abs(float(y2 - y1)) + abs(float(n2 - n1))
+        stage2_strength = float(np.clip(stage2_shift / max(1.0, n1 + 1.0), 0.0, 1.0))
+        stage2_strength = float(
+            np.clip(
+                max(stage2_strength, np.std(np.asarray(mix.get("regime_weights", [0.0])))),
+                0.0,
+                1.0,
+            )
+        )
+        return alpha_corr, beta_corr, mean_corr, var_corr, stage1_strength, stage2_strength, mix
 
     def run(self):
         run_start = time.time()
@@ -206,447 +190,384 @@ class FlatPriorSimulationRunner:
             self.sim_cfg.out_dir,
             self.sim_cfg.live_plot,
         )
-        # 1) Generate synthetic MBO data
-        price_scale = float(self.cfg.get("simulation", {}).get("price_scale", 1.0))
+        if self.sim_cfg.mode != "synthetic":
+            raise ValueError("Only synthetic mode is supported.")
+
+        sim_cfg = self.cfg.get("simulation", {})
+        training_cfg = self.cfg.get("training", {})
         synth_cfg = self.cfg.get("synthetic", {})
-        days_total = float(self.sim_cfg.historical_years * 365)
-        stage_cfg = self.cfg.get("corrections", {})
-        stage1_cfg = stage_cfg.get("stage1", {})
-        stage2_cfg = stage_cfg.get("stage2", {})
         vis_cfg = self.cfg.get("visualization", {})
-        training_fraction = float(self.cfg.get("training", {}).get("historical_fraction", 0.7))
-        kappa = float(vis_cfg.get("kappa", 0.10))
+        corr_cfg = self.cfg.get("corrections", {})
+        stage1_cfg = corr_cfg.get("stage1", {})
+        stage2_cfg = corr_cfg.get("stage2", {})
+        posterior_cfg = self.cfg.get("posterior_dynamics", {})
+
+        seed = int(sim_cfg.get("seed", 12345))
+        rng_synth = np.random.default_rng(seed)
+        rng_post = np.random.default_rng(seed + 7)
+
+        total_days = int(sim_cfg.get("total_days", self.sim_cfg.historical_years * 365))
+        training_days = int(training_cfg.get("training_days", int(0.7 * total_days)))
+        incoming_days = int(training_cfg.get("incoming_days", max(1, total_days - training_days)))
+        training_days = max(1, min(training_days, total_days - 1))
+        incoming_days = max(1, min(incoming_days, total_days - training_days))
+        total_days = training_days + incoming_days
+
+        price_scale = float(sim_cfg.get("price_scale", 1e-9))
+        tick_size = float(synth_cfg.get("tick_size", 0.01))
+        max_events = int(synth_cfg.get("max_events", max(20000, total_days * int(synth_cfg.get("avg_events_per_day", 180)))))
+
         gen_t0 = time.time()
-        self.log.info(
-            "Synthetic MBO generation start (days=%.2f, avg_events_per_day=%.1f, max_events=%s)",
-            days_total,
-            float(synth_cfg.get("avg_events_per_day", 200.0)),
-            int(synth_cfg.get("max_events", 5e5)) if "max_events" in synth_cfg else 500000,
-        )
-        events_int = generate_synth_mbo(
+        events_int, daily = generate_synth_mbo(
             instrument_id=int(synth_cfg.get("instrument_id", 1)),
             start_ts_event_ns=int(synth_cfg.get("start_ts_event_ns", 0)),
-            avg_events_per_day=float(synth_cfg.get("avg_events_per_day", 200.0)),
+            avg_events_per_day=float(synth_cfg.get("avg_events_per_day", 180.0)),
             initial_mid=float(synth_cfg.get("initial_mid", 100.0)),
-            tick_size=float(synth_cfg.get("tick_size", 0.01)),
+            tick_size=tick_size,
             order_id_start=int(synth_cfg.get("order_id_start", 1000)),
             price_scale=price_scale,
-            days=days_total,
-            rng=np.random.default_rng(123),
+            days=total_days,
+            rng=rng_synth,
             logger=self.log,
-            max_events=int(5e5),
+            max_events=max_events,
+            process_cfg=synth_cfg.get("price_process", {}),
+            return_daily=True,
         )
-        self.log.info(
-            "Synthetic MBO generation end: events=%d, elapsed=%.2fs",
-            len(events_int),
-            time.time() - gen_t0,
-        )
+        self.log.info("Synthetic MBO generated in %.2fs", time.time() - gen_t0)
 
-        # Convert for downstream processing (float prices) while preserving int price.
         events = events_int.copy()
-        events["price_raw"] = events["price"]
-        events["price"] = events["price"].astype(np.float64) * price_scale
+        events["price_raw"] = events["price"].astype(np.int64)
+        events["price"] = events["price_raw"].astype(np.float64) * price_scale
 
-        # 2) ML prior
-        ml_t0 = time.time()
-        self.log.info("ML prior construction start")
-        ml_prior = self._build_ml_prior()
-        alpha_ml, beta_ml, ml_diag = ml_prior.predict_beta(events)
+        imbalance_t0 = time.time()
+        imbalance_df = generate_synth_imbalance(
+            daily=daily,
+            instrument_id=int(synth_cfg.get("instrument_id", 1)),
+            start_ts_event_ns=int(synth_cfg.get("start_ts_event_ns", 0)),
+            tick_size=tick_size,
+            price_scale=price_scale,
+            rng=np.random.default_rng(seed + 1),
+            logger=self.log,
+            cfg=synth_cfg.get("imbalance_synth", {}),
+        )
+        self.log.info("Synthetic imbalance generated in %.2fs", time.time() - imbalance_t0)
+
+        imbalance_out = Path(self.sim_cfg.out_dir, "data", "synthetic_imbalance.csv")
+        imbalance_df.to_csv(imbalance_out, index=False)
+
+        fill_daily = (
+            events_int.loc[events_int["action"] == "F", ["sim_day", "size"]]
+            .groupby("sim_day", as_index=False)
+            .agg(fill_count=("size", "count"), fill_volume=("size", "sum"))
+        )
+        imb_daily = (
+            imbalance_df.groupby("sim_day", as_index=False)
+            .agg(
+                paired_qty=("paired_qty", "sum"),
+                total_imbalance_qty=("total_imbalance_qty", "sum"),
+                imbalance_events=("ts_event", "count"),
+                auction_events=("auction_status", lambda x: int(np.sum(np.asarray(x) != 0))),
+                opening_auctions=("auction_status", lambda x: int(np.sum(np.asarray(x) == 1))),
+                closing_auctions=("auction_status", lambda x: int(np.sum(np.asarray(x) == 2))),
+                halt_events=("auction_status", lambda x: int(np.sum(np.asarray(x) == 3))),
+            )
+            .reset_index(drop=True)
+        )
+
+        daily_panel = daily.merge(imb_daily, on="sim_day", how="left").merge(fill_daily, on="sim_day", how="left")
+        for col in [
+            "paired_qty",
+            "total_imbalance_qty",
+            "imbalance_events",
+            "auction_events",
+            "opening_auctions",
+            "closing_auctions",
+            "halt_events",
+            "fill_count",
+            "fill_volume",
+        ]:
+            daily_panel[col] = daily_panel[col].fillna(0.0)
+        daily_panel = daily_panel.sort_values("sim_day", kind="mergesort").reset_index(drop=True)
+
+        # Phase-1 diagnostic logs requested by user.
+        vol_stats = daily_panel["realized_vol_10d"].describe(percentiles=[0.1, 0.5, 0.9]).to_dict()
         self.log.info(
-            "ML prior construction end (alpha_ml=%.4f, beta_ml=%.4f, elapsed=%.2fs)",
-            alpha_ml,
-            beta_ml,
-            time.time() - ml_t0,
+            "Per-day realized vol stats: p10=%.6f p50=%.6f p90=%.6f max=%.6f",
+            float(vol_stats.get("10%", 0.0)),
+            float(vol_stats.get("50%", 0.0)),
+            float(vol_stats.get("90%", 0.0)),
+            float(vol_stats.get("max", 0.0)),
         )
 
-        # 3) Hybrid mixture
-        mixture_state = self._init_mixture(alpha_ml, beta_ml)
+        ml_prior = self._build_ml_prior()
+        train_events = events.loc[events["sim_day"] < training_days].copy()
+        if train_events.empty:
+            train_events = events.copy()
+        alpha_ml, beta_ml, ml_diag = ml_prior.predict_beta(train_events)
+
         mixture = HybridMixturePrior(
-            weight=float(self.cfg.get("hybrid_prior", {}).get("mixture_weight_w", 0.6)),
+            weight=float(self.cfg.get("hybrid_prior", {}).get("mixture_weight_w", 0.55)),
             logger=self.log,
         )
+        mix_state = mixture.initialize(alpha_ml, beta_ml)
+        mean0, var0 = self._mixture_mean_var(mix_state)
+        alpha_state, beta_state = self._moment_match_beta(mean0, var0, default_conc=24.0)
 
-        def _mixture_mean_var(state):
-            mean_ml = state.alpha_ml / (state.alpha_ml + state.beta_ml)
-            var_ml = (state.alpha_ml * state.beta_ml) / ((state.alpha_ml + state.beta_ml) ** 2 * (state.alpha_ml + state.beta_ml + 1.0))
-            mean_flat = state.alpha_flat / (state.alpha_flat + state.beta_flat)
-            var_flat = (state.alpha_flat * state.beta_flat) / ((state.alpha_flat + state.beta_flat) ** 2 * (state.alpha_flat + state.beta_flat + 1.0))
-            mean_mix = state.weight * mean_ml + (1.0 - state.weight) * mean_flat
-            second = state.weight * (var_ml + mean_ml**2) + (1.0 - state.weight) * (var_flat + mean_flat**2)
-            var_mix = second - mean_mix**2
-            return mean_mix, var_mix
+        days = daily_panel["sim_day"].to_numpy(dtype=np.float64)
+        mid_prices = daily_panel["mid_close"].to_numpy(dtype=np.float64)
+        if len(days) != total_days:
+            total_days = len(days)
+            training_days = max(1, min(training_days, total_days - 1))
+            incoming_days = max(1, min(incoming_days, total_days - training_days))
 
-        mixture_mean0, mixture_var0 = _mixture_mean_var(mixture_state)
-        alpha_ref, beta_ref = self._moment_match_beta(mixture_mean0, mixture_var0)
-        p_ref = mixture_mean0
+        alpha_full = np.full(total_days, alpha_state, dtype=np.float64)
+        beta_full = np.full(total_days, beta_state, dtype=np.float64)
+        posterior_mean = np.full(total_days, mean0, dtype=np.float64)
+        posterior_var = np.full(total_days, var0, dtype=np.float64)
+        p_true_full = np.full(total_days, np.nan, dtype=np.float64)
+        y_full = np.zeros(total_days, dtype=np.int32)
+        n_full = np.zeros(total_days, dtype=np.int32)
+        stage1_strength = np.zeros(total_days, dtype=np.float64)
+        stage2_strength = np.zeros(total_days, dtype=np.float64)
+        corr_strength = np.zeros(total_days, dtype=np.float64)
+        corr_active = np.zeros(total_days, dtype=bool)
 
-        alpha_seq: List[float] = []
-        beta_seq: List[float] = []
-        corrected_mean_seq: List[float] = []
-        capopm_price_seq: List[float] = []
-
-        posterior_records: List[Dict] = []
-        draw_records: List[np.ndarray] = []
-        weight_series: List[float] = []
-        posterior_mean_series: List[float] = []
-        mid_series: List[float] = []
-        regime_series: List[int] = []
-        trade_log_rows: List[Dict] = []
-        mcmc_events: List[pd.DataFrame] = []
-        mcmc_state = {
-            "ts_event": int(events_int["ts_event"].max()) if not events_int.empty else 0,
-            "order_id": int(events_int["order_id"].max()) if not events_int.empty else 0,
-            "mid": float(events["price"].iloc[-1]),
-            "regime": 0,
-        }
-
-        # 4) Windows
-        windows = self._window_slices(events)
-        rng = np.random.default_rng(42)
-        mcmc_cfg = self.cfg.get("mcmc", {})
-        regimes, transition = load_regime_config(self.sim_cfg.regimes_path)
-        sampler = EventTimeMCMCSampler(
-            regimes=regimes,
-            transition_matrix=transition,
-            n_chains=int(mcmc_cfg.get("n_chains", self.sim_cfg.n_chains)),
-            warmup=int(mcmc_cfg.get("warmup", 500)),
-            draws=int(mcmc_cfg.get("draws", 1000)),
-            max_events_per_chain=int(mcmc_cfg.get("max_events_per_chain", 20000)),
-            logger=self.log,
+        # Signal prep for dynamic p_true(t).
+        imbalance_ratio = daily_panel["total_imbalance_qty"].to_numpy(dtype=np.float64) / (
+            np.abs(daily_panel["paired_qty"].to_numpy(dtype=np.float64)) + 1.0
         )
+        imb_std = float(np.std(imbalance_ratio)) + 1e-9
+        imb_z = (imbalance_ratio - float(np.mean(imbalance_ratio))) / imb_std
+        trend_signal = (
+            pd.Series(np.log(mid_prices + 1e-9))
+            .diff()
+            .rolling(window=int(posterior_cfg.get("trend_window", 8)), min_periods=1)
+            .mean()
+            .fillna(0.0)
+            .to_numpy(dtype=np.float64)
+        )
+        regime_effect = np.asarray(posterior_cfg.get("regime_effect", [0.0, 0.85, 0.40, -0.35]), dtype=np.float64)
+        if regime_effect.size <= int(daily_panel["regime_id"].max()):
+            pad = int(daily_panel["regime_id"].max()) + 1 - regime_effect.size
+            regime_effect = np.pad(regime_effect, (0, pad), mode="edge")
 
-        current_state = mixture_state
-        all_chains: List[pd.DataFrame] = []
-        self.log.info("Posterior window loop start: %d windows", len(windows))
-        for win_id, win_df in windows:
-            win_t0 = time.time()
-            self.log.info("Window %s start (len=%d)", win_id, len(win_df))
-            y, n, diag = map_l3_to_counts(win_df)
-            prev_state = current_state
-            current_state = mixture.update(current_state, y=y, n=n)
-            posterior_mean = current_state.posterior_mean()
-            mid_seq = diag.get("mid_series", [])
-            segment_start = len(mid_series)
-            mid_series.extend(mid_seq)
-            regime_series.extend([0] * len(mid_seq))  # placeholder until MCMC append
-            posterior_mean_series.extend([posterior_mean] * max(1, len(mid_seq)))
-            weight_series.extend([current_state.weight] * max(1, len(mid_seq)))
-            trade_log_rows.extend(
-                [
-                    {
-                        "window": win_id,
-                        **fill,
-                    }
-                    for fill in diag.get("fills", [])
-                ]
-            )
+        logistic_a0 = float(posterior_cfg.get("a0", -0.02))
+        logistic_a_imb = float(posterior_cfg.get("a_imbalance", 0.85))
+        logistic_a_trend = float(posterior_cfg.get("a_trend", 6.5))
+        logistic_a_auc = float(posterior_cfg.get("a_auction", 0.40))
+        p_noise = float(posterior_cfg.get("p_noise_sigma", 0.18))
+        p_clip = posterior_cfg.get("p_clip", [0.02, 0.98])
+        p_clip_lo = float(p_clip[0])
+        p_clip_hi = float(p_clip[1])
 
-            draws = current_state.sample(draws=200, rng=rng)
-            draw_records.append(draws)
-            posterior_records.append(
-                {
-                    "window": win_id,
-                    "start_ts": int(win_df["ts_event"].min()),
-                    "end_ts": int(win_df["ts_event"].max()),
-                    "mode": "historical" if win_id == "historical" else "rolling",
-                    "y": y,
-                    "n": n,
-                    "posterior_mean": posterior_mean,
-                    "weight": current_state.weight,
-                    "alpha_ml": current_state.alpha_ml,
-                    "beta_ml": current_state.beta_ml,
-                    "alpha_flat": current_state.alpha_flat,
-                    "beta_flat": current_state.beta_flat,
-                }
-            )
+        n_base = float(posterior_cfg.get("n_base", 2.0))
+        n_fill_scale = float(posterior_cfg.get("n_fill_scale", 0.35))
+        n_pair_scale = float(posterior_cfg.get("n_pair_scale", 0.30))
+        n_auction_scale = float(posterior_cfg.get("n_auction_scale", 1.20))
+        n_vol_scale = float(posterior_cfg.get("n_vol_scale", 4.0))
+        burst_prob = float(posterior_cfg.get("burst_prob", 0.28))
+        burst_low = int(posterior_cfg.get("burst_low", 4))
+        burst_high = int(posterior_cfg.get("burst_high", 11))
+        correction_carry = float(posterior_cfg.get("correction_carry", 0.62))
+        active_threshold = float(corr_cfg.get("active_threshold", 0.12))
 
-            # MCMC extrapolation seeded by latest mid price
-            init_mid = mid_series[-1] if mid_series else float(win_df["price"].iloc[-1])
-            init_mid = float(init_mid) if np.isfinite(init_mid) else mcmc_state["mid"]
-            start_ts = mcmc_state["ts_event"] + 1
-            start_oid = mcmc_state["order_id"] + 1
-            mcmc_t0 = time.time()
-            self.log.info(
-                "Window %s: starting MCMC (init_mid=%.5f, chains=%d)",
-                win_id,
-                init_mid,
-                int(mcmc_cfg.get("n_chains", self.sim_cfg.n_chains)),
+        # Training is explicitly frozen.
+        incoming_start = training_days
+        incoming_end = min(total_days, training_days + incoming_days)
+        incoming_rows: List[Dict] = []
+        self.log.info(
+            "Posterior incoming loop start: training_days=%d incoming_days=%d",
+            training_days,
+            incoming_end - incoming_start,
+        )
+        for day_idx in range(incoming_start, incoming_end):
+            row = daily_panel.iloc[day_idx]
+            reg_id = int(row["regime_id"])
+            auc_intensity = float(row["auction_events"] / max(1.0, row["imbalance_events"]))
+            reg_term = float(regime_effect[reg_id]) if reg_id < len(regime_effect) else float(regime_effect[-1])
+            latent = (
+                logistic_a0
+                + reg_term
+                + logistic_a_imb * float(imb_z[day_idx])
+                + logistic_a_trend * float(trend_signal[day_idx])
+                + logistic_a_auc * auc_intensity
+                + float(rng_post.normal(0.0, p_noise))
             )
-            chains, combined_df, end_state = sampler.run(
-                init_regime=mcmc_state["regime"],
-                init_mid=init_mid,
-                start_ts_event_ns=start_ts,
-                start_order_id=start_oid,
-                instrument_id=int(synth_cfg.get("instrument_id", 1)),
-                price_scale=price_scale,
-                tick_size=float(synth_cfg.get("tick_size", 0.01)),
-            )
-            self.log.info(
-                "Window %s: finished MCMC (chains=%d, total_mid=%d, elapsed=%.2fs)",
-                win_id,
-                len(chains),
-                sum(len(cdf) for cdf in chains),
-                time.time() - mcmc_t0,
-            )
-            for cdf in chains:
-                mid_series.extend(cdf["mid"].tolist())
-                regime_series.extend(cdf["regime"].tolist())
-                posterior_mean_series.extend([posterior_mean] * len(cdf))
-                weight_series.extend([current_state.weight] * len(cdf))
-            all_chains.extend(chains)
-            if not combined_df.empty:
-                mcmc_events.append(combined_df)
-            mcmc_state = {
-                "ts_event": int(end_state["ts_event"]),
-                "order_id": int(end_state["order_id"]),
-                "mid": float(end_state["mid"]),
-                "regime": int(end_state["regime"]),
-            }
-            segment_len = len(mid_series) - segment_start
+            p_true = float(np.clip(self._sigmoid(latent), p_clip_lo, p_clip_hi))
 
-            alpha_corr, beta_corr, mean_corr = self._apply_stage_corrections(
-                diag.get("fills", []),
-                alpha_base=prev_state.alpha_ml,
-                beta_base=prev_state.beta_ml,
+            n_signal = (
+                n_base
+                + n_fill_scale * np.log1p(float(row["fill_volume"]))
+                + n_pair_scale * np.log1p(abs(float(row["paired_qty"])))
+                + n_auction_scale * auc_intensity
+                + n_vol_scale * float(row["realized_vol_10d"])
+            )
+            if rng_post.random() < burst_prob:
+                n_signal += int(rng_post.integers(burst_low, burst_high + 1))
+            n_obs = int(np.clip(np.round(rng_post.normal(n_signal, 2.2)), 0, 20))
+            y_obs = int(rng_post.binomial(n_obs, p_true)) if n_obs > 0 else 0
+
+            alpha_state = max(1e-3, alpha_state + y_obs)
+            beta_state = max(1e-3, beta_state + (n_obs - y_obs))
+            base_mean, base_var = self._beta_mean_var(alpha_state, beta_state)
+
+            tape = self._build_trade_tape(
+                y=y_obs,
+                n=n_obs,
+                p_true=p_true,
+                total_imbalance_qty=float(row["total_imbalance_qty"]),
+                paired_qty=float(row["paired_qty"]),
+                rng=rng_post,
+            )
+            alpha_corr, beta_corr, mean_corr, var_corr, s1, s2, corr_diag = self._apply_stage_corrections(
+                alpha_base=alpha_state,
+                beta_base=beta_state,
+                tape=tape,
                 stage1_cfg=stage1_cfg,
                 stage2_cfg=stage2_cfg,
             )
-            if segment_len > 0:
-                alpha_seq.extend([alpha_corr] * segment_len)
-                beta_seq.extend([beta_corr] * segment_len)
-                corrected_mean_seq.extend([mean_corr] * segment_len)
-            self.log.info("Window %s end (elapsed=%.2fs)", win_id, time.time() - win_t0)
 
-        # Align series lengths for visualization safety.
-        min_len = min(len(mid_series), len(posterior_mean_series), len(weight_series))
-        if min_len == 0:
-            # Fallback to raw prices if no mid prices were captured.
-            mid_series = events["price"].tolist()
-            posterior_mean_series = [posterior_mean_series[-1] if posterior_mean_series else 0.5] * len(mid_series)
-            weight_series = [weight_series[-1] if weight_series else 0.5] * len(mid_series)
-            regime_series = [0] * len(mid_series)
+            alpha_state = max(1e-3, (1.0 - correction_carry) * alpha_state + correction_carry * alpha_corr)
+            beta_state = max(1e-3, (1.0 - correction_carry) * beta_state + correction_carry * beta_corr)
+            post_mean, post_var = self._beta_mean_var(alpha_state, beta_state)
+
+            local_strength = float(np.clip(0.55 * s1 + 0.45 * s2 + 0.25 * abs(mean_corr - base_mean), 0.0, 1.0))
+            active = bool(local_strength > active_threshold)
+
+            alpha_full[day_idx] = alpha_state
+            beta_full[day_idx] = beta_state
+            posterior_mean[day_idx] = post_mean
+            posterior_var[day_idx] = post_var
+            p_true_full[day_idx] = p_true
+            y_full[day_idx] = y_obs
+            n_full[day_idx] = n_obs
+            stage1_strength[day_idx] = s1
+            stage2_strength[day_idx] = s2
+            corr_strength[day_idx] = local_strength
+            corr_active[day_idx] = active
+
+            incoming_rows.append(
+                {
+                    "sim_day": int(day_idx),
+                    "regime_id": reg_id,
+                    "p_true": p_true,
+                    "y": y_obs,
+                    "n": n_obs,
+                    "alpha": alpha_state,
+                    "beta": beta_state,
+                    "posterior_mean": post_mean,
+                    "posterior_var": post_var,
+                    "stage1_strength": s1,
+                    "stage2_strength": s2,
+                    "correction_strength": local_strength,
+                    "correction_active": int(active),
+                    "imbalance_ratio": float(imbalance_ratio[day_idx]),
+                    "auction_intensity": auc_intensity,
+                    "base_posterior_mean": base_mean,
+                    "base_posterior_var": base_var,
+                    "regime_weights": corr_diag.get("regime_weights"),
+                }
+            )
+
+        incoming_df = pd.DataFrame.from_records(incoming_rows)
+        if not incoming_df.empty:
+            self.log.info(
+                "Incoming y,n summary: n[min=%d max=%d mean=%.2f] y[min=%d max=%d mean=%.2f]",
+                int(incoming_df["n"].min()),
+                int(incoming_df["n"].max()),
+                float(incoming_df["n"].mean()),
+                int(incoming_df["y"].min()),
+                int(incoming_df["y"].max()),
+                float(incoming_df["y"].mean()),
+            )
+            self.log.info(
+                "Incoming posterior mean/var summary: mean[min=%.4f max=%.4f] var[min=%.6f max=%.6f]",
+                float(incoming_df["posterior_mean"].min()),
+                float(incoming_df["posterior_mean"].max()),
+                float(incoming_df["posterior_var"].min()),
+                float(incoming_df["posterior_var"].max()),
+            )
+            self.log.info(
+                "Incoming alpha/beta ranges: alpha[min=%.4f max=%.4f] beta[min=%.4f max=%.4f]",
+                float(incoming_df["alpha"].min()),
+                float(incoming_df["alpha"].max()),
+                float(incoming_df["beta"].min()),
+                float(incoming_df["beta"].max()),
+            )
         else:
-            mid_series = mid_series[:min_len]
-            posterior_mean_series = posterior_mean_series[:min_len]
-            weight_series = weight_series[:min_len]
-            regime_series = regime_series[:min_len] if regime_series else [0] * min_len
+            self.log.warning("Incoming loop produced no rows; posterior remains at training prior.")
 
-        total_len = len(mid_series)
-        if total_len == 0:
-            self.log.warning("No mid-price series to visualize; aborting animation steps.")
-            return
-        if len(alpha_seq) < total_len:
-            alpha_seq.extend([alpha_seq[-1] if alpha_seq else alpha_ref] * (total_len - len(alpha_seq)))
-        if len(beta_seq) < total_len:
-            beta_seq.extend([beta_seq[-1] if beta_seq else beta_ref] * (total_len - len(beta_seq)))
-        if len(corrected_mean_seq) < total_len:
-            corrected_mean_seq.extend([p_ref] * (total_len - len(corrected_mean_seq)))
-
-        cutoff_idx = int(training_fraction * total_len)
-        cutoff_idx = max(0, min(total_len, cutoff_idx))
-        if cutoff_idx > 0:
-            alpha_seq[:cutoff_idx] = [alpha_ref] * cutoff_idx
-            beta_seq[:cutoff_idx] = [beta_ref] * cutoff_idx
-            corrected_mean_seq[:cutoff_idx] = [p_ref] * cutoff_idx
-
-        capopm_price_seq = []
-        for mid_val, p_t in zip(mid_series, corrected_mean_seq):
-            price = float(mid_val) * (1.0 + kappa * (p_t - p_ref))
-            if price <= 0.0:
-                price = max(price, 1e-6)
-            capopm_price_seq.append(price)
-
-        ts_series = np.linspace(float(events_int["ts_event"].min()), float(events_int["ts_event"].max()), total_len)
-        ts_days = (ts_series - ts_series[0]) / (24 * 3600 * 1e9)
-
-        # 5) Diagnostics
-        diag_t0 = time.time()
-        self.log.info("Diagnostics start (chains=%d)", len(all_chains))
-        diag_tables = []
-        # Use mid from chains grouped by chain for rhat/ess
-        chain_mids = [cdf["mid"].to_numpy() for cdf in all_chains] if all_chains else []
-        diag_tables.append(summarize_metric("mid", chain_mids))
-        diag_tables.append(summarize_metric("posterior_mean", [np.array(posterior_mean_series)]))
-
-        diag_df = pd.concat(diag_tables, ignore_index=True)
-        diag_path = Path(self.sim_cfg.out_dir, "mcmc_diagnostics", "diagnostics.csv")
-        diag_df.to_csv(diag_path, index=False)
-        self._save_chain_plots(all_chains, Path(self.sim_cfg.out_dir, "mcmc_diagnostics"))
-        self.log.info("Diagnostics end (elapsed=%.2fs)", time.time() - diag_t0)
-
-        # 6) Persist outputs
-        combined_stream = events_int.copy()
-        combined_stream["source"] = "synthetic_base"
-        if mcmc_events:
-            mcmc_concat = pd.concat(mcmc_events, ignore_index=True)
-            mcmc_concat["source"] = "mcmc_extrapolation"
-            combined_stream = pd.concat([combined_stream, mcmc_concat], ignore_index=True)
-        combined_stream = combined_stream.sort_values("ts_event", kind="mergesort").reset_index(drop=True)
-        csv_path = Path(self.sim_cfg.out_dir, "synthetic_mbo.csv")
-        csv_t0 = time.time()
-        self.log.info("Starting CSV write to %s (rows=%d)", csv_path, len(combined_stream))
-        combined_stream.to_csv(csv_path, index=False)
-        self.log.info("Finished CSV write to %s (elapsed=%.2fs)", csv_path, time.time() - csv_t0)
-
-        write_parquet = bool(self.cfg.get("logging", {}).get("write_parquet", False))
-        if write_parquet:
-            pq_path = Path(self.sim_cfg.out_dir, "synthetic_mbo.parquet")
-            pq_t0 = time.time()
-            self.log.info("Starting parquet write to %s", pq_path)
-            try:
-                combined_stream.to_parquet(pq_path, index=False)
-                self.log.info("Finished parquet write to %s (elapsed=%.2fs)", pq_path, time.time() - pq_t0)
-            except Exception as exc:  # pragma: no cover - parquet optional
-                self.log.warning("Parquet export failed: %s", exc)
-        else:
-            self.log.info("Parquet export skipped (write_parquet=False)")
-
-        posterior_df = pd.DataFrame.from_records(posterior_records)
-        posterior_df.to_csv(Path(self.sim_cfg.out_dir, "posterior_windows.csv"), index=False)
+        # Persist outputs.
+        events_int.sort_values("ts_event", kind="mergesort").to_csv(
+            Path(self.sim_cfg.out_dir, "synthetic_mbo.csv"), index=False
+        )
+        incoming_df.to_csv(Path(self.sim_cfg.out_dir, "posterior_windows.csv"), index=False)
+        incoming_df.to_csv(Path(self.sim_cfg.out_dir, "trade_update_log.csv"), index=False)
+        daily_out = daily_panel.copy()
+        daily_out["posterior_mean"] = posterior_mean
+        daily_out["posterior_var"] = posterior_var
+        daily_out["alpha"] = alpha_full
+        daily_out["beta"] = beta_full
+        daily_out["p_true"] = p_true_full
+        daily_out["y"] = y_full
+        daily_out["n"] = n_full
+        daily_out["stage1_strength"] = stage1_strength
+        daily_out["stage2_strength"] = stage2_strength
+        daily_out["correction_strength"] = corr_strength
+        daily_out["correction_active"] = corr_active.astype(np.int8)
+        daily_out.to_csv(Path(self.sim_cfg.out_dir, "posterior_daily_diagnostics.csv"), index=False)
 
         np.savez(
             Path(self.sim_cfg.out_dir, "posterior_draws.npz"),
-            draws=np.array(draw_records, dtype=object),
-            weights=np.array(weight_series),
-            posterior_means=np.array(posterior_mean_series),
-        )
-
-        pd.DataFrame.from_records(trade_log_rows).to_csv(
-            Path(self.sim_cfg.out_dir, "trade_update_log.csv"), index=False
+            posterior_mean=posterior_mean,
+            posterior_var=posterior_var,
+            alpha=alpha_full,
+            beta=beta_full,
+            p_true=p_true_full,
         )
 
         manifest = {
             "config": self.sim_cfg.cfg_path,
             "regimes": self.sim_cfg.regimes_path,
-            "synthetic": synth_cfg,
-            "symbol": self.sim_cfg.symbol,
+            "out_dir": self.sim_cfg.out_dir,
             "mode": self.sim_cfg.mode,
-            "mixture_weight": float(self.cfg.get("hybrid_prior", {}).get("mixture_weight_w", 0.6)),
+            "seed": seed,
+            "total_days": total_days,
+            "training_days": training_days,
+            "incoming_days": incoming_end - incoming_start,
             "ml_prior": ml_diag,
+            "mp4_name": vis_cfg.get("out_mp4_name", "capopm_v2.mp4"),
         }
         with open(Path(self.sim_cfg.out_dir, "manifest.json"), "w", encoding="utf-8") as f:
             json.dump(manifest, f, indent=2)
 
-        dual_anim_path = Path(self.sim_cfg.out_dir, "plots", vis_cfg.get("out_mp4_name", "capopm_dual_viz.mp4"))
-        self.log.info(
-            "Dual-panel animation start (len=%d, cutoff_idx=%d, save_path=%s)",
-            total_len,
-            cutoff_idx,
-            dual_anim_path,
-        )
-        make_dual_panel_animation(
-            ts=ts_days,
-            mid_prices=mid_series,
-            alpha_seq=alpha_seq,
-            beta_seq=beta_seq,
-            capopm_price=capopm_price_seq,
-            cutoff_index=cutoff_idx,
-            save_path=str(dual_anim_path),
+        incoming_days_arr = days[incoming_start:incoming_end]
+        alpha_in_arr = alpha_full[incoming_start:incoming_end]
+        beta_in_arr = beta_full[incoming_start:incoming_end]
+        mp4_path = Path(self.sim_cfg.out_dir, "plots", vis_cfg.get("out_mp4_name", "capopm_v2.mp4"))
+        make_capopm_v2_animation(
+            full_days=days,
+            full_prices=mid_prices,
+            incoming_days=incoming_days_arr,
+            alpha_incoming=alpha_in_arr,
+            beta_incoming=beta_in_arr,
+            training_cutoff_day=float(training_days),
+            correction_active=corr_active,
+            correction_strength=corr_strength,
+            stage1_strength=stage1_strength,
+            stage2_strength=stage2_strength,
+            save_path=str(mp4_path),
             fps=int(vis_cfg.get("fps", 30)),
             max_frames=int(vis_cfg.get("max_frames", 900)),
-            grid_points=int(vis_cfg.get("posterior_grid_points", 120)),
-            rolling_window=int(vis_cfg.get("posterior_rolling_window", 80)),
-            camera_elev=float(vis_cfg.get("camera_elev", 25)),
-            camera_azim=float(vis_cfg.get("camera_azim", -60)),
+            posterior_grid_points=int(vis_cfg.get("posterior_grid_points", 140)),
+            posterior_rolling_window=int(vis_cfg.get("posterior_rolling_window", 120)),
+            camera_elev=float(vis_cfg.get("camera_elev", 28)),
+            camera_azim=float(vis_cfg.get("camera_azim", -55)),
             logger=self.log,
         )
-
-        anim_path = Path(self.sim_cfg.out_dir, "plots", "live_simulation.mp4")
-        live_flag = bool(self.sim_cfg.live_plot)
-        anim_t0 = time.time()
-        self.log.info(
-            "Animation generation start (events=%d, live=%s, save_path=%s)",
-            len(mid_series),
-            live_flag,
-            anim_path,
-        )
-        make_live_animation(
-            mid_prices=mid_series,
-            regimes=regime_series,
-            posterior_means=posterior_mean_series,
-            weights=weight_series,
-            save_path=str(anim_path),
-            fps=int(self.cfg.get("visualization", {}).get("fps", 30)),
-            live=live_flag,
-            logger=self.log,
-        )
-        self.log.info("Animation generation finished (elapsed=%.2fs)", time.time() - anim_t0)
-
-        # Static summary plots
-        self._save_static_plots(mid_series, posterior_mean_series, weight_series, Path(self.sim_cfg.out_dir, "plots"))
 
         self.log.info(
             "Simulation complete. Outputs stored under %s (total_elapsed=%.2fs)",
             self.sim_cfg.out_dir,
             time.time() - run_start,
         )
-
-    def _save_static_plots(
-        self,
-        mids: List[float],
-        post_means: List[float],
-        weights: List[float],
-        plots_dir: Path,
-    ):
-        import matplotlib.pyplot as plt
-
-        plots_dir.mkdir(parents=True, exist_ok=True)
-        fig, axes = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
-        axes[0].plot(mids, color="steelblue")
-        axes[0].set_ylabel("Mid price")
-        axes[1].plot(post_means, color="darkorange")
-        axes[1].set_ylabel("Posterior mean")
-        axes[1].set_ylim(0, 1)
-        axes[2].plot(weights, color="seagreen")
-        axes[2].set_ylabel("Mixture weight")
-        axes[2].set_ylim(0, 1)
-        axes[2].set_xlabel("Event index")
-        fig.tight_layout()
-        path = plots_dir / "static_diagnostics.png"
-        fig.savefig(path, dpi=120)
-        plt.close(fig)
-        self.log.info("Saved static diagnostics to %s", path)
-
-    def _save_chain_plots(self, chains: List[pd.DataFrame], diag_dir: Path):
-        import matplotlib.pyplot as plt
-        import numpy as np
-
-        if not chains:
-            return
-
-        diag_dir.mkdir(parents=True, exist_ok=True)
-        fig, ax = plt.subplots(figsize=(10, 4))
-        for cdf in chains:
-            ax.plot(cdf["mid"].values, alpha=0.7, lw=1)
-        ax.set_title("MCMC mid traces")
-        ax.set_xlabel("Event index")
-        ax.set_ylabel("Mid")
-        fig.tight_layout()
-        fig.savefig(diag_dir / "trace_mid.png", dpi=120)
-        plt.close(fig)
-
-        # Autocorrelation for first chain
-        chain0 = chains[0]["mid"].values
-        if len(chain0) > 1:
-            lags = min(50, len(chain0) - 1)
-            ac = [np.corrcoef(chain0[:-k], chain0[k:])[0, 1] for k in range(1, lags)]
-            fig, ax = plt.subplots(figsize=(8, 3))
-            ax.bar(range(1, lags), ac, width=0.8, color="steelblue")
-            ax.set_xlabel("Lag")
-            ax.set_ylabel("Autocorr")
-            ax.set_title("Autocorrelation (chain 0)")
-            fig.tight_layout()
-            fig.savefig(diag_dir / "autocorr_mid.png", dpi=120)
-            plt.close(fig)
-
-            # Rank histogram across chains
-            combined = np.concatenate([cdf["mid"].values for cdf in chains])
-            ranks = np.searchsorted(np.sort(combined), chain0)
-            fig, ax = plt.subplots(figsize=(8, 3))
-            ax.hist(ranks, bins=20, color="darkorange", alpha=0.8)
-            ax.set_title("Rank histogram (chain 0 vs combined)")
-            ax.set_xlabel("Rank")
-            ax.set_ylabel("Frequency")
-            fig.tight_layout()
-            fig.savefig(diag_dir / "rank_hist_mid.png", dpi=120)
-            plt.close(fig)
