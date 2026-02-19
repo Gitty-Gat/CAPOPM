@@ -1,0 +1,22 @@
+\section{Introduction}
+\label{sec:introduction}
+
+\sectionpurpose{This section motivates PRISM as a practical Bayesian workflow for extracting event-level beliefs from market microstructure data. The emphasis is statistical coherence and uncertainty reporting, not direct pricing output.}
+
+\sectionlearn{
+\item Why L3 order flow is informative for posterior belief extraction in parimutuel-style settings.
+\item Why machine-learning output is treated as a calibratable signal instead of a prior.
+\item How PRISM separates workflow definition from empirical validation claims.
+}
+
+Financial markets and prediction venues generate high-frequency traces of participant behavior. Order arrivals, cancellations, queue placement, and trade aggressiveness contain information about directional beliefs, but the information is noisy and behaviorally distorted. Prior work on information aggregation in parimutuel environments shows that trading flow can encode private information in structured ways \citep{KoesslerNoussairZiegelmeyer,AxelrodPlott}.
+
+PRISM formalizes that intuition as a Bayesian workflow: it maps raw microstructure to anchor beliefs, calibrates a machine-learning signal, fuses the two information sources, applies explicit correction maps, and outputs a posterior distribution over the event probability. The workflow uses transparent objects and conservative assumptions so that interpretation remains stable under stress scenarios.
+
+The framework is intentionally modular. Each stage can be inspected, replaced, or stress tested without changing the meaning of the final posterior object. This design supports auditing and avoids implicit dependence on hidden black-box assumptions.
+
+\sectionestablished{
+\item PRISM is motivated by belief aggregation and uncertainty quantification from market microstructure.
+\item The central output is a posterior distribution for an event probability.
+\item The workflow is modular, auditable, and designed for conservative interpretation.
+}

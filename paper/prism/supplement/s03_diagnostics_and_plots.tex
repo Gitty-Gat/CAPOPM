@@ -1,0 +1,28 @@
+\section{Diagnostics and Plot Conventions}
+\label{supp:diagnostics}
+
+\sectionpurpose{This section standardizes how calibration and posterior diagnostics are interpreted so scenario comparisons remain consistent.}
+
+\sectionlearn{
+\item Reliability and coverage diagnostics used in artifact generation.
+\item Low-support and fallback flags that qualify interpretation.
+\item How to read mixed scenario outcomes without overclaiming.
+}
+
+Diagnostics reported in scenario artifacts include reliability curves by model variant, coverage deltas at nominal 90\% and 95\% levels, and model-level degeneration flags where bin support is weak.
+
+Interpretation rules used in this supplement:
+\begin{itemize}[leftmargin=*]
+\item Coverage-off-nominal flags are disqualifying for strong calibration claims.
+\item Low-support flags trigger conservative interpretation of any pass result.
+\item Fallback-based calibration variance implies wider posterior uncertainty by design.
+\item Mixed outcomes in a family are not aggregated into unconditional success claims.
+\end{itemize}
+
+This convention follows a restrained Bayesian workflow perspective: diagnostics are part of the model output contract, not post-hoc annotations.
+
+\sectionestablished{
+\item Diagnostic interpretation rules are explicit and reproducible.
+\item Support quality is a first-class gating signal for empirical claims.
+\item Mixed evidence is carried forward without optimistic aggregation.
+}

@@ -1,0 +1,40 @@
+\section{Notation and Problem Setup}
+\label{sec:notation}
+
+\sectionpurpose{This section defines the event, data objects, and the stage-by-stage variables used across the paper. The same symbols are reused in theory, diagnostics, and supplement tables.}
+
+\sectionlearn{
+\item Canonical notation for anchor, ML, fused, corrected, and posterior quantities.
+\item The data objects provided at each workflow stage.
+\item The exact stage ordering used throughout the manuscript.
+}
+
+Let $Y \in \{0,1\}$ denote the event of interest and let $p = \Prob(Y=1)$ denote the unknown event probability. For each decision window $t$, let $\mathcal{D}^{\mathrm{L3}}_t$ denote raw L3 order-flow records and let $X_t$ denote non-order-flow covariates available to an ML model.
+
+We use the following stage-specific probability objects:
+\begin{align*}
+&p_{\mathrm{anchor},t} &&\text{anchor belief from raw order flow},\\
+&p_{\mathrm{ml,raw},t} &&\text{raw ML score mapped to }(0,1),\\
+&p_{\mathrm{ml,cal},t} &&\text{calibrated ML probability},\\
+&p_{\mathrm{fused},t} &&\text{fused probability before corrections},\\
+&p_{\mathrm{corr},t} &&\text{probability after correction maps},\\
+&p_{\mathrm{post},t} &&\text{posterior mean after updated evidence}.
+\end{align*}
+
+The canonical flow used in both text and figures is:
+\[
+\mathcal{D}^{\mathrm{L3}}_t \rightarrow \text{anchor beliefs} \rightarrow \text{ML signal} \rightarrow \text{calibration} \rightarrow \text{fusion} \rightarrow \text{corrections} \rightarrow \text{posterior}.
+\]
+
+\begin{figure}[t]
+\centering
+\input{figures/workflow/prism_workflow_dag.tikz}
+\caption{PRISM workflow DAG used throughout the manuscript.}
+\label{fig:prism-workflow-dag}
+\end{figure}
+
+\sectionestablished{
+\item All core variables are defined with stable notation.
+\item Stage ordering is explicit and fixed.
+\item Workflow figure is aligned with the mathematical objects used later.
+}

@@ -1,0 +1,57 @@
+\section{Fusion and Corrections}
+\label{sec:fusion-corrections}
+
+\sectionpurpose{This section combines anchor and calibrated ML evidence into a single conjugate representation, then applies behavioral and structural correction maps before posterior updating.}
+
+\sectionlearn{
+\item The additive-evidence fusion rule used by PRISM.
+\item How correction maps are parameterized and constrained.
+\item Which quantities are transformed and which remain invariant.
+}
+
+Let
+\[
+\pi_{\mathrm{anchor},t}=\BetaDist(\alpha_{\mathrm{anchor},t},\beta_{\mathrm{anchor},t}),
+\quad
+\pi_{\mathrm{ml},t}=\BetaDist(\alpha_{\mathrm{ml},t},\beta_{\mathrm{ml},t}).
+\]
+Define reliability weights $w_{a,t},w_{m,t}\in[0,1]$ with $w_{a,t}+w_{m,t}=1$. The fused evidence parameters are
+\begin{align*}
+\alpha_{\mathrm{fused},t} &= 1 + w_{a,t}(\alpha_{\mathrm{anchor},t}-1) + w_{m,t}(\alpha_{\mathrm{ml},t}-1),\\
+\beta_{\mathrm{fused},t} &= 1 + w_{a,t}(\beta_{\mathrm{anchor},t}-1) + w_{m,t}(\beta_{\mathrm{ml},t}-1).
+\end{align*}
+
+Behavioral correction is a bounded log-odds transform:
+\[
+\phi_{\mathrm{beh},t}(p)=\sigmoid\!\big(\logit(p)+\delta_0+\delta_1 z_{\mathrm{herd},t}+\delta_2 z_{\mathrm{longshot},t}\big),
+\]
+with covariates $(z_{\mathrm{herd},t},z_{\mathrm{longshot},t})$ and coefficients estimated out of sample.
+
+Structural correction is a shrink map toward the anchor mean:
+\[
+\phi_{\mathrm{str},t}(p)=\lambda_t\,p + (1-\lambda_t)\,\frac{\alpha_{\mathrm{anchor},t}}{\alpha_{\mathrm{anchor},t}+\beta_{\mathrm{anchor},t}},
+\quad \lambda_t\in[0,1].
+\]
+Define
+\[
+p_{\mathrm{fused},t}=\frac{\alpha_{\mathrm{fused},t}}{\alpha_{\mathrm{fused},t}+\beta_{\mathrm{fused},t}},
+\quad
+p_{\mathrm{corr},t}=\phi_{\mathrm{str},t}(\phi_{\mathrm{beh},t}(p_{\mathrm{fused},t})).
+\]
+
+To preserve conjugate updating, PRISM reconstructs corrected Beta parameters with fused concentration
+\[
+\kappa_{\mathrm{fused},t}=\alpha_{\mathrm{fused},t}+\beta_{\mathrm{fused},t}-2,
+\]
+then
+\[
+\alpha_{\mathrm{corr},t}=1+\kappa_{\mathrm{fused},t}p_{\mathrm{corr},t},
+\quad
+\beta_{\mathrm{corr},t}=1+\kappa_{\mathrm{fused},t}(1-p_{\mathrm{corr},t}).
+\]
+
+\sectionestablished{
+\item Fusion is implemented as weighted additive evidence relative to a flat baseline.
+\item Corrections are explicit maps with bounded domains and clear interpretation.
+\item Corrected parameters remain in a conjugate Beta family for downstream updating.
+}

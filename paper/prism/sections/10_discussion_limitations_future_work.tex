@@ -1,0 +1,30 @@
+\section{Discussion, Limitations, and Future Work}
+\label{sec:discussion}
+
+\sectionpurpose{This section records practical and statistical limitations so that workflow interpretation remains aligned with observed evidence and finite-sample realities.}
+
+\sectionlearn{
+\item Which limitations are structural versus finite-sample.
+\item Where sensitivity enters through calibration and correction steps.
+\item Which extensions are natural and still within PRISM positioning.
+}
+
+The dominant current limitation is support quality in stress scenarios. Many scenarios in the synthetic suite carry low-support flags and off-nominal coverage diagnostics, which weakens direct empirical backing for broad robustness claims.
+
+Calibration quality is a second limitation. When calibration data are sparse or shifted, uncertainty estimates widen and Beta concentration must be capped aggressively. This makes posterior intervals wider by design, which is appropriate but can reduce decisiveness.
+
+Correction-map estimation is a third limitation. Behavioral and structural transforms are intentionally simple and bounded, but parameter error in these transforms can dominate posterior movement in adversarial regimes.
+
+Future work that remains within PRISM scope includes:
+\begin{itemize}[leftmargin=*]
+\item richer but still auditable anchor extraction from L3 message dynamics,
+\item stronger uncertainty quantification for calibration transport,
+\item regime-adaptive correction maps with explicit identifiability diagnostics,
+\item broader synthetic support before any stronger empirical claims.
+\end{itemize}
+
+\sectionestablished{
+\item Current limits are explicit and tied to concrete pipeline stages.
+\item Conservative posterior interpretation is appropriate under present diagnostics.
+\item A clear future-work path exists without changing PRISM's core scope.
+}

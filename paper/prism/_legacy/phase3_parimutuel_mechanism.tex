@@ -1,0 +1,56 @@
+%% Phase 3 refactor: Parimutuel mechanism and likelihood under flat prior
+
+\subsection{Phase~3: Parimutuel Mechanism}\label{sec:phase3-parimutuel}
+
+The CAPOPM framework models the aggregation of dispersed information through a parimutuel betting mechanism.  In this phase we describe the event structure, payoff mechanism, and the statistical model governing trader signals.  Throughout, the structural prior remains flat and the hybrid prior from Phase~2 serves as the prior distribution for the event probability.
+
+\begin{definition}[Event and payoff]\label{def:event-payoff}
+Let $A$ denote a binary event that resolves at maturity time $T$; for example, ``the price of an asset exceeds a strike'' or ``Team A wins a match''.  A parimutuel contract pays one unit of account if $A$ occurs and zero otherwise.  Participants wager on the outcome by purchasing YES shares or NO shares.  The random variable
+\[
+  p = \Pr(A=1),
+\]
+representing the true (but unknown) probability of the event, is endowed with the hybrid prior $\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})$ from Phase~2.
+\end{definition}
+
+\begin{definition}[Trader signals and order flow]\label{def:signals}
+At each time step, a population of traders observes private signals about the event $A$ and expresses their beliefs through YES and NO orders.  After applying behavioral and structural corrections (Phase~6), the aggregate order flow is summarised by $y$ effective YES orders and $n-y$ effective NO orders, where $n$ is the total effective number of bets.  Conditional on the true event probability $p$, the corrected YES count follows a Binomial distribution
+\[
+  y \mid p \sim \operatorname{Binomial}(n,p).
+\]
+This assumption reflects a simple information‑aggregation mechanism: each effective bet acts as an independent Bernoulli trial with success probability $p$.
+\end{definition}
+
+\begin{assumption}[Independence and stationarity]\label{assump:indep}
+Conditional on $p$, effective trader signals are independent and identically distributed across participants and over time.  There is no additional dynamics imposed on $p$ beyond its prior distribution.  In particular, we do not assume any stochastic‑volatility or long‑memory dynamics; those would constitute optional modules outside the core framework.
+\end{assumption}
+
+\begin{lemma}[Posterior update under the parimutuel mechanism]\label{lem:phase3-posterior}
+Let $p \sim \operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})$ be the hybrid prior from Phase~2 and suppose $y$ YES orders and $n-y$ NO orders are observed as in Definition~\ref{def:signals}.  Under Assumption~\ref{assump:indep}, the posterior distribution of $p$ is
+\[
+  p \mid y \sim \operatorname{Beta}(\alpha_{\mathrm{ML}} + y,\; \beta_{\mathrm{ML}} + n-y).
+\]
+This follows from the Beta–Binomial conjugate update $\alpha' = \alpha + y$ and $\beta' = \beta + n - y$ for a Beta–Binomial model \cite{Data140_Updating}.
+\end{lemma}
+
+\begin{remark}[Interpretation]
+Lemma~\ref{lem:phase3-posterior} illustrates the simplicity afforded by the flat structural prior.  Each effective YES order increments the shape parameter $\alpha_{\mathrm{ML}}$ and each effective NO order increments $\beta_{\mathrm{ML}}$, leading to a Beta posterior.  The absence of structural dynamics implies that the posterior update depends solely on the counts $(y,n-y)$ and the ML pseudo‑counts $(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})$; no additional parameters or filters are required.  For example, with a flat prior (\(n_{\mathrm{eff}}=0\)) and $n$ effective bets, the posterior reduces to $\operatorname{Beta}(1+y,1+n-y)$.
+\end{remark}
+
+\begin{definition}[Market price and implied probability]\label{def:market-price}
+In a parimutuel market, the price of a YES contract is determined by the ratio of YES orders to total orders.  Let
+\[
+  \pi = \frac{y}{n}
+\]
+denote the market share of YES orders after corrections.  Because the payoffs are normalized, the market price $\pi$ can be interpreted as the market‑implied probability of the event.  When the Beta prior is conjugate to the Binomial likelihood, the posterior mean
+\[
+  \mathbb{E}[p \mid y] = \frac{\alpha_{\mathrm{ML}} + y}{\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}} + n}
+\]
+is a weighted average of the prior mean $\mu$ and the sample mean $\pi$ \cite{NIST_Beta,Data140_Updating}; explicitly, letting $m = \alpha_{\mathrm{ML}} + \beta_{\mathrm{ML}}$ and writing $\mu = \alpha_{\mathrm{ML}}/m$, we have
+\[
+  \mathbb{E}[p \mid y] = \frac{m\mu + y}{m + n} = \left(1 - \frac{n}{m + n}\right) \mu + \frac{n}{m + n} \pi.
+\]
+Thus the posterior mean interpolates between the ML forecast and the observed market fraction according to their respective sample sizes \cite{NIST_Beta,Data140_Updating}.
+\end{definition}
+
+\paragraph{Discussion.}
+Phase 3 formalizes how CAPOPM aggregates trader information in a parimutuel setting.  By replacing the fractional Heston‑driven likelihood with a simple Binomial model, we obtain closed‑form posteriors and intuitive interpretations: the market price represents the empirical frequency of YES bets, the hybrid prior contributes pseudo‑counts that reflect prior forecasts, and the posterior blends these according to relative sample sizes.  This simplicity underscores the epistemic humility of the refactored framework and prepares the ground for behavioral and structural corrections in later phases.

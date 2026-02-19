@@ -1,0 +1,68 @@
+\section{Theory}
+\label{sec:theory}
+
+\sectionpurpose{This section keeps only theory statements that follow from the revised PRISM workflow: flat structural prior, calibrated-signal fusion, and correction maps with explicit regularity assumptions.}
+
+\sectionlearn{
+\item When Beta moment matching from calibrated ML uncertainty is well-defined.
+\item Why conjugate updating is preserved after fusion and correction reconstruction.
+\item A conservative finite-sample sensitivity bound for posterior means.
+}
+
+\begin{proposition}[Feasibility of Beta moment matching]
+\label{prop:moment-feasible}
+For any $m\in(0,1)$ and $v$ satisfying $0<v<m(1-m)$, there exists a unique $(\alpha,\beta)\in(0,\infty)^2$ such that a $\BetaDist(\alpha,\beta)$ random variable has mean $m$ and variance $v$.
+\end{proposition}
+
+\begin{proof}
+Set $\kappa=m(1-m)/v-1$. The variance condition implies $\kappa>0$. Then define $\alpha=m\kappa$ and $\beta=(1-m)\kappa$. Substitution gives the desired mean and variance.
+\end{proof}
+
+\begin{proposition}[Conjugacy is preserved by PRISM reconstruction]
+\label{prop:conjugacy-preserved}
+If $\alpha_{\mathrm{corr},t}>0$ and $\beta_{\mathrm{corr},t}>0$, and if corrected evidence is represented by $(y_t^*,n_t^*)$ with $0\le y_t^*\le n_t^*$, then the PRISM posterior is Beta with parameters
+\[
+\alpha_{\mathrm{post},t}=\alpha_{\mathrm{corr},t}+y_t^*,
+\quad
+\beta_{\mathrm{post},t}=\beta_{\mathrm{corr},t}+n_t^*-y_t^*.
+\]
+\end{proposition}
+
+\begin{proof}
+Immediate from the Beta-Binomial conjugate update identity.
+\end{proof}
+
+\begin{assumption}[Lipschitz correction map]
+\label{ass:lipschitz}
+For each window $t$, the composition $\phi_t=\phi_{\mathrm{str},t}\circ\phi_{\mathrm{beh},t}$ is $L_t$-Lipschitz on $(0,1)$.
+\end{assumption}
+
+\begin{theorem}[Posterior-mean stability under bounded perturbations]
+\label{thm:stability}
+Under Assumption~\ref{ass:lipschitz}, consider two data realizations producing fused probabilities $p_{\mathrm{fused},t}$ and $p'_{\mathrm{fused},t}$ and corrected counts $(y_t^*,n_t^*)$, $(y_t^{*\prime},n_t^{*\prime})$. If
+\[
+|p_{\mathrm{fused},t}-p'_{\mathrm{fused},t}|\le \Delta_p,
+\quad
+|y_t^*-y_t^{*\prime}|\le \Delta_y,
+\quad
+|n_t^*-n_t^{*\prime}|\le \Delta_n,
+\]
+then there is a finite constant $C_t$ depending on concentration bounds such that
+\[
+|p_{\mathrm{post},t}-p'_{\mathrm{post},t}|\le C_t\left(L_t\Delta_p+\Delta_y+\Delta_n\right).
+\]
+\end{theorem}
+
+\begin{proof}
+A direct decomposition into corrected-mean perturbation and count perturbation terms yields the bound. Details are in Appendix~\ref{app:proofs}.
+\end{proof}
+
+\begin{remark}
+Asymptotic concentration claims require effective sample growth and dependence control assumptions. When those assumptions are weak in finite synthetic runs, PRISM treats large-sample claims as directional rather than fully validated \citep{VanDerVaart1998,Doukhan1994}.
+\end{remark}
+
+\sectionestablished{
+\item Moment matching is mathematically well-posed on the feasible variance domain.
+\item Conjugate updating remains intact after correction-parameter reconstruction.
+\item Posterior means are Lipschitz-stable under bounded perturbations when correction maps are regular.
+}

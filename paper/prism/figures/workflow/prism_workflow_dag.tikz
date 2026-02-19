@@ -1,0 +1,21 @@
+\begin{tikzpicture}[
+  node distance=8mm and 10mm,
+  stage/.style={draw, rounded corners, align=center, minimum width=2.3cm, minimum height=0.9cm, fill=blue!5},
+  >=Latex
+]
+\node[stage] (l3) {L3 order\\flow};
+\node[stage, right=of l3] (anchor) {Anchor\\beliefs};
+\node[stage, right=of anchor] (ml) {ML\\signal};
+\node[stage, right=of ml] (cal) {Calibration};
+\node[stage, below=of ml] (fusion) {Fusion};
+\node[stage, right=of fusion] (corr) {Corrections};
+\node[stage, right=of corr] (post) {Posterior};
+
+\draw[->, thick] (l3) -- (anchor);
+\draw[->, thick] (anchor) -- (fusion);
+\draw[->, thick] (ml) -- (cal);
+\draw[->, thick] (cal) -- (fusion);
+\draw[->, thick] (fusion) -- (corr);
+\draw[->, thick] (corr) -- (post);
+\draw[->, thick] (l3.east) |- (ml.north);
+\end{tikzpicture}

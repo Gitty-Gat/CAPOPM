@@ -1,0 +1,154 @@
+% Phase 8: Theoretical Results Under Flat–Prior Framework
+% This section develops the theoretical properties of CAPOPM under the simplified
+% Beta–Binomial model.  It replaces the fractional–Heston based arguments of the
+% original draft with standard Bayesian results about Beta priors and Binomial
+% likelihoods.
+
+\section{Phase 8: Theoretical Results}
+
+In the final phase we formalize the theoretical guarantees of the simplified
+CAPOPM framework.  Under the revised assumptions, the structural prior is
+\(\operatorname{Beta}(1,1)\) and the machine–learning (ML) prior is
+\(\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})\).  The hybrid prior
+is therefore \(\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})\) by
+Proposition~\ref{prop:hybrid-prior-beta}.  We observe \(n\) parimutuel
+signals, each a Bernoulli random variable with unknown success probability
+\(p_\star\).  Corrected order‑flow counts \((y',n')\) from
+Phase 6 serve as our effective data.  Throughout this section, we assume
+\((y',n')\) are the sufficient statistics of the market signals and that the
+corrections are fixed functions of the raw counts.  Conditioning on
+\(y'\) and \(n'\), the posterior distribution of \(p\) remains
+\(\operatorname{Beta}(\alpha_{\mathrm{ML}}+y',\beta_{\mathrm{ML}}+n'-y')\) by
+Lemma~\ref{lem:beta-binomial-update}.  We now analyze this posterior.
+
+\subsection{Posterior mean, variance and shrinkage}
+
+Recall that a Beta distribution with shape parameters \(a,b>0\) has
+mean \(a/(a+b)\) and standard deviation
+\(\sqrt{ab}\big/\bigl((a+b)\sqrt{(a+b+1)}\bigr)\)\cite{315913489390355}.  In particular, if
+\(X\sim\operatorname{Beta}(a,b)\) then the variance is
+\(\operatorname{Var}(X)=ab/\bigl((a+b)^2(a+b+1)\bigr)\).  For our posterior
+\(P\mid y'\sim\operatorname{Beta}(\alpha_{\mathrm{ML}}+y',\beta_{\mathrm{ML}}+n'-y')\),
+the mean and variance can be written explicitly as follows.
+
+\begin{proposition}[Posterior mean and variance]\label{prop:posterior-moments}
+  Let \(P\mid y'\sim \operatorname{Beta}(\alpha_{\mathrm{ML}}+y',\beta_{\mathrm{ML}}+n'-y')\).
+  Then
+  \begin{align*}
+    \mathbb{E}[P\mid y'] &= \frac{\alpha_{\mathrm{ML}}+y'}{\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n'},\\
+    \operatorname{Var}(P\mid y') &= \frac{(\alpha_{\mathrm{ML}}+y')(\beta_{\mathrm{ML}}+n'-y')}{\bigl(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n'\bigr)^2\bigl(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n'+1\bigr)}.
+  \end{align*}
+  In particular, the posterior mean is a weighted average
+  \[\mathbb{E}[P\mid y']=w_{\mathrm{prior}}\,\mu_{\mathrm{ML}}+w_{\mathrm{data}}\,\frac{y'}{n'},\]
+  where \(\mu_{\mathrm{ML}}=\alpha_{\mathrm{ML}}/(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}})\) is the ML prior
+  mean, \(y'/n'\) is the market‑implied probability and
+  \(w_{\mathrm{prior}}=(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}})/(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n')\),
+  \(w_{\mathrm{data}}=n'/(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n')\) are weights summing to one.
+\end{proposition}
+
+\begin{proof}
+  The formulas follow directly from the general mean and variance of a
+  \(\operatorname{Beta}(a,b)\) random variable\cite{315913489390355}, after substituting
+  \(a=\alpha_{\mathrm{ML}}+y'\) and \(b=\beta_{\mathrm{ML}}+n'-y'\).  The weighted
+  average representation arises by dividing numerator and denominator by
+  \(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n'\).
+\end{proof}
+
+Proposition~\ref{prop:posterior-moments} shows that the posterior mean
+\(\mathbb{E}[P\mid y']\) shrinks the empirical frequency \(y'/n'\) toward the
+prior mean \(\mu_{\mathrm{ML}}\).  The effect of the structural prior is
+minimal because \(\operatorname{Beta}(1,1)\) adds no pseudo–observations.  The
+weights \(w_{\mathrm{prior}}\) and \(w_{\mathrm{data}}\) quantify the relative
+influence of the ML prior and the data.  As more signals arrive (\(n'\to\infty\)),
+the prior weight \(w_{\mathrm{prior}}\) diminishes and the posterior mean
+approaches the observed market probability.
+
+\subsection{Consistency and posterior concentration}
+
+Next we establish that the posterior distribution concentrates around the true
+event probability \(p_\star\) as the number of effective signals grows.
+
+\begin{assumption}[Well‑defined true probability]\label{ass:true-probability}
+  The effective counts \((y',n')\) are generated from independent Bernoulli
+  trials with a fixed success probability \(p_\star\in(0,1)\).  In other words,
+  conditional on \(p_\star\),
+  \[y'\sim\operatorname{Binomial}(n',p_\star).
+  \]
+\end{assumption}
+
+\begin{theorem}[Posterior consistency]\label{thm:posterior-consistency}
+  Under Assumption~\ref{ass:true-probability}, the posterior distribution of
+  \(P\mid y'\) converges in probability to the point mass at \(p_\star\) as
+  \(n'\to\infty\).  In particular, for any \(\varepsilon>0\),
+  \[
+    \Pr\bigl(|P- p_\star|>\varepsilon\mid y'\bigr)\xrightarrow[n'\to\infty]{}0.
+  \]
+\end{theorem}
+
+\begin{proof}
+  By the law of large numbers, \(y'/n'\to p_\star\) almost surely as
+  \(n'\to\infty\).  Proposition~\ref{prop:posterior-moments} implies that the
+  posterior mean \(m_{n'}=\mathbb{E}[P\mid y']\) satisfies
+  \(m_{n'}=(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}})/(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n')\cdot\mu_{\mathrm{ML}}+n'/(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n')\cdot (y'/n')\).
+  Since \((y'/n')\to p_\star\) and \(n'/(\alpha_{\mathrm{ML}}+\beta_{\mathrm{ML}}+n')\to 1\),
+  we have \(m_{n'}\to p_\star\).  Moreover, the posterior variance
+  \(\operatorname{Var}(P\mid y')\) in Proposition~\ref{prop:posterior-moments}
+  decreases at order \(\mathcal{O}(1/n')\).  Chebyshev's inequality then
+  yields
+  \[\Pr\bigl(|P- p_\star|>\varepsilon\mid y'\bigr)\leq
+    \frac{\operatorname{Var}(P\mid y')}{\varepsilon^{2}}\xrightarrow[n'\to\infty]{}0,
+  \]
+  proving the claim.
+\end{proof}
+
+\subsection{Asymptotic normality (Bernstein–von Mises)}
+
+Beyond consistency, we can describe the distribution of the posterior around
+\(p_\star\) for large \(n'\).  The Bernstein–von Mises theorem states that a
+posterior distribution under regularity conditions behaves asymptotically like a
+normal distribution centered at the true parameter with variance equal to the
+inverse Fisher information.  In the Beta–Binomial model, the Fisher
+information per observation for the Bernoulli parameter \(p\) is
+\(1/[p(1-p)]\).  The following theorem makes this precise.
+
+\begin{theorem}[Asymptotic normality]\label{thm:asymptotic-normality}
+  Under Assumption~\ref{ass:true-probability}, as \(n'\to\infty\),
+  the posterior distribution of \(P\) satisfies
+  \[
+    \sqrt{n'}\bigl(P - p_\star\bigr) \xrightarrow{\mathscr{D}}
+    \mathcal{N}\Bigl(0,\,p_\star(1-p_\star)\Bigr),
+  \]
+  where \(\mathcal{N}(0,\sigma^{2})\) denotes a normal distribution with
+  mean zero and variance \(\sigma^{2}\).
+\end{theorem}
+
+\begin{proof}[Sketch of proof]
+  The Beta–Binomial posterior is \(\operatorname{Beta}(a_{n'},b_{n'})\) with
+  \(a_{n'}=\alpha_{\mathrm{ML}}+y'\) and \(b_{n'}=\beta_{\mathrm{ML}}+n'-y'\).
+  For large \(n'\), both shape parameters grow on the order of \(n'\) by
+  Assumption~\ref{ass:true-probability}.  A classical result for the Beta
+  distribution (see, e.g., the Bernstein–von Mises theorem) states that if
+  \(a_{n'},b_{n'}\to\infty\) and
+  \(a_{n'}/(a_{n'}+b_{n'})\to p_\star\), then after centering at the mean
+  \(p_\star\) and scaling by \(\sqrt{a_{n'}+b_{n'}}\), the distribution converges
+  to a normal law with variance \(p_\star(1-p_\star)\).  Alternatively, one can
+  derive the result by matching the first two moments in
+  Proposition~\ref{prop:posterior-moments}: the mean error is of order
+  \(\mathcal{O}(1/n')\) and the variance is of order
+  \(p_\star(1-p_\star)/n'\).  Standard central limit arguments then yield the
+  claimed convergence.
+\end{proof}
+
+\subsection{Robustness considerations}
+
+The flat prior \(\operatorname{Beta}(1,1)\) imposes no structural belief on the
+event probability \(p\).  This ensures that the posterior is driven entirely by
+the ML prior and the data.  In contrast to the original fractional–Heston
+structural prior, there is no risk of misspecifying volatility dynamics.  The
+consistency and asymptotic normality results derived above require only
+independent Bernoulli trials and hold for any calibrated ML prior.  In practice,
+the choice of effective sample size \(n_{\mathrm{eff}}\) controls the speed of
+adaptation: larger \(n_{\mathrm{eff}}\) yields slower convergence but stabilizes
+the posterior in small samples, while smaller \(n_{\mathrm{eff}}\) allows rapid
+learning at the cost of increased variability.  These trade‑offs should be
+evaluated empirically via the simulation framework of Phase~7.

@@ -1,0 +1,30 @@
+\section{Scope and Positioning}
+\label{sec:scope}
+
+\sectionpurpose{This section defines the paper boundary so claims remain aligned with what is actually modeled and audited. It also states what PRISM is not.}
+
+\sectionlearn{
+\item The canonical problem solved by PRISM.
+\item Explicit exclusions that prevent over-interpretation.
+\item How main-paper claims are separated from supplement-level evidence.
+}
+
+PRISM is a Bayesian workflow for posterior inference on a binary event of interest. It consumes granular order-flow evidence and a calibrated machine-learning signal, then returns posterior summaries such as mean, credible intervals, and calibration diagnostics.
+
+PRISM is not a derivative-pricing engine, not a risk-neutral valuation model, and not a claim of trading-profit superiority. Downstream decision modules may consume the posterior, but those modules are outside this paper's canonical scope.
+
+Claims in the main paper are limited to:
+\begin{itemize}[leftmargin=*]
+\item workflow definition,
+\item internal mathematical consistency,
+\item conservative theoretical properties under explicit assumptions,
+\item high-level synthetic validation summary.
+\end{itemize}
+
+Detailed stress-study outputs, finite-sample diagnostics, and scenario tables are placed in the supplement.
+
+\sectionestablished{
+\item PRISM is positioned as posterior inference workflow, not pricing model.
+\item The manuscript scope is explicitly bounded.
+\item Main and supplement responsibilities are separated.
+}

@@ -1,0 +1,35 @@
+\section{Additional Tables}
+\label{supp:tables}
+
+\sectionpurpose{This section records compact status tables so readers can connect main-text claims to scenario-level artifact outcomes.}
+
+\sectionlearn{
+\item A compact mapping from experiment family to determinate and indeterminate status counts.
+\item Which families currently support only limited conclusions.
+\item Where to find scenario-level JSON and CSV artifacts.
+}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llll}
+\toprule
+Family & Total Scenarios & Determinate Pass Count & Indeterminate Count \\
+\midrule
+A1 & 9 & 0 & 9 \\
+A2 & 10 & 2 & 8 \\
+A3 & 8 & 0 & 8 \\
+B1 & 20 & 0 & 20 \\
+B2 & 2 & 0 & 2 \\
+B3 & 8 & 0 & 8 \\
+B4 & 4 & 0 & 4 \\
+B5 & 6 & 6 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Family-level status summary computed from `results/**/audit.json` using `criteria\_evaluation.overall\_pass`.}
+\end{table}
+
+\sectionestablished{
+\item The supplement provides quick status lookup tied to scenario-level audit artifacts.
+\item Family-level summaries remain conservative and preserve indeterminacy.
+\item Detailed scenario diagnostics remain in per-scenario artifacts (`summary.json`, `audit.json`, `tests.csv`).
+}

@@ -1,0 +1,46 @@
+\section{Proof Details}
+\label{app:proofs}
+
+This appendix provides details omitted from Section~\ref{sec:theory}.
+
+\subsection*{Details for Proposition~\ref{prop:moment-feasible}}
+The mapping $(m,v)\mapsto(\alpha,\beta)$ uses
+\[
+\kappa = \frac{m(1-m)}{v}-1,
+\quad
+\alpha = m\kappa,
+\quad
+\beta = (1-m)\kappa.
+\]
+The strict inequality $v<m(1-m)$ implies $\kappa>0$, so $\alpha,\beta>0$. Uniqueness follows because Beta mean and variance identify $(\alpha,\beta)$ uniquely on $(0,\infty)^2$.
+
+\subsection*{Details for Proposition~\ref{prop:conjugacy-preserved}}
+For likelihood term
+\[
+L(p\given y^*,n^*) \propto p^{y^*}(1-p)^{n^*-y^*}
+\]
+and prior
+\[
+\pi(p)\propto p^{\alpha_{\mathrm{corr}}-1}(1-p)^{\beta_{\mathrm{corr}}-1},
+\]
+the posterior kernel is
+\[
+p^{\alpha_{\mathrm{corr}}+y^*-1}(1-p)^{\beta_{\mathrm{corr}}+n^*-y^*-1},
+\]
+which is Beta.
+
+\subsection*{Details for Theorem~\ref{thm:stability}}
+Let
+\[
+\mu_t = \frac{\alpha_t+y_t^*}{\alpha_t+\beta_t+n_t^*},
+\quad
+\mu_t' = \frac{\alpha_t'+y_t^{*\prime}}{\alpha_t'+\beta_t'+n_t^{*\prime}}.
+\]
+Use triangle inequality with intermediate $(\alpha_t',\beta_t',y_t^*,n_t^*)$.
+Parameter perturbations $(\alpha_t,\beta_t)\leftrightarrow p_{\mathrm{corr},t}$ are controlled by Lipschitz correction and bounded concentration. Count perturbations are controlled by bounded derivatives:
+\[
+\left|\frac{\partial \mu_t}{\partial y_t^*}\right|\le \frac{1}{\underline c_t},
+\qquad
+\left|\frac{\partial \mu_t}{\partial n_t^*}\right|\le \frac{1}{\underline c_t},
+\]
+for lower concentration bound $\underline c_t>0$. Combining yields the stated bound.

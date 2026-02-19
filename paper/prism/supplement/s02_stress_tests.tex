@@ -1,0 +1,28 @@
+\section{Stress Tests}
+\label{supp:stress-tests}
+
+\sectionpurpose{This section records the stress mechanisms used to challenge calibration transport, correction stability, and posterior robustness under adversarial or low-support regimes.}
+
+\sectionlearn{
+\item How adversarial timing and liquidity stresses are parameterized.
+\item Why misspecification grids are needed for fusion robustness checks.
+\item Which stresses are most likely to trigger diagnostic failures.
+}
+
+Stress mechanisms include:
+\begin{itemize}[leftmargin=*]
+\item timing attacks that concentrate directional flow in short windows,
+\item low-liquidity settings where a small number of messages dominate weighted evidence,
+\item mismatch injections between calibration assumptions and generated outcomes,
+\item regime-switch windows where correction parameters drift relative to training periods.
+\end{itemize}
+
+For each mechanism, PRISM logs whether correction maps amplify or attenuate instability. The intended interpretation is diagnostic: stress failures identify boundary regions where assumptions do not hold strongly enough for aggressive claims.
+
+Current scenario-level audit artifacts indicate substantial stress sensitivity in several families. In particular, no-regret and concentration-oriented claims are not uniformly supported under low-support and coverage-disqualification regimes.
+
+\sectionestablished{
+\item Stress tests explicitly target known weak points of the workflow.
+\item Failures are treated as boundary information, not as noise to suppress.
+\item The suite supports conservative refinement of assumptions and thresholds.
+}

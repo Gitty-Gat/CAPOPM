@@ -1,0 +1,32 @@
+\section{Simulation Design}
+\label{supp:sim-design}
+
+\sectionpurpose{This section documents synthetic scenario construction and metric computation used to exercise the PRISM pipeline under controlled distortions.}
+
+\sectionlearn{
+\item Scenario families and what each family targets.
+\item Shared simulation knobs and evidence-generation rules.
+\item Core metrics used in audit artifacts.
+}
+
+The synthetic suite is organized into families A1--A3 and B1--B5:
+\begin{itemize}[leftmargin=*]
+\item A1: information-efficiency curve behavior under varying informed-trader fractions.
+\item A2: convergence timing under different arrival rates and fixed horizons.
+\item A3: strategic-timing attack scenarios with attack scale and timing controls.
+\item B1: correction no-regret checks under longshot/herding/liquidity combinations.
+\item B2: asymptotic-rate checks under increasing effective evidence.
+\item B3: misspecification-regret grid over structural/ML misspecification levels.
+\item B4: regime concentration tests under controlled evidence totals.
+\item B5: projection-impact checks for constrained output post-processing.
+\end{itemize}
+
+Shared controls include random seed, effective sample budget, attack intensity, and liquidity regime toggles. Scenario manifests and outputs are materialized under `results/**` as scenario-level `summary.json`, `tests.csv`, and `audit.json` artifacts.
+
+Primary metrics include Brier score, log score, reliability deviations, nominal-coverage deviations, and scenario-specific regret proxies. For bounded outcomes and concentration sanity checks, Hoeffding-style inequalities provide conservative finite-sample guardrails \citep{Hoeffding1963}.
+
+\sectionestablished{
+\item The synthetic suite has explicit families with targeted stress intent.
+\item Scenario outputs are reproducible through repository artifacts.
+\item Metric choices are aligned with probabilistic forecasting diagnostics.
+}

@@ -1,0 +1,41 @@
+\section{Additional Proofs}
+\label{supp:proofs}
+
+\sectionpurpose{This section gives expanded arguments for the stability statements used in the main text.}
+
+\sectionlearn{
+\item A fuller perturbation decomposition for posterior means.
+\item How concentration bounds enter constants in stability inequalities.
+\item The role of Lipschitz correction assumptions in finite-sample controls.
+}
+
+\begin{proof}[Expanded proof sketch for the main stability theorem]
+Write posterior mean as
+\[
+\mu(\alpha,\beta,y,n)=\frac{\alpha+y}{\alpha+\beta+n}.
+\]
+For two realizations, add and subtract an intermediate value using matched counts:
+\[
+|\mu-\mu'|\le |\mu(\alpha,\beta,y,n)-\mu(\alpha',\beta',y,n)| + |\mu(\alpha',\beta',y,n)-\mu(\alpha',\beta',y',n')|.
+\]
+
+First term: if corrected means differ by at most $L_t\Delta_p$ and concentration is bounded above and below, parameter perturbations are linear in $L_t\Delta_p$.
+
+Second term: partial derivatives with respect to $(y,n)$ are bounded by inverse effective concentration factors, yielding constants multiplying $(\Delta_y+\Delta_n)$.
+
+Combining terms gives
+\[
+|\mu-\mu'|\le C_t\left(L_t\Delta_p+\Delta_y+\Delta_n\right),
+\]
+with finite $C_t$ under bounded concentration.
+\end{proof}
+
+\begin{remark}
+When concentration collapses toward zero because of aggressive uncertainty caps, constants increase. This is expected: PRISM chooses conservative uncertainty over artificial stability.
+\end{remark}
+
+\sectionestablished{
+\item The stability bound follows by a direct decomposition argument.
+\item Bounded concentration assumptions are explicit in the constant term.
+\item Conservative concentration choices can widen sensitivity bounds.
+}

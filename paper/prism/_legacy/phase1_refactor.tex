@@ -1,0 +1,52 @@
+%% Phase  1 refactor: Structural prior and hybrid prior under flat assumptions
+
+\subsection{Phase~1: Structural Prior and Event Foundations}\label{sec:phase1-flat}
+
+CAPOPM begins by specifying a prior belief over the event probability \(p\), where the event corresponds to a binary outcome such as “YES” versus “NO” in a parimutuel market. In the original draft this structural prior was derived from a tempered fractional Heston model. Under the revised assumptions, we adopt a non‑informative baseline instead and treat structural complexity as an optional extension. The following definitions formalize the new building blocks.
+
+\begin{definition}[Structural prior]\label{def:structural-prior-flat}
+The \emph{structural prior} is a flat distribution on \([0,1]\) given by
+\[
+  p \sim \operatorname{Beta}(1,1).
+\]
+Equivalently, the density is constant on the unit interval, so the prior expresses maximal ignorance about the event probability. This choice preserves conjugacy with a Beta–Binomial likelihood and serves as an epistemically neutral anchoring point for subsequent updates.
+\end{definition}
+
+\begin{definition}[Machine‑learning prior]\label{def:ml-prior}
+Let \(\mu \in (0,1)\) denote a point forecast for the event probability derived from an external predictive model, and let \(n_{\mathrm{eff}} \ge 0\) denote the effective sample size associated with that forecast. The \emph{ML prior} is defined as the Beta distribution
+\[
+  p \sim \operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}}),
+\]
+where \(\alpha_{\mathrm{ML}} = \mu\,n_{\mathrm{eff}}\) and \(\beta_{\mathrm{ML}} = (1-\mu)\,n_{\mathrm{eff}}\). Intuitively, \(n_{\mathrm{eff}}\) quantifies the pseudo‑sample strength of the ML forecast: larger values concentrate the prior around \(\mu\), whereas \(n_{\mathrm{eff}}=0\) collapses back to the flat structural prior \(\operatorname{Beta}(1,1)\).
+\end{definition}
+
+\begin{definition}[Hybrid prior]\label{def:hybrid-prior}
+The \emph{hybrid prior} is obtained by combining the structural and ML priors via a pseudo‑sample interpretation. Specifically, under a product‑of‑experts interpretation the resulting prior is
+\[
+  p \sim \operatorname{Beta}(1,1) \times \operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}}) \propto \operatorname{Beta}(\alpha_{\mathrm{ML}}+1-1,\beta_{\mathrm{ML}}+1-1)
+  = \operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}}).
+\]
+Thus the hybrid prior is effectively \(\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})\); the flat structural component acts as a neutral baseline, and the pseudo‑sample counts \(\alpha_{\mathrm{ML}}\) and \(\beta_{\mathrm{ML}}\) capture the influence of ML forecasts.
+\end{definition}
+
+\begin{assumption}[Parimutuel likelihood and signals]\label{assump:parimutuel-likelihood}
+Trader order flow is summarized by the number of effective “YES” bets \(y'\) and “NO” bets \(n' - y'\) after applying behavioral and structural corrections (see Sections~\ref{sec:phase6-behavioral}--\ref{sec:phase6-structural}). Conditional on \(p\), the corrected counts follow a Binomial distribution,
+\[
+  y' \mid p \sim \operatorname{Binomial}(n',p),
+\]
+reflecting a parimutuel information‑aggregation mechanism. Combined with the Beta hybrid prior, this yields a conjugate Beta–Binomial model.
+\end{assumption}
+
+\begin{lemma}[Posterior under the flat‑hybrid prior]\label{lem:posterior-beta}
+Under Assumption~\ref{assump:parimutuel-likelihood} and Definitions~\ref{def:ml-prior}--\ref{def:hybrid-prior}, the posterior distribution of \(p\) after observing \(y'\) effective YES bets and \(n'\!\! - \!y'\) effective NO bets is
+\[
+  p \mid y' \sim \operatorname{Beta}(\alpha_{\mathrm{ML}} + y',\beta_{\mathrm{ML}} + n' - y').
+\]
+In particular, when \(n_{\mathrm{eff}}=0\) the posterior reduces to \(\operatorname{Beta}(1 + y',1 + n' - y')\), recovering the standard Beta–Binomial update from a flat prior.
+\end{lemma}
+
+\begin{remark}[Optional structural complexity]\label{rem:optional-complexity}
+The tempered fractional Heston model and related stochastic‑volatility dynamics used in the previous draft are now treated as optional extensions. When included, such models may inform \(\mu\) and \(n_{\mathrm{eff}}\) in Definition~\ref{def:ml-prior} or generate a separate set of pseudo‑observations, but they are no longer part of the canonical structural prior. Consequently, mathematical results that relied on fractional Heston dynamics in the earlier version (e.g., Lemmas\,1--2 and Proposition\,1 in Phase\,1) are either vacuous under the flat prior or can be reinterpreted as remarks about optional modules. We omit those results in the main text.
+\end{remark}
+
+\paragraph{Discussion.} By anchoring the structural prior at \(\operatorname{Beta}(1,1)\), CAPOPM adopts an epistemically humble baseline that avoids over‑reliance on unvalidated structural models. The ML prior introduces principled pseudo‑sample counts to encode forecast information, and the hybrid prior fuses these components while preserving the analytic tractability of Beta–Binomial conjugacy. This simple foundation paves the way for the behavioral and structural corrections introduced in subsequent phases.

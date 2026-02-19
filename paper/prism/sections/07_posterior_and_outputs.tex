@@ -1,0 +1,45 @@
+\section{Posterior and Outputs}
+\label{sec:posterior}
+
+\sectionpurpose{This section defines the final posterior update and the reported output objects. The output layer is centered on probabilistic inference and diagnostics.}
+
+\sectionlearn{
+\item How corrected parameters combine with adjusted evidence.
+\item Closed-form posterior summaries used in PRISM reports.
+\item Which diagnostics must accompany posterior means.
+}
+
+Let $y_t^*$ denote corrected yes-count evidence and let $n_t^*$ denote corrected total count for window $t$ (with $0\le y_t^*\le n_t^*$). Given corrected prior parameters $(\alpha_{\mathrm{corr},t},\beta_{\mathrm{corr},t})$, PRISM updates through
+\[
+\pi_{\mathrm{post},t}(p)
+=
+\BetaDist\!\left(
+\alpha_{\mathrm{corr},t}+y_t^*,
+\beta_{\mathrm{corr},t}+n_t^*-y_t^*
+\right).
+\]
+
+The posterior mean is
+\[
+p_{\mathrm{post},t} =
+\frac{\alpha_{\mathrm{corr},t}+y_t^*}{\alpha_{\mathrm{corr},t}+\beta_{\mathrm{corr},t}+n_t^*}.
+\]
+The $(1-\eta)$ credible interval is obtained from Beta quantiles.
+
+For every experiment scenario, posterior reporting includes:
+\begin{itemize}[leftmargin=*]
+\item posterior mean and interval width,
+\item reliability-curve diagnostics,
+\item Brier score and log score,
+\item support flags (effective sample size, empty-bin checks, and calibration fallbacks).
+\end{itemize}
+
+\begin{remark}
+PRISM outputs posterior beliefs about an event probability. Any downstream contract settlement or policy layer is external and must not be conflated with the posterior construction itself.
+\end{remark}
+
+\sectionestablished{
+\item Posterior updating remains closed-form under corrected evidence.
+\item Reported outputs are probabilistic summaries plus diagnostics.
+\item The output contract is inference-first and explicitly separated from downstream decisions.
+}

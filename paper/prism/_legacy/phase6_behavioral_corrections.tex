@@ -1,0 +1,35 @@
+%% Phase 6 refactor: Behavioral and structural corrections
+
+\subsection{Phase~6: Behavioral and Structural Corrections}\label{sec:phase6-corrections}
+
+The predictive accuracy of a parimutuel market depends not only on the prior distribution and the mechanism for aggregating information, but also on the quality of the input signals.  Real‑world bettors exhibit systematic biases such as the favourite–longshot bias, herding and overconfidence.  Moreover, structural features of the market—liquidity imbalances or large strategic orders—can distort the relationship between raw order flow and underlying beliefs.  Phase 6 introduces corrections that map raw YES/NO counts to effective counts $(y',n')$ for use in the Beta–Binomial update.  These corrections are essential in the refactored framework because the flat structural prior places greater weight on early data; failure to adjust for biases could lead to severely skewed posteriors.
+
+%The favourite--longshot bias is the empirical regularity that bets placed at higher offered odds (longshots) yield worse rates of return than bets placed at lower odds (favourites). In traditional betting markets this bias manifests as systematic overpricing of longshot contracts relative to their true probabilities. To correct for this bias, CAPOPM applies a transformation $y \mapsto y' = f(y)$ that down-weights longshot orders and up-weights favourite orders according to a calibrated function $f$.\end{definition}
+\end{definition}
+
+\begin{definition}[Herding correction]\label{def:herding}
+Herd behavior refers to individuals acting collectively without centralized direction\citeLeadershipIQ_Herding.  In prediction markets, herding can manifest when traders mimic the actions of others rather than relying on their private information.  To mitigate herding, CAPOPM applies a dampening function $g$ to clusters of identical orders arriving in quick succession, thereby reducing the effective weight of copycat trades while preserving genuinely independent signals.
+\end{definition}
+
+\begin{definition}[Structural corrections]\label{def:structural-correction}
+Structural corrections address market frictions such as liquidity imbalances or the presence of large, possibly strategic orders.  For instance, if a single large trader places a block order, the raw count $n$ may overstate the amount of independent information.  A structural correction $h$ maps $(y,n)$ to $(y'',n'')$ by capping the influence of any one participant and by normalizing counts across liquidity regimes.  In the refactored framework structural corrections are modular: they may incorporate optional models of market depth or order‑book dynamics, but they do not introduce additional stochastic processes into the prior.
+\end{definition}
+
+\begin{assumption}[Monotonicity and invariance]\label{assump:corrections}
+The correction functions $f$, $g$ and $h$ are assumed to be deterministic, monotonic and time‑invariant.  They preserve order (if $y_1 \le y_2$ then $f(y_1) \le f(y_2)$) and depend only on observable order‑flow statistics.  Corrections are applied sequentially: first behavioural corrections (favourite–longshot and herding), followed by structural corrections.  The resulting effective counts $(y',n')$ enter the Beta–Binomial update described in Phase~3.
+\end{assumption}
+
+\begin{lemma}[Posterior with corrections]\label{lem:correction-posterior}
+Let $p \sim \operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})$ be the hybrid prior from Phase~2 and suppose raw YES and NO counts $(y,n-y)$ are transformed to $(y',n'-y')$ via behavioural and structural corrections satisfying Assumption~\ref{assump:corrections}.  Then, under the Binomial model $y' \mid p \sim \operatorname{Binomial}(n',p)$, the posterior distribution of $p$ is
+\[
+  p \mid y' \sim \operatorname{Beta}(\alpha_{\mathrm{ML}} + y',\; \beta_{\mathrm{ML}} + n' - y').
+\]
+The corrections enter only through the adjusted counts, leaving the functional form of the posterior unchanged.
+\end{lemma}
+
+\begin{remark}[Calibration challenges]
+The choice of correction functions $f$, $g$ and $h$ introduces additional hyperparameters that must be calibrated empirically.  In the original CAPOPM implementation these calibrations relied on stress tests and simulations.  Under the flat prior, improper calibration can have a more pronounced impact because there is less regularization from structural dynamics.  It is therefore essential to validate corrections using historical data and out‑of‑sample evaluation.
+\end{remark}
+
+\paragraph{Discussion.}
+Behavioural and structural corrections play a central role in extracting meaningful information from noisy order flow.  By explicitly modelling common biases—favourite–longshot, herding and strategic trading—the CAPOPM framework produces effective counts that better reflect independent beliefs.  These corrected counts feed into the Beta–Binomial update, preserving analytic tractability.  While our refactoring demotes stochastic volatility models to optional modules, it reaffirms the importance of robust correction schemes and highlights the sensitivity of posteriors to early data under a flat structural prior.

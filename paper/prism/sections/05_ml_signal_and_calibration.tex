@@ -1,0 +1,47 @@
+\section{ML Signal and Calibration}
+\label{sec:ml-calibration}
+
+\sectionpurpose{This section formalizes the ML component as a signal generator, then calibrates that signal before any Bayesian fusion step. Uncertainty is propagated through conservative Beta moment matching.}
+
+\sectionlearn{
+\item Why ML output is not treated as a prior object.
+\item A transparent calibration map from raw score to calibrated probability.
+\item A defensible conversion from calibrated mean/variance to Beta parameters.
+}
+
+Let an ML model produce raw score $r_t \in \mathbb{R}$ or raw probability $\tilde p_t \in (0,1)$. If a score is emitted, map to probability by
+\[
+p_{\mathrm{ml,raw},t}=\sigmoid(r_t).
+\]
+If probability is emitted directly, set $p_{\mathrm{ml,raw},t}=\tilde p_t$.
+
+Calibration is performed on a held-out calibration set using logistic calibration:
+\[
+p_{\mathrm{ml,cal},t}=\sigmoid\!\left(a+b\,\logit\!\left(\mathrm{clip}(p_{\mathrm{ml,raw},t},\varepsilon,1-\varepsilon)\right)\right),
+\]
+with fitted $(a,b)$ and small $\varepsilon>0$.
+
+Let $m_t=p_{\mathrm{ml,cal},t}$ and let $v_t$ denote an uncertainty estimate from calibration-resampling (bootstrap on calibration folds \citep{Efron1994}) or a conservative floor when resampling support is weak. Beta moment matching is feasible when $0<v_t<m_t(1-m_t)$. In that regime,
+\[
+\kappa_t=\frac{m_t(1-m_t)}{v_t}-1,
+\quad
+\alpha_{\mathrm{ml},t}=m_t\kappa_t,
+\quad
+\beta_{\mathrm{ml},t}=(1-m_t)\kappa_t.
+\]
+
+To avoid overconfidence in low-support calibration regimes, PRISM applies a conservative cap and floor:
+\[
+\kappa_t \leftarrow \min\{\kappa_{\max},\max\{\kappa_{\min},\kappa_t\}\}.
+\]
+When feasibility fails, PRISM uses fallback variance $v_t \leftarrow m_t(1-m_t)/(1+\kappa_{\min})$ and reports the fallback in diagnostics.
+
+\begin{remark}
+This mapping is a modeling choice for uncertainty transport, not a claim that ML output is itself a Bayesian prior. The calibration-quality dependence must be reported alongside posterior summaries.
+\end{remark}
+
+\sectionestablished{
+\item ML output enters PRISM as a calibratable signal.
+\item Calibration is explicit and auditable.
+\item ML uncertainty enters fusion through conservative Beta moment matching with fallback rules.
+}

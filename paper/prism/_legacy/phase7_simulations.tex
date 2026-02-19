@@ -1,0 +1,34 @@
+%% Phase 7 refactor: Simulation and stress testing under the flat prior
+
+\subsection{Phase~7: Simulation and Stress Testing}\label{sec:phase7-sim}
+
+To evaluate the performance of CAPOPM under the refactored assumptions, we conduct a series of Monte\,Carlo experiments.  These simulations assess how the hybrid prior, behavioural corrections and effective sample size influence posterior accuracy when the structural prior is flat.  Unlike the original draft, no fractional Heston dynamics are introduced; instead, all randomness arises from the Beta–Binomial model.
+
+\paragraph{Experimental design.}
+Each simulation proceeds as follows:
+\begin{enumerate}
+  \item \textbf{True event probability.}  Draw a true probability $p_{\star}$ from the uniform distribution $\mathrm{Uniform}(0,1)$ (equivalently $\operatorname{Beta}(1,1)$).  This reflects maximal prior uncertainty.
+  \item \textbf{ML prior.}  Specify a forecast mean $\mu$ and an effective sample size $n_{\mathrm{eff}}$.  Define the ML prior as $\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})$ with $\alpha_{\mathrm{ML}} = \mu n_{\mathrm{eff}}$ and $\beta_{\mathrm{ML}} = (1-\mu)n_{\mathrm{eff}}$.  The hybrid prior is equal to this ML prior by Phase~2.
+  \item \textbf{Generate signals.}  For $t = 1,2,\dots,T$, simulate $n_t$ effective trades.  Each trade is a Bernoulli($p_{\star}$) draw, yielding $y_t \sim \operatorname{Binomial}(n_t,p_{\star})$ YES trades and $n_t - y_t$ NO trades.
+  \item \textbf{Apply corrections.}  Transform the raw counts $(y_t,n_t)$ to effective counts $(y'_t,n'_t)$ using behavioural and structural correction functions $f$, $g$ and $h$ from Phase~6.
+  \item \textbf{Update posterior.}  Using Lemma~\ref{lem:phase3-posterior} or Lemma~\ref{lem:correction-posterior}, update the Beta parameters as
+    \[
+      (\alpha,\beta) \leftarrow (\alpha + y'_t,\beta + n'_t - y'_t).
+    \]
+    At each step the posterior mean $\hat{p}_t = \alpha/(\alpha+\beta)$ serves as CAPOPM’s price estimate.
+  \item \textbf{Evaluate.}  After $T$ rounds, compute performance metrics such as the mean squared error (MSE) between $\hat{p}_t$ and $p_{\star}$, the Brier score, and coverage of credible intervals.
+\end{enumerate}
+
+\paragraph{Illustrative results.}
+Figure~\ref{fig:simulation} (omitted here) summarises typical outcomes from these experiments.  Key observations include:
+\begin{itemize}
+  \item \emph{Role of $n_{\mathrm{eff}}$.}  Larger effective sample sizes yield a more informative prior, causing the posterior to concentrate more quickly around the ML mean.  When $n_{\mathrm{eff}}$ is too large relative to the true forecast accuracy, the posterior may under\-react to new data; when it is too small, the posterior may over\-react.  Calibrating $n_{\mathrm{eff}}$ is therefore critical.
+  \item \emph{Impact of corrections.}  Behavioural and structural corrections reduce bias arising from longshot overbetting and herding.  In simulations with uncorrected counts, the posterior estimates systematically under\- or over\-estimate $p_{\star}$ depending on the direction of bias.  Applying corrections improves MSE and Brier scores, particularly when true $p_{\star}$ is near 0 or 1.
+  \item \emph{Posterior convergence.}  As the number of effective trades grows, the posterior variance shrinks and the estimate $\hat{p}_t$ converges to $p_{\star}$, consistent with the Bernstein–von\,Mises theorem for Beta–Binomial models.  The flat prior accelerates convergence because it does not add pseudo\-observations.
+\end{itemize}
+
+\paragraph{Comparison with the original model.}
+The original CAPOPM simulations incorporated fractional Heston dynamics to generate a stochastic volatility term for $p_t$.  In the refactored model we exclude such dynamics, focusing instead on the Beta–Binomial mechanism.  This simplifies the simulation and highlights the core sources of uncertainty: the true event probability, the effectiveness of behavioural corrections, and the calibration of the ML prior.  Notably, the refactored simulations show that even with a non‑informative structural prior, CAPOPM can achieve accurate estimates as long as correction schemes are robust and $n_{\mathrm{eff}}$ is calibrated appropriately.
+
+\paragraph{Guidelines for practitioners.}
+Practitioners implementing CAPOPM should perform bespoke simulations using their own ML priors and correction functions.  Sensitivity analysis over $n_{\mathrm{eff}}$, correction parameters and trade volumes can inform the robustness of posterior estimates.  In particular, scenarios with low trade counts require cautious interpretation because the flat prior implies minimal regularization; conversely, high trade volumes will quickly dominate any prior beliefs.

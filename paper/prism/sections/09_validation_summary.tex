@@ -1,0 +1,60 @@
+\section{Validation Summary}
+\label{sec:validation-summary}
+
+\sectionpurpose{This section summarizes synthetic validation outcomes at a high level and points to the supplement for full diagnostics. The summary intentionally follows audit boundaries and does not convert indeterminate scenarios into broad claims.}
+
+\sectionlearn{
+\item Which experiment families were executed.
+\item Where validation is determinate versus indeterminate under current audit gates.
+\item Why current evidence supports a constrained interpretation.
+}
+
+Synthetic experiments cover:
+\begin{itemize}[leftmargin=*]
+\item information-efficiency curves (A1),
+\item convergence timing (A2),
+\item strategic-timing attacks (A3),
+\item correction no-regret checks (B1),
+\item asymptotic-rate checks (B2),
+\item misspecification-regret grids (B3),
+\item regime concentration tests (B4),
+\item projection impact tests (B5).
+\end{itemize}
+
+Scenario-level status in `results/**/audit.json` is mostly indeterminate for families A1, A3, B1, B2, B3, and B4 under current criteria evaluation and coverage gating. Determinate outcomes are concentrated in B5, with partial determinate support in A2.
+
+At a high level:
+\begin{itemize}[leftmargin=*]
+\item A2 currently has 2 determinate passes and 8 indeterminate scenarios.
+\item B5 currently has 6 determinate passes (with 3 marked paper-ready).
+\item A1, A3, B1, B2, B3, and B4 are currently indeterminate at scenario level.
+\item Paper-ready flags and determinacy do not coincide uniformly; both must be checked before any empirical claim.
+\end{itemize}
+
+These outcomes justify a cautious conclusion: the workflow is implementable and auditable, but broad empirical validation claims remain unsupported at family level under current determinacy patterns.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Family & Scenario Status Pattern & Main-Paper Interpretation \\
+\midrule
+A1 & 9 indeterminate / 9 total & exploratory only \\
+A2 & 2 pass, 8 indeterminate / 10 total & supportive but limited \\
+A3 & 8 indeterminate / 8 total & stress-sensitive and unresolved \\
+B1 & 20 indeterminate / 20 total & correction robustness unresolved \\
+B2 & 2 indeterminate / 2 total & asymptotic rate unresolved empirically \\
+B3 & 8 indeterminate / 8 total & misspecification robustness unresolved \\
+B4 & 4 indeterminate / 4 total & concentration claim unresolved \\
+B5 & 6 pass / 6 total (3 paper-ready) & projection behavior conditionally supported \\
+\bottomrule
+\end{tabular}
+\caption{High-level summary computed from scenario-level `audit.json` fields (`criteria\_evaluation.overall\_pass`, `seed\_grid\_coverage.paper\_ready`).}
+\label{tab:validation-summary}
+\end{table}
+
+\sectionestablished{
+\item Validation evidence is mixed and must be interpreted conservatively.
+\item Main text reports high-level status only; detailed diagnostics are deferred to supplement.
+\item Current empirical evidence supports workflow viability, not universal claim validation.
+}

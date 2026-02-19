@@ -1,0 +1,38 @@
+%% Phase  2 refactor: Hybrid prior fusion under flat assumptions
+
+\subsection{Phase~2: Hybrid Prior Fusion}\label{sec:phase2-hybrid}
+
+In the refactored CAPOPM framework the hybrid prior fuses the non‑informative structural prior from Phase~1 with a principled machine‑learning (ML) prior.  This fusion encodes both epistemic humility and data‑driven insight while preserving the analytic convenience of conjugate Beta distributions.
+
+\begin{definition}[Hybrid prior via product of Beta distributions]\label{def:hybrid-prior-product}
+Let $p$ denote the event probability, and let the structural and ML priors be defined as in Definitions~\ref{def:structural-prior-flat} and~\ref{def:ml-prior}.  We assume these two sources of belief are independent, so the joint prior density factors as
+\[
+  f(p) \;\propto\; f_{\text{structural}}(p)\,f_{\text{ML}}(p).
+\]
+Since both factors are Beta densities, their product is proportional to another Beta density.  In particular,
+\begin{equation}\label{eq:beta-product}
+  f_{\text{hybrid}}(p)
+  \propto p^{(1-1)+(\alpha_{\mathrm{ML}}-1)}\,(1-p)^{(1-1)+(\beta_{\mathrm{ML}}-1)}
+  = p^{\alpha_{\mathrm{ML}}-1}\,(1-p)^{\beta_{\mathrm{ML}}-1},
+\end{equation}
+so the hybrid prior is the Beta distribution
+\[
+  p \sim \operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}}).
+\]
+This result reflects the fact that a flat $\operatorname{Beta}(1,1)$ structural prior contributes zero pseudo‑observations (see Remark~\ref{rem:pseudo}), leaving the ML pseudo‑counts $(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})$ unchanged.
+\end{definition}
+
+\begin{remark}[Pseudo‑sample interpretation]\label{rem:pseudo}
+For a Beta distribution $\operatorname{Beta}(\alpha,\beta)$ one can interpret $(\alpha-1)$ and $(\beta-1)$ as the numbers of prior ``success'' and ``failure'' observations, respectively.  A flat structural prior has $\alpha = \beta = 1$, corresponding to zero pseudo‑observations.  Thus the product \eqref{eq:beta-product} simply recovers the ML prior $\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})$: the structural prior anchors the domain but does not contribute additional information.  When $n_{\mathrm{eff}}=0$ in Definition~\ref{def:ml-prior}, the hybrid prior collapses to $\operatorname{Beta}(1,1)$.
+\end{remark}
+
+\begin{lemma}[Hybrid posterior update]\label{lem:hybrid-posterior}
+Under Assumption~\ref{assump:parimutuel-likelihood} and Definition~\ref{def:hybrid-prior-product}, the posterior distribution of $p$ after observing $y'$ effective YES bets and $n' - y'$ effective NO bets is
+\[
+  p \mid y' \sim \operatorname{Beta}(\alpha_{\mathrm{ML}} + y',\,\beta_{\mathrm{ML}} + n' - y').
+\]
+In other words, the flat structural prior does not alter the Beta--Binomial update beyond the pseudo--counts contributed by the ML prior.  This follows directly from the conjugate update $\alpha' = \alpha + y'$ and $\beta' = \beta + n' - y'$ for a Beta--Binomial model \cite{Data140_Updating}.\end{lemma}
+\pa%ragraph{Parameterization by mean and effective sample size.}
+The ML prior $\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})$ can be parameterized by its mean $\mu$ and effective sample size $n_{\mathrm{eff}}$ via $\alpha_{\mathrm{ML}} = \mu\,n_{\mathrm{eff}}$ and $\beta_{\mathrm{ML}} = (1-\mu)\,n_{\mathrm{eff}}$. Equivalently, if $\mu$ and $\nu = \alpha_{\mathrm{ML}} + \beta_{\mathrm{ML}}$ denote the mean and ``sample size'' of a Beta distribution, then $\alpha = \mu \, \nu$ and $\beta = (1-\mu)\nu$. This parameterization clarifies how the prior mean anchors the distribution while $n_{\mathrm{eff}}$ controls its concentration. In the hybrid prior, this interpretation persists because the structural prior contributes no additional pseudo\,observations.
+\paragraph{Discussion and implications.}
+The hybrid prior fusion emphasises that CAPOPM’s belief state is the product of an epistemically neutral structural anchor and a data‑driven ML component.  By adopting $\operatorname{Beta}(1,1)$ as the structural prior, we ensure that the hybrid prior is entirely determined by the ML pseudo‑counts.  This design maintains conjugacy with the parimutuel likelihood and preserves interpretability.  We stress that structural complexity, such as stochastic volatility models, can still inform the ML prior (e.g., via a model‑based forecast mean and variance), but it no longer functions as a canonical generator of dynamics.  Consequently, the proofs and propositions that relied on fractional Heston dynamics in the original draft either reduce to statements about optional modules or become vacuous under the flat prior.

@@ -1,0 +1,79 @@
+% Literature Review and Conclusion for CAPOPM
+% This section completes the refactor by aligning the literature review
+% and concluding remarks with the flat prior framework.  It omits detailed
+% discussions of fractional Heston dynamics and instead highlights work on
+% conjugate priors, Beta–Binomial models, and parimutuel markets.
+
+\section{Literature Review}
+
+The original CAPOPM paper surveyed a broad range of financial models,
+including fractional Heston processes, stochastic volatility models, and
+non‑parametric machine learning approaches.  In the simplified version we
+restrict attention to models that are relevant to the flat‑prior, Beta–Binomial
+framework and to parimutuel prediction markets.
+
+\paragraph{Bayesian inference for binary events.}  Bayesian analysis of
+binary outcomes typically employs the Beta distribution as a conjugate prior
+for the Bernoulli or binomial likelihood.  This choice dates back to the
+classical works of Laplace and remains a cornerstone of modern Bayesian
+statistics.  The Beta distribution \(\operatorname{Beta}(a,b)\) has a tractable
+posterior update when combined with binomial data: if \(p\) has prior
+\(\operatorname{Beta}(a,b)\) and \(y\) successes are observed in \(n\)
+trials, the posterior is \(\operatorname{Beta}(a+y,b+n-y)\)\cite{714310495055200}.  Its mean is
+\(a/(a+b)\) and its variance is \(ab/((a+b)^2(a+b+1))\)\cite{315913489390355}, allowing
+closed‑form expressions for posterior summaries.
+
+\paragraph{Prediction markets and parimutuel mechanisms.}  Prediction markets
+and parimutuel betting schemes aggregate information by letting traders buy
+shares contingent on outcomes.  Market prices in a pari‑mutuel market with
+binary events can be interpreted as estimates of the event probability and
+provide a natural likelihood for Bayesian updating.  Studies by
+\citet{wolfers2004prediction} and \citet{manski2006interpreting} argue that
+market prices approximate subjective probabilities when participants are
+risk‑neutral and face no liquidity constraints.  More recent research
+investigates behavioural biases (e.g., favourite–longshot bias) in sports
+betting\cite{609924582939380} and herding phenomena in financial markets\cite{619800483002449}, which motivate the
+correction functions introduced in Phase 6.
+
+\paragraph{Conjugate priors in machine learning.}  Machine learning models
+often produce point forecasts without quantified uncertainty.  To incorporate
+such forecasts into Bayesian decision making, one can construct a principled
+Beta prior by specifying a forecast mean \(\mu\) and an effective sample size
+\(n_{\mathrm{eff}}\).  This parameterization, also known as the method of
+moments, sets \(\alpha=\mu n_{\mathrm{eff}}\) and
+\(\beta=(1-\mu)n_{\mathrm{eff}}\).  The resulting Beta prior reflects both
+the point estimate and the confidence level of the machine learning model.
+
+\paragraph{Hybrid Bayesian frameworks.}  Combining structural and empirical
+priors is common in modern Bayesian econometrics.  The CAPOPM framework
+belongs to this family: it fuses a non‑informative structural prior
+\(\operatorname{Beta}(1,1)\) with a principled ML prior via independent
+products.  Similar ideas appear in works on hierarchical modelling and
+empirical Bayes, where prior hyperparameters are estimated from data.
+
+\section{Conclusion}
+
+The refactored CAPOPM framework provides a simplified yet rigorous foundation
+for belief aggregation in parimutuel prediction markets.  By adopting a
+flat \(\operatorname{Beta}(1,1)\) structural prior, CAPOPM eliminates
+unjustified complexity from fractional Heston dynamics and focuses on
+information extraction and behavioural correction.  The hybrid prior,
+constructed as a product of the flat prior and a principled machine–learning
+\(\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})\) prior, yields
+a conjugate \(\operatorname{Beta}(\alpha_{\mathrm{ML}},\beta_{\mathrm{ML}})\)
+distribution for the event probability.  Posterior updates follow the
+Beta–Binomial conjugacy, allowing closed‑form expressions for the mean and
+variance and straightforward integration of effective order‑flow counts.
+
+The theoretical analysis demonstrates that CAPOPM is consistent and
+asymptotically normal under mild conditions (Phase 8), and the simulation
+studies (Phase 7) highlight the trade‑offs introduced by the effective sample
+size and behavioural corrections.  The modular design of the framework
+accommodates optional structural layers, such as stochastic volatility, but does
+not require them for validity.
+
+Looking forward, future work can explore empirical calibration of the machine
+learning prior, incorporate richer behavioural models, and extend the framework
+to multi‑outcome events.  While the present formulation avoids overfitting by
+maintaining epistemic humility, it remains a flexible platform for research on
+prediction markets, information aggregation, and Bayesian mechanism design.

@@ -1,0 +1,48 @@
+\section{Data and Anchor Beliefs}
+\label{sec:data-anchor}
+
+\sectionpurpose{This section defines how raw L3 order flow is transformed into anchor beliefs under a flat structural prior. The anchor object is the first probabilistic input to fusion.}
+
+\sectionlearn{
+\item The exact L3 fields used for anchor extraction.
+\item How effective yes/no evidence is computed from raw flow.
+\item Why the structural prior is fixed at $\BetaDist(1,1)$.
+}
+
+For each observed message $j$ in window $t$, let:
+\begin{itemize}[leftmargin=*]
+\item $s_j \in \{+1,-1\}$ be side indicator (yes or no pressure),
+\item $q_j > 0$ be size,
+\item $d_j \ge 0$ be depth-relative distance,
+\item $\ell_j \ge 0$ be order lifetime proxy.
+\end{itemize}
+
+Define a bounded reliability weight
+\[
+\omega_j = \min\{\omega_{\max},\max\{\omega_{\min},\,(1+d_j)^{-1}\min(1,\ell_j/\ell_0)\}\},
+\]
+with fixed constants $0<\omega_{\min}\le\omega_{\max}$ and scale $\ell_0>0$.
+
+Effective evidence totals are
+\[
+N^+_t = \sum_{j \in \mathcal{D}^{\mathrm{L3}}_t} \omega_j q_j\,\mathbf{1}\{s_j=+1\},
+\quad
+N^-_t = \sum_{j \in \mathcal{D}^{\mathrm{L3}}_t} \omega_j q_j\,\mathbf{1}\{s_j=-1\}.
+\]
+
+The canonical structural prior is fixed at $\BetaDist(1,1)$. The anchor belief is then
+\[
+\pi_{\mathrm{anchor},t}(p) = \BetaDist(\alpha_{\mathrm{anchor},t},\beta_{\mathrm{anchor},t}),
+\quad
+\alpha_{\mathrm{anchor},t}=1+N^+_t,
+\quad
+\beta_{\mathrm{anchor},t}=1+N^-_t.
+\]
+
+This construction makes the prior-to-anchor transition explicit: PRISM starts neutral and lets order-flow evidence determine concentration.
+
+\sectionestablished{
+\item Anchor beliefs are computed directly from raw L3 signals.
+\item The baseline prior is exactly $\BetaDist(1,1)$.
+\item Anchor concentration scales with reliability-weighted evidence, not heuristic phase labels.
+}
